@@ -13,8 +13,8 @@ public class FileMenu extends JMenu {
 	JMenuItem delete;
 	JMenuItem sync;
 	
-	public FileMenu(String name) {
-		super(name);
+	public FileMenu() {
+		super("File");
 		this.setMnemonic(KeyEvent.VK_F);
 		
 		newFile = new JMenuItem("New File");

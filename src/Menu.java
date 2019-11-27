@@ -14,16 +14,14 @@ public class Menu extends JMenuBar{
 	
 	public Menu() {
 		super();
-		file = new FileMenu("File");
-		
-		edit = new JMenu("Edit");
-		edit.setMnemonic(KeyEvent.VK_E);
-		
-		help = new JMenu("Help");
-		help.setMnemonic(KeyEvent.VK_H);
-		
+		file = new FileMenu();
 		this.add(file);
+		
+		edit = new EditMenu();
 		this.add(edit);
+
+		help = new HelpMenu();
 		this.add(help);
+		
 	}
 }
