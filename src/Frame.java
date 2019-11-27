@@ -6,20 +6,30 @@ import java.awt.*;
  * @author Emad
  *
  */
-public class Frame {
-	JFrame frame;
-	JPanel panel;
-	JToolBar toolbar;
-	Menu menu;
+public class Frame extends JFrame {
+	
+	JPanel content = new JPanel();
+	JPanel header = new JPanel();
+	JMenuBar menuBar = new Menu();
+	
 	
 	public Frame() {
-		frame = new JFrame();
-		frame.setTitle("JFileManger");
-		frame.setSize(1024, 720);
-		frame.setMinimumSize(new Dimension(400, 400));
-		frame.setLocation(100, 150);
-		frame.setLayout(null);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
-		frame.setVisible(true);
+		super();
+		this.setTitle("JFileManger");
+		this.setSize(1024, 720);
+		this.setMinimumSize(new Dimension(400, 400));
+		this.setLocation(100, 150);
+		this.setLayout(null);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		header.setLayout(new BorderLayout());
+		header.add(menuBar, BorderLayout.NORTH);
+		
+		content = new JPanel();
+		content.setLayout(new BorderLayout());
+		content.add(header, BorderLayout.NORTH);
+		
+		this.setContentPane(content);
+		this.setVisible(true);
 	}
 }
