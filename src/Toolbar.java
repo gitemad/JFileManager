@@ -11,8 +11,8 @@ public class Toolbar extends JToolBar {
 	private JButton back = new BackButton();
 	private JButton forward = new ForwardButton();
 	private JButton parent = new ParentButton();
-	private JTextArea address = new AddressBar();
-	private JTextArea search = new Search();
+	private JTextField address = new AddressBar();
+	private JTextField search = new Search();
 	private BorderLayout layout = new BorderLayout(15, 0);
 	private Insets margin = new Insets(0, 5, 0, 15);
 	
