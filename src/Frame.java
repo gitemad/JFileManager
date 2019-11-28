@@ -17,6 +17,7 @@ public class Frame extends JFrame {
 	JScrollPane treePane = new TreePane(tree);
 	JScrollPane filePane = new FilePane(filePanel);
 	JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treePane, filePane);
+	JPanel footer = new Footer();
 	
 	public Frame() {
 		super();
@@ -31,11 +32,17 @@ public class Frame extends JFrame {
 		header.add(menuBar, BorderLayout.NORTH);
 		header.add(toolBar, BorderLayout.SOUTH);
 		
+		
 		content = new JPanel();
 		content.setLayout(new BorderLayout());
 		content.add(header, BorderLayout.NORTH);
 		
+		
 		content.add(split, BorderLayout.CENTER);
+		
+		
+		content.add(footer, BorderLayout.SOUTH);
+		
 		
 		this.setContentPane(content);
 		
