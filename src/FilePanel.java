@@ -9,10 +9,14 @@ import java.awt.event.*;
  */
 public class FilePanel extends JPanel {
 
-    int x, y, x2, y2;
+    private int x;
+    private int y;
+    private int x2;
+    private int y2;
+    private JPopupMenu rClickMenu = new ContextMenuPanel();
 
     FilePanel() {
-        x = y = x2 = y2 = 0; // 
+        x = y = x2 = y2 = 0;
         MyMouseListener listener = new MyMouseListener();
         addMouseListener(listener);
         addMouseMotionListener(listener);
@@ -50,7 +54,11 @@ public class FilePanel extends JPanel {
         public void mouseReleased(MouseEvent e) {
             x = y = x2 = y2 = 10000;
             repaint();
+            if (e.getButton() == MouseEvent.BUTTON3) {
+            	rClickMenu.show(e.getComponent(), e.getX(), e.getY());
+            }
         }
+        
     }
 
     public void paintComponent(Graphics g) {
