@@ -48,7 +48,7 @@ public class FilePanel extends JPanel {
         }
 
         public void mouseReleased(MouseEvent e) {
-            x = y = x2 = y2 = 0;
+            x = y = x2 = y2 = 10000;
             repaint();
         }
     }
