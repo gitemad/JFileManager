@@ -14,7 +14,7 @@ public class Frame extends JFrame {
 	private JMenuBar menuBar = new Menu();
 	private JToolBar toolBar = new Toolbar();
 	private JTree tree = new Tree();
-	private JPanel filePanel = new JPanel();
+	private JPanel filePanel = new FilePanel();
 	private JScrollPane treePane = new TreePane(tree);
 	private JScrollPane filePane = new FilePane(filePanel);
 	private JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treePane, filePane);
