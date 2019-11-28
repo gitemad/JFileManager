@@ -8,6 +8,7 @@ import java.awt.*;
  */
 public class Frame extends JFrame {
 	
+	private Image icon = new ImageIcon("img/icon.png").getImage();
 	private JPanel content = new JPanel();
 	private JPanel header = new JPanel();
 	private JMenuBar menuBar = new Menu();
@@ -21,6 +22,7 @@ public class Frame extends JFrame {
 	
 	public Frame() {
 		super();
+		this.setIconImage(icon);
 		this.setTitle("JFileManger");
 		this.setSize(1024, 720);
 		this.setMinimumSize(new Dimension(600, 400));

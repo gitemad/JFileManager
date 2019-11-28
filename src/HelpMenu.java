@@ -11,7 +11,7 @@ public class HelpMenu extends JMenu {
 	private JMenuItem about;
 	private JMenuItem settings;
 	private JMenuItem help;
-	
+		
 	public HelpMenu() {
 		super("Help");
 		this.setMnemonic(KeyEvent.VK_H);
@@ -23,6 +23,13 @@ public class HelpMenu extends JMenu {
 		
 		settings = new JMenuItem("Settings");
 		settings.setMnemonic(KeyEvent.VK_S);
+		settings.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent eve) {
+				Settings settings = new Settings();
+			}
+		});
 		this.add(settings);
 		
 		help = new JMenuItem("Help");
@@ -30,5 +37,6 @@ public class HelpMenu extends JMenu {
 		this.add(help);
 		
 	}
+	
 	
 }

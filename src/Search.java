@@ -16,7 +16,7 @@ public class Search extends JTextField {
 	private Border outer = this.getBorder();
 	private Border iconBorder = new MatteBorder(0, 25, 0, 0, icon);
 	private CompoundBorder border = new CompoundBorder(outer, iconBorder);
-	
+
 	public Search() {
 		super("Search");
 		this.setBorder(border);
