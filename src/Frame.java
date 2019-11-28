@@ -12,13 +12,17 @@ public class Frame extends JFrame {
 	JPanel header = new JPanel();
 	JMenuBar menuBar = new Menu();
 	JToolBar toolBar = new Toolbar();
-	
+	JTree tree = new Tree();
+	JPanel filePanel = new JPanel();
+	JScrollPane treePane = new TreePane(tree);
+	JScrollPane filePane = new FilePane(filePanel);
+	JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treePane, filePane);
 	
 	public Frame() {
 		super();
 		this.setTitle("JFileManger");
 		this.setSize(1024, 720);
-		this.setMinimumSize(new Dimension(600, 600));
+		this.setMinimumSize(new Dimension(600, 400));
 		this.setLocation(100, 150);
 		this.setLayout(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -31,20 +35,11 @@ public class Frame extends JFrame {
 		content.setLayout(new BorderLayout());
 		content.add(header, BorderLayout.NORTH);
 		
+		content.add(split, BorderLayout.CENTER);
+		
 		this.setContentPane(content);
 		
 		
-		
-		try {
-			for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-				if ("Nimbus".equals(info.getName())) {
-					UIManager.setLookAndFeel(info.getClassName());
-					break;
-				}
-			}
-		} catch (Exception e) {
-			// If Nimbus is not available, you can set the GUI to another look and feel.
-		}
 		this.setVisible(true);
 	}
 }
