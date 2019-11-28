@@ -7,17 +7,19 @@ import java.awt.*;
  */
 public class Toolbar extends JToolBar {
 	
-	JPanel buttonsPanel = new JPanel();
-	JButton back = new BackButton();
-	JButton forward = new ForwardButton();
-	JButton parent = new ParentButton();
-	JTextArea address = new AddressBar();
-	JTextArea search = new Search();
-	BorderLayout layout = new BorderLayout(15, 0);
+	private JPanel buttonsPanel = new JPanel();
+	private JButton back = new BackButton();
+	private JButton forward = new ForwardButton();
+	private JButton parent = new ParentButton();
+	private JTextArea address = new AddressBar();
+	private JTextArea search = new Search();
+	private BorderLayout layout = new BorderLayout(15, 0);
+	private Insets margin = new Insets(0, 5, 0, 15);
 	
 	public Toolbar() {
 		super();
 		this.setLayout(layout);		
+		this.setMargin(margin);
 		buttonsPanel.add(back);
 		buttonsPanel.add(forward);
 		buttonsPanel.add(Box.createHorizontalStrut(15));

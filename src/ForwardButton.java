@@ -7,8 +7,8 @@ import java.awt.*;
  */
 public class ForwardButton extends JButton {
 	
-	Dimension size = new Dimension(20, 20);
-	Boolean enable = false;
+	private Dimension size = new Dimension(20, 20);
+	private Boolean enable = false;
 	
 	public ForwardButton() {
 		super(new ImageIcon("img/forward.png"));

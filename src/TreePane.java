@@ -6,8 +6,11 @@ import java.awt.*;
  *
  */
 public class TreePane extends JScrollPane {
-	JTree tree;
-	Dimension minSize = new Dimension(180, 300);
+	
+	private JTree tree;
+	private Dimension minSize = new Dimension(180, 300);
+	
+	
 	public TreePane(JTree tree) {
 		super(tree, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		this.tree = tree;

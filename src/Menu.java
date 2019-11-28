@@ -8,9 +8,9 @@ import java.awt.event.*;
  */
 public class Menu extends JMenuBar{
 	
-	JMenu file;
-	JMenu edit;
-	JMenu help;
+	private JMenu file;
+	private JMenu edit;
+	private JMenu help;
 	
 	public Menu() {
 		super();

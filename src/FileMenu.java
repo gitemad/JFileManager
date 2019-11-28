@@ -8,10 +8,10 @@ import java.awt.event.*;
  */
 public class FileMenu extends JMenu {
 	
-	JMenuItem newFile;
-	JMenuItem newFolder;
-	JMenuItem delete;
-	JMenuItem sync;
+	private JMenuItem newFile;
+	private JMenuItem newFolder;
+	private JMenuItem delete;
+	private JMenuItem sync;
 	
 	public FileMenu() {
 		super("File");

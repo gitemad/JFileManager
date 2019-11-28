@@ -8,11 +8,11 @@ import java.awt.event.*;
  */
 public class EditMenu extends JMenu {
 	
-	JMenuItem rename;
-	JMenuItem copy;
-	JMenuItem cut;
-	JMenuItem paste;
-	JMenuItem sync;
+	private JMenuItem rename;
+	private JMenuItem copy;
+	private JMenuItem cut;
+	private JMenuItem paste;
+	private JMenuItem sync;
 	
 	public EditMenu() {
 		super("Edit");

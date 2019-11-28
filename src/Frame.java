@@ -8,16 +8,16 @@ import java.awt.*;
  */
 public class Frame extends JFrame {
 	
-	JPanel content = new JPanel();
-	JPanel header = new JPanel();
-	JMenuBar menuBar = new Menu();
-	JToolBar toolBar = new Toolbar();
-	JTree tree = new Tree();
-	JPanel filePanel = new JPanel();
-	JScrollPane treePane = new TreePane(tree);
-	JScrollPane filePane = new FilePane(filePanel);
-	JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treePane, filePane);
-	JPanel footer = new Footer();
+	private JPanel content = new JPanel();
+	private JPanel header = new JPanel();
+	private JMenuBar menuBar = new Menu();
+	private JToolBar toolBar = new Toolbar();
+	private JTree tree = new Tree();
+	private JPanel filePanel = new JPanel();
+	private JScrollPane treePane = new TreePane(tree);
+	private JScrollPane filePane = new FilePane(filePanel);
+	private JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treePane, filePane);
+	private JPanel footer = new Footer();
 	
 	public Frame() {
 		super();

@@ -8,9 +8,9 @@ import java.awt.event.*;
  */
 public class HelpMenu extends JMenu {
 	
-	JMenuItem about;
-	JMenuItem settings;
-	JMenuItem help;
+	private JMenuItem about;
+	private JMenuItem settings;
+	private JMenuItem help;
 	
 	public HelpMenu() {
 		super("Help");

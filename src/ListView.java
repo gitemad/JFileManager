@@ -9,7 +9,7 @@ import java.awt.event.*;
  */
 public class ListView extends JToggleButton {
 	
-	Dimension size = new Dimension(30, 30);
+	private Dimension size = new Dimension(30, 30);
 
 	public ListView() {
 		super(new ImageIcon("img/listshow.png"));

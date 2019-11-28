@@ -9,9 +9,9 @@ import java.awt.event.ActionListener;
  */
 public class Footer extends JPanel {
 	
-	JToggleButton list = new ListView();
-	JToggleButton grid = new GridView();
-	FlowLayout layout = new FlowLayout(FlowLayout.RIGHT);
+	private JToggleButton list = new ListView();
+	private JToggleButton grid = new GridView();
+	private FlowLayout layout = new FlowLayout(FlowLayout.RIGHT);
 	
 	public Footer() {
 		super();
