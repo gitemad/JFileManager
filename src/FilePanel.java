@@ -1,6 +1,8 @@
 import javax.swing.*;
+import javax.swing.tree.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.*;
 
 /**
  * 
@@ -66,5 +68,6 @@ public class FilePanel extends JPanel {
         g.setColor(new Color(0, 0, 255, 100));
         drawPerfectRect(g, x, y, x2, y2);
     }
+
 
 }

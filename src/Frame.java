@@ -1,6 +1,9 @@
 import javax.swing.*;
+import javax.swing.tree.*;
+
 import java.awt.*;
 
+import java.io.*;
 
 /**
  * @author Emad
@@ -13,11 +16,18 @@ public class Frame extends JFrame {
 	private JPanel header = new JPanel();
 	private JMenuBar menuBar = new Menu();
 	private JToolBar toolBar = new Toolbar();
-	private JTree tree = new Tree();
+	
+	
+	private JTree tree = new JTree();
+	
+	
+	
 	private JPanel filePanel = new FilePanel();
-	private JScrollPane treePane = new TreePane(tree);
+	private JScrollPane treePane;
+//	= new TreePane(tree);
 	private JScrollPane filePane = new FilePane(filePanel);
-	private JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treePane, filePane);
+	private JSplitPane split;
+//	new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treePane, filePane);
 	private JPanel footer = new Footer();
 	
 	public Frame() {
@@ -39,7 +49,10 @@ public class Frame extends JFrame {
 		content.setLayout(new BorderLayout());
 		content.add(header, BorderLayout.NORTH);
 		
-		
+	
+		tree = new FileExplorerTree().getTree();
+		treePane = new TreePane(tree);
+		split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treePane, filePane);
 		content.add(split, BorderLayout.CENTER);
 		
 		
@@ -51,4 +64,5 @@ public class Frame extends JFrame {
 		
 		this.setVisible(true);
 	}
+	
 }
