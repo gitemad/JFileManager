@@ -1,5 +1,5 @@
 import javax.swing.*;
-import javax.swing.tree.*;
+import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
@@ -16,12 +16,28 @@ public class FilePanel extends JPanel {
     private int x2;
     private int y2;
     private JPopupMenu rClickMenu = new ContextMenuPanel();
-
+    private FileSystemView fileSystemView;
+    private JLabel filePanel;
+    
     FilePanel() {
+    	LayoutManager boxLayout = new BoxLayout(this, BoxLayout.Y_AXIS);
+    	this.setLayout(boxLayout);
         x = y = x2 = y2 = 0;
         MyMouseListener listener = new MyMouseListener();
         addMouseListener(listener);
         addMouseMotionListener(listener);
+        
+        fileSystemView = FileSystemView.getFileSystemView();
+        File[] roots = fileSystemView.getRoots();
+		for (File fileSystemRoot : roots) {
+			File[] files = fileSystemView.getFiles(fileSystemRoot, true);
+			for (File file : files) {
+				filePanel = new JLabel();
+				filePanel.setIcon(fileSystemView.getSystemIcon(file));
+				filePanel.setText(fileSystemView.getSystemDisplayName(file));
+				this.add(filePanel);
+			}
+		}
     }
 
     public void setStartPoint(int x, int y) {

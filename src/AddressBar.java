@@ -12,7 +12,7 @@ public class AddressBar extends JTextField {
 	private Insets margin = new Insets(0, 15, 0, 0);
 
 	public AddressBar() {
-		super("Address Bar");
+		super("Desktop");
 		this.setPreferredSize(size);
 		this.setFont(font);
 		this.setMargin(margin);
