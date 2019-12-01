@@ -1,8 +1,10 @@
 import javax.swing.*;
+import javax.swing.event.*;
 import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import java.util.Date;
 
 /**
  * 
@@ -18,6 +20,9 @@ public class FilePanel extends JPanel {
     private JPopupMenu rClickMenu = new ContextMenuPanel();
     private FileSystemView fileSystemView;
     private JLabel filePanel;
+
+
+
     
     FilePanel() {
     	LayoutManager boxLayout = new BoxLayout(this, BoxLayout.Y_AXIS);
@@ -81,9 +86,10 @@ public class FilePanel extends JPanel {
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+//        g.clearRect(0, 0, getX(), getY());
         g.setColor(new Color(0, 0, 255, 100));
         drawPerfectRect(g, x, y, x2, y2);
     }
-
-
+    
+    
 }
