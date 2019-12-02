@@ -59,6 +59,7 @@ public class FileExplorerTree {
 							node.add(new DefaultMutableTreeNode(child));
 						}
 					}
+//					setTableDate(files);
 				}
 				tree.setEnabled(true);
 				return "done";
@@ -66,4 +67,5 @@ public class FileExplorerTree {
 		};
 		worker.execute();
 	}
+	
 }

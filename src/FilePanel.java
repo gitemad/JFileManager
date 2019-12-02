@@ -19,7 +19,7 @@ public class FilePanel extends JPanel {
     private int y2;
     private JPopupMenu rClickMenu = new ContextMenuPanel();
     private FileSystemView fileSystemView;
-    private JLabel filePanel;
+    private JPanel filePanel;
 
 
 
@@ -32,17 +32,21 @@ public class FilePanel extends JPanel {
         addMouseListener(listener);
         addMouseMotionListener(listener);
         
-        fileSystemView = FileSystemView.getFileSystemView();
-        File[] roots = fileSystemView.getRoots();
-		for (File fileSystemRoot : roots) {
-			File[] files = fileSystemView.getFiles(fileSystemRoot, true);
-			for (File file : files) {
-				filePanel = new JLabel();
-				filePanel.setIcon(fileSystemView.getSystemIcon(file));
-				filePanel.setText(fileSystemView.getSystemDisplayName(file));
-				this.add(filePanel);
-			}
-		}
+//        fileSystemView = FileSystemView.getFileSystemView();
+//        File[] roots = fileSystemView.getRoots();
+//		for (File fileSystemRoot : roots) {
+//			File[] files = fileSystemView.getFiles(fileSystemRoot, true);
+//			for (File file : files) {
+//				filePanel = new JLabel();
+//				filePanel.setIcon(fileSystemView.getSystemIcon(file));
+//				filePanel.setText(fileSystemView.getSystemDisplayName(file));
+//				this.add(filePanel);
+//			}
+//		}
+        
+        filePanel = new JPanel(new BorderLayout());
+//        filePanel.add(new FileTable().getTable(), BorderLayout.CENTER);
+        this.add(filePanel);
     }
 
     public void setStartPoint(int x, int y) {

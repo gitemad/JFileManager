@@ -16,9 +16,6 @@ public class FileTableModel extends AbstractTableModel {
         "Path/name",
         "Size",
         "Last Modified",
-        "R",
-        "W",
-        "E"
     };
 
     FileTableModel() {
@@ -42,12 +39,6 @@ public class FileTableModel extends AbstractTableModel {
                 return file.length();
             case 4:
                 return file.lastModified();
-            case 5:
-                return file.canRead();
-            case 6:
-                return file.canWrite();
-            case 7:
-                return file.canExecute();
             default:
                 System.err.println("Logic Error");
         }
@@ -66,10 +57,6 @@ public class FileTableModel extends AbstractTableModel {
                 return Long.class;
             case 4:
                 return Date.class;
-            case 5:
-            case 6:
-            case 7:
-                return Boolean.class;
         }
         return String.class;
     }
