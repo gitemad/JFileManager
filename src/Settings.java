@@ -17,7 +17,7 @@ public class Settings extends JFrame {
 	private JTextField compAdrs = new JTextField("Select computer address to share files");
 	private JTextField compPort = new JTextField("Select computer port to share files");
 	private JComboBox<String> lookFeels = new JComboBox<String>();
-	private Checkbox view = new Checkbox("List View");
+	private Checkbox view = new Checkbox("Set List View As Default View");
 	private JComboBox<String> syncTime = new JComboBox<String>();
 	private JButton ok = new JButton("OK");
 	private JButton cancel = new JButton("Cancel");
@@ -26,7 +26,7 @@ public class Settings extends JFrame {
 		super("Settings");
 		this.setIconImage(icon);
 		this.setSize(720, 480);
-		this.setResizable(false);
+//		this.setResizable(false);
 		this.setMinimumSize(new Dimension(600, 480));
 		this.setLocation(100, 150);
 		this.setLayout(null);
@@ -42,10 +42,13 @@ public class Settings extends JFrame {
 			syncTime.addItem(time);
 		}
 		
+		view.setState(true);
+		
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.anchor = GridBagConstraints.WEST;
+        gbc.weightx = 1;
+        gbc.anchor = GridBagConstraints.EAST;
 
         adrsPanel.add(new JLabel("Default address: "), gbc);
         
@@ -59,13 +62,14 @@ public class Settings extends JFrame {
         sharePanel.add(new JLabel("Sync data every:  "), gbc);
         
         gbc.gridy = 0;
-        viewPanel.add(new JLabel("Select look and feel: "));
+        viewPanel.add(new JLabel("Select look and feel: "), gbc);
         
         
         gbc.gridx++;
         gbc.gridy = 0;
         gbc.weightx = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.anchor = GridBagConstraints.WEST;
 
         adrsPanel.add(address, gbc);
         
@@ -86,21 +90,25 @@ public class Settings extends JFrame {
 		
         gbc.gridx = 0;
         gbc.gridy = 0;
+        gbc.weighty = 1;
+        gbc.anchor = GridBagConstraints.NORTH;
         gbc.insets = new Insets(40, 40, 40, 40);
 		panel.add(adrsPanel, gbc);
+		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.gridy++;
 		panel.add(sharePanel, gbc);
+		gbc.anchor = GridBagConstraints.SOUTH;
 		gbc.gridy++;
 		panel.add(viewPanel, gbc);
 		gbc.insets = new Insets(5, 5, 5, 5);
-		gbc.anchor = GridBagConstraints.SOUTH;
+		gbc.anchor = GridBagConstraints.SOUTHEAST;
 		gbc.fill = GridBagConstraints.REMAINDER;
-		gbc.weighty = 1;
-		gbc.weightx = 0;
+		gbc.weightx = 1;
 		gbc.gridx++;
 		gbc.gridy++;
 		panel.add(ok, gbc);
 		gbc.gridx++;
+		gbc.weightx = 0;
 		panel.add(cancel, gbc);
 		this.setContentPane(panel);
 		this.setVisible(true);
