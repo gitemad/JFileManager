@@ -12,10 +12,10 @@ public class FileTableModel extends AbstractTableModel {
     private FileSystemView fileSystemView = FileSystemView.getFileSystemView();
     private String[] columns = {
         "Icon",
-        "File",
-        "Path/name",
+        "Name",
+        "Date Modified",
+        "Type",
         "Size",
-        "Last Modified",
     };
 
     FileTableModel() {
@@ -34,11 +34,16 @@ public class FileTableModel extends AbstractTableModel {
             case 1:
                 return fileSystemView.getSystemDisplayName(file);
             case 2:
-                return file.getPath();
+            	return file.lastModified();
             case 3:
-                return file.length();
+            	if (file.isDirectory())
+            		return "File folder";
+            	if (file.isFile())
+            		return getFileType(file);
+//                return file.getPath();
             case 4:
-                return file.lastModified();
+            	return getFileSize(file);
+//                return file.length();
             default:
                 System.err.println("Logic Error");
         }
@@ -53,10 +58,10 @@ public class FileTableModel extends AbstractTableModel {
         switch (column) {
             case 0:
                 return ImageIcon.class;
-            case 3:
-                return Long.class;
+            case 2:
+            	return Date.class;
             case 4:
-                return Date.class;
+                return Long.class;
         }
         return String.class;
     }
@@ -76,5 +81,42 @@ public class FileTableModel extends AbstractTableModel {
     public void setFiles(File[] files) {
         this.files = files;
         fireTableDataChanged();
+    }
+    
+    private String getFileType(File file) {
+    	String extension = "";
+    	String fileName = file.getName();
+    	int i = fileName.lastIndexOf('.');
+    	if (i > 0) {
+    	    extension = fileName.substring(i+1);
+    	}
+    	if (extension.equals("lnk")) {
+    		extension = "Shortcut";
+    	}
+    	return extension;
+    }
+    
+    private String getFileSize(File file) {
+    	if (!file.isFile())
+    		return "";
+    	
+    	
+    	double bytes = file.length();
+		double kilobytes = (bytes / 1024);
+		double megabytes = (kilobytes / 1024);
+		double gigabytes = (megabytes / 1024);
+		double terabytes = (gigabytes / 1024);
+		
+		if (terabytes > 1)
+			return terabytes + " TB";
+		if (gigabytes > 1)
+			return gigabytes + " GB";
+		if (megabytes > 1)
+			return megabytes + " MB";
+		if (kilobytes > 1)
+			return kilobytes + " KB";
+		if (bytes > 1)
+			return bytes + " B";
+		return "";
     }
 }

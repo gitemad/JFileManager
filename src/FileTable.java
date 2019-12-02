@@ -55,10 +55,12 @@ public class FileTable extends JTable {
               if (!cellSizesSet) {
 
                   setColumnWidth(0,-1);
+                  setColumnWidth(1,250);
+                  setColumnWidth(2,100);
                   setColumnWidth(3,100);
-                  FileTable.this.getColumnModel().getColumn(3).setMaxWidth(120);
-                  setColumnWidth(4,-1);
-                  
+//                  FileTable.this.getColumnModel().getColumn(3).setMaxWidth(120);
+                  setColumnWidth(4,100);
+                  FileTable.this.setFillsViewportHeight(true);
                   cellSizesSet = true;
               }
           }
@@ -72,10 +74,10 @@ public class FileTable extends JTable {
             JLabel label = new JLabel( (String)tableColumn.getHeaderValue() );
             Dimension preferred = label.getPreferredSize();
             width = (int)preferred.getWidth() + 10;
+            tableColumn.setMaxWidth(width);
+            tableColumn.setMinWidth(width);
         }
         tableColumn.setPreferredWidth(width);
-        tableColumn.setMaxWidth(width);
-        tableColumn.setMinWidth(width);
     }
     
     public void setStartPoint(int x, int y) {
@@ -108,7 +110,7 @@ public class FileTable extends JTable {
         }
 
         public void mouseReleased(MouseEvent e) {
-            x = y = x2 = y2 = 10000;
+            x = y = x2 = y2 = 0;
             repaint();
             if (e.getButton() == MouseEvent.BUTTON3) {
             	rClickMenu.show(e.getComponent(), e.getX(), e.getY());
