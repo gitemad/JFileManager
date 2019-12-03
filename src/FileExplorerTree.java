@@ -40,6 +40,7 @@ public class FileExplorerTree {
 		tree.setRootVisible(false);
 		tree.addTreeSelectionListener(treeSelectionListener);
 		tree.setCellRenderer(new FileTreeCellRenderer());
+		tree.expandRow(0);
 	}
 	
 	public JTree getTree() {
