@@ -24,7 +24,7 @@ public class FilePanel extends JPanel {
     private static int gap = 15;
     private JPopupMenu rClickMenu = new ContextMenuPanel();
     private FileSystemView fileSystemView;
-    private ArrayList<JLabel> fileLabels;
+    private ArrayList<FileLabel> fileLabels;
 
 
 
@@ -40,29 +40,10 @@ public class FilePanel extends JPanel {
         File[] roots = fileSystemView.getRoots();
 		for (File fileSystemRoot : roots) {
 			File[] files = fileSystemView.getFiles(fileSystemRoot, true);
-			fileLabels = new ArrayList<JLabel>();
+			fileLabels = new ArrayList<FileLabel>();
 			for (File file : files) {
-				JLabel fileLabel = new JLabel();
-				fileLabels.add(fileLabel);
-				fileLabel.setPreferredSize(new Dimension(130, 130));
-				//TODO
-//				fileLabel.setToolTipText();
-				fileLabel.setHorizontalAlignment(JLabel.CENTER);
-				fileLabel.setVerticalAlignment(JLabel.BOTTOM);
-				fileLabel.setHorizontalTextPosition(JLabel.CENTER);
-				fileLabel.setVerticalTextPosition(JLabel.BOTTOM);
-				ImageIcon icon = (ImageIcon) fileSystemView.getSystemIcon(file);
-				Image imgIcon = icon.getImage();
-				try {
-					imgIcon = sun.awt.shell.ShellFolder.getShellFolder(file).getIcon(true);
-				} catch (FileNotFoundException e1) {
-					e1.printStackTrace();
-				}
-				imgIcon = getScaledImage(imgIcon, 100, 100);
-				icon.setImage(imgIcon);
-				fileLabel.setIcon(icon);
-				fileLabel.setText(fileSystemView.getSystemDisplayName(file));
-				
+				FileLabel fileLabel = new FileLabel(file);
+				fileLabels.add(fileLabel);				
 				
 				fileLabel.addMouseListener(new MouseListener() {
 					@Override
@@ -79,21 +60,26 @@ public class FilePanel extends JPanel {
 					@Override
 					public void mouseExited(MouseEvent e) {
 						// TODO Auto-generated method stub
-						fileLabel.setOpaque(false);
-						repaint();
+						if (!fileLabel.isClicked()) {
+							fileLabel.setOpaque(false);
+							repaint();
+						}
 					}
 					
 					@Override
 					public void mouseEntered(MouseEvent arg0) {
 						// TODO Auto-generated method stub
-						fileLabel.setOpaque(true);
-						fileLabel.setBackground(getBackground().darker());
-						repaint();
+						if (!fileLabel.isClicked()) {
+							fileLabel.setOpaque(true);
+							fileLabel.setBackground(getBackground().darker());
+							repaint();
+						}
 					}
 					
 					@Override
 					public void mouseClicked(MouseEvent arg0) {
 						deselectAll();
+						fileLabel.setClicked(true);
 						fileLabel.setOpaque(true);
 						fileLabel.setBackground(getBackground().darker().darker());
 						repaint();
@@ -136,7 +122,8 @@ public class FilePanel extends JPanel {
     }
     
     private void deselectAll() {
-    	for (JLabel fileLabel : fileLabels) {
+    	for (FileLabel fileLabel : fileLabels) {
+    		fileLabel.setClicked(false);
     		fileLabel.setOpaque(false);
     	}
     }
@@ -146,6 +133,7 @@ public class FilePanel extends JPanel {
 
         public void mousePressed(MouseEvent e) {
             setStartPoint(e.getX(), e.getY());
+            deselectAll();
         }
 
         public void mouseDragged(MouseEvent e) {
