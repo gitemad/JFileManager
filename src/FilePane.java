@@ -29,6 +29,9 @@ public class FilePane extends JScrollPane {
 	public FilePane(JTable table) {
 		super(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		this.table = table;
+		JPanel rectPanel = new JPanel();
+		rectPanel.setBackground(Color.BLACK);
+		this.add(rectPanel, new BorderLayout());
 		this.getViewport().setBackground(Color.WHITE);
 //		this.getViewport().setOpaque(false);
 //		this.getViewport().getView().setBackground(new Color(0, 0, 0, 0));

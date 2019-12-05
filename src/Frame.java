@@ -25,8 +25,12 @@ public class Frame extends JFrame {
 	private JPanel filePanel = new FilePanel();
 	private JScrollPane treePane;
 //	= new TreePane(tree);
-//	private JScrollPane filePane = new FilePane(new FileTable(new FileTableModel()));
-	private JScrollPane filePane = new FilePane(filePanel);
+	
+	//List View
+	private JScrollPane filePane = new FilePane(new FileTable(new FileTableModel()));
+	
+	//Grid view
+//	private JScrollPane filePane = new FilePane(filePanel);
 	private JSplitPane split;
 //	new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treePane, filePane);
 	private JPanel footer = new Footer();

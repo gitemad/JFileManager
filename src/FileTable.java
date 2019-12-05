@@ -2,6 +2,9 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.util.*;
+import java.util.List;
+
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.filechooser.FileSystemView;
@@ -33,8 +36,18 @@ public class FileTable extends JTable {
         addMouseMotionListener(listener);
 		
 		this.fileTableModel = fileTableModel;
-	    this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-	    this.setAutoCreateRowSorter(true);
+	    
+		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+//	    this.setAutoCreateRowSorter(true);
+		
+		//Sort by name and then by date
+	    TableRowSorter<FileTableModel> sorter = new TableRowSorter<FileTableModel>(fileTableModel);
+        this.setRowSorter(sorter);
+        List<RowSorter.SortKey> sortKeys = new ArrayList<RowSorter.SortKey>();
+        sortKeys.add(new RowSorter.SortKey(1, SortOrder.ASCENDING));
+        sortKeys.add(new RowSorter.SortKey(2, SortOrder.ASCENDING));
+        sorter.setSortKeys(sortKeys);
+        
 	    this.setShowVerticalLines(false);
 	    this.setShowHorizontalLines(false);
 	    this.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
