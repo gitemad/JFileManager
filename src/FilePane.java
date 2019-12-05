@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.table.*;
 
 /**
  * @author Emad
@@ -13,7 +14,7 @@ public class FilePane extends JScrollPane {
     private int y;
     private int x2;
     private int y2;
-    private JPopupMenu rClickMenu = new ContextMenuPanel();
+    private JPopupMenu rClickMenu;
 	private JPanel panel;
 	private JTable table;
 	private Dimension minSize = new Dimension(400, 300);
@@ -22,19 +23,21 @@ public class FilePane extends JScrollPane {
 		super(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		this.panel = panel;
 		this.setMinimumSize(minSize);
-		
+		rClickMenu = new JPopupMenu();
 
 	}
 	
 	public FilePane(JTable table) {
 		super(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		this.table = table;
-		JPanel rectPanel = new JPanel();
-		rectPanel.setBackground(Color.BLACK);
-		this.add(rectPanel, new BorderLayout());
-		this.getViewport().setBackground(Color.WHITE);
+		rClickMenu = new ContextMenuEmptyPanel();
+//		this.getViewport().setBackground(Color.WHITE);
 //		this.getViewport().setOpaque(false);
 //		this.getViewport().getView().setBackground(new Color(0, 0, 0, 0));
+//		this.getViewport().getView().setForeground(Color.BLACK);
+		
+		this.setOpaque(false);
+		this.getViewport().setOpaque(false);
 		this.setMinimumSize(minSize);
 
 		MyMouseListener listener = new MyMouseListener();
@@ -62,6 +65,8 @@ public class FilePane extends JScrollPane {
         g.fillRect(px, py, pw, ph);
         this.getViewport().paint(g);
     }
+    
+    
 
     class MyMouseListener extends MouseAdapter {
 

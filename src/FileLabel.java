@@ -17,6 +17,7 @@ public class FileLabel extends JLabel {
 	private ImageIcon icon;
 	private static Dimension size = new Dimension(130, 130);
 	private static FileSystemView fileSystemView = FileSystemView.getFileSystemView();
+	private JPopupMenu rClick;
 	
 	public FileLabel(File file) {
 		super();
@@ -25,6 +26,7 @@ public class FileLabel extends JLabel {
 		this.setVerticalAlignment(JLabel.BOTTOM);
 		this.setHorizontalTextPosition(JLabel.CENTER);
 		this.setVerticalTextPosition(JLabel.BOTTOM);
+		rClick = new ContextMenuFile();
 		//TODO
 //		fileLabel.setToolTipText();
 		

@@ -2,7 +2,8 @@ import javax.swing.*;
 import javax.swing.tree.*;
 
 import java.awt.*;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
 
 /**
@@ -11,29 +12,23 @@ import java.io.*;
  */
 public class Frame extends JFrame {
 	
-	private Image icon = new ImageIcon("img/icon.png").getImage();
-	private JPanel content = new JPanel();
-	private JPanel header = new JPanel();
-	private JMenuBar menuBar = new Menu();
-	private JToolBar toolBar = new Toolbar();
-	
-	
-	private JTree tree = new JTree();
-	
-	
-	
-	private JPanel filePanel = new FilePanel();
+	private Image icon;
+	private JPanel content;
+	private JPanel header;
+	private JMenuBar menuBar;
+	private JToolBar toolBar;
+	private JTree tree;
 	private JScrollPane treePane;
 //	= new TreePane(tree);
 	
 	//List View
-	private JScrollPane filePane = new FilePane(new FileTable(new FileTableModel()));
+	private JScrollPane filePane;
 	
 	//Grid view
 //	private JScrollPane filePane = new FilePane(filePanel);
 	private JSplitPane split;
 //	new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treePane, filePane);
-	private JPanel footer = new Footer();
+	private Footer footer;
 	
 	public Frame() {
 		super();
@@ -45,28 +40,77 @@ public class Frame extends JFrame {
 		this.setLayout(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+		icon = new ImageIcon("img/icon.png").getImage();
+		content = new JPanel();
+		header = new JPanel();
+		menuBar = new Menu();
+		toolBar = new Toolbar();
+		filePane = new FilePane(new FileTable(new FileTableModel()));
+		tree = new JTree();
+		footer = new Footer();
+		
+		footer.addListListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent eve) {
+				footer.getList().setSelected(true);
+				footer.getGrid().setSelected(false);
+				listView();
+			}
+		});
+		
+		footer.addGridListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent eve) {
+				footer.getGrid().setSelected(true);
+				footer.getList().setSelected(false);
+				gridView();
+			}
+		});
+		
+		listView();
+	}
+	
+	
+	private void listView() {
 		header.setLayout(new BorderLayout());
 		header.add(menuBar, BorderLayout.NORTH);
 		header.add(toolBar, BorderLayout.SOUTH);
 		
+		content = new JPanel();
+		content.setLayout(new BorderLayout());
+		content.add(header, BorderLayout.NORTH);
+	
+		tree = new FileExplorerTree().getTree();
+		treePane = new TreePane(tree);
+		filePane = new FilePane(new FileTable(new FileTableModel()));				
+		split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treePane, filePane);
+		
+		content.add(split, BorderLayout.CENTER);		
+		content.add(footer, BorderLayout.SOUTH);
+		
+		this.setContentPane(content);
+	
+		this.setVisible(true);
+	}
+	
+	private void gridView() {
+		header.setLayout(new BorderLayout());
+		header.add(menuBar, BorderLayout.NORTH);
+		header.add(toolBar, BorderLayout.SOUTH);
 		
 		content = new JPanel();
 		content.setLayout(new BorderLayout());
 		content.add(header, BorderLayout.NORTH);
-		
-	
+			
 		tree = new FileExplorerTree().getTree();
 		treePane = new TreePane(tree);
-//		filePanel.add(new FileTable().getTable());
+		filePane = new FilePane(new FilePanel());
 		split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treePane, filePane);
 		content.add(split, BorderLayout.CENTER);
 		
-		
 		content.add(footer, BorderLayout.SOUTH);
 		
-		
 		this.setContentPane(content);
-		
 		
 		this.setVisible(true);
 	}

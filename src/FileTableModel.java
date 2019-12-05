@@ -11,7 +11,7 @@ public class FileTableModel extends AbstractTableModel {
     private File[] files;
     private FileSystemView fileSystemView = FileSystemView.getFileSystemView();
     private String[] columns = {
-        "Icon",
+        "",
         "Name",
         "Date Modified",
         "Type",
