@@ -101,21 +101,21 @@ public class FileTableModel extends AbstractTableModel {
     		return "";
     	
     	
-    	double bytes = file.length();
-		double kilobytes = (bytes / 1024);
-		double megabytes = (kilobytes / 1024);
-		double gigabytes = (megabytes / 1024);
-		double terabytes = (gigabytes / 1024);
+    	long bytes = file.length();
+		long kilobytes = (bytes / 1024);
+		long megabytes = (kilobytes / 1024);
+		long gigabytes = (megabytes / 1024);
+		long terabytes = (gigabytes / 1024);
 		
-		if (terabytes > 1)
+		if (terabytes > 0)
 			return terabytes + " TB";
-		if (gigabytes > 1)
+		if (gigabytes > 0)
 			return gigabytes + " GB";
-		if (megabytes > 1)
+		if (megabytes > 0)
 			return megabytes + " MB";
-		if (kilobytes > 1)
+		if (kilobytes > 0)
 			return kilobytes + " KB";
-		if (bytes > 1)
+		if (bytes > 0)
 			return bytes + " B";
 		return "";
     }
