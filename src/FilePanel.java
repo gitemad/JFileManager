@@ -5,6 +5,7 @@ import javax.swing.filechooser.FileSystemView;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,7 +30,7 @@ public class FilePanel extends JPanel {
 
     
     public FilePanel() {
-    	super(new WrapLayout(WrapLayout.LEFT, 15, 15));
+    	super(new WrapLayout(WrapLayout.LEFT, gap, gap));
         x = y = x2 = y2 = 0;
         MyMouseListener listener = new MyMouseListener();
         addMouseListener(listener);
@@ -39,18 +40,26 @@ public class FilePanel extends JPanel {
         File[] roots = fileSystemView.getRoots();
 		for (File fileSystemRoot : roots) {
 			File[] files = fileSystemView.getFiles(fileSystemRoot, true);
+			fileLabels = new ArrayList<JLabel>();
 			for (File file : files) {
-				fileLabels = new ArrayList<JLabel>();
 				JLabel fileLabel = new JLabel();
 				fileLabels.add(fileLabel);
 				fileLabel.setPreferredSize(new Dimension(130, 130));
 				//TODO
 //				fileLabel.setToolTipText();
 				fileLabel.setHorizontalAlignment(JLabel.CENTER);
-				fileLabel.setVerticalAlignment(JLabel.CENTER);
+				fileLabel.setVerticalAlignment(JLabel.BOTTOM);
 				fileLabel.setHorizontalTextPosition(JLabel.CENTER);
 				fileLabel.setVerticalTextPosition(JLabel.BOTTOM);
-				Icon icon = fileSystemView.getSystemIcon(file);
+				ImageIcon icon = (ImageIcon) fileSystemView.getSystemIcon(file);
+				Image imgIcon = icon.getImage();
+				try {
+					imgIcon = sun.awt.shell.ShellFolder.getShellFolder(file).getIcon(true);
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				}
+				imgIcon = getScaledImage(imgIcon, 100, 100);
+				icon.setImage(imgIcon);
 				fileLabel.setIcon(icon);
 				fileLabel.setText(fileSystemView.getSystemDisplayName(file));
 				
@@ -68,10 +77,9 @@ public class FilePanel extends JPanel {
 					}
 					
 					@Override
-					public void mouseExited(MouseEvent arg0) {
+					public void mouseExited(MouseEvent e) {
 						// TODO Auto-generated method stub
 						fileLabel.setOpaque(false);
-						fileLabel.setBackground(getBackground().brighter());
 						repaint();
 					}
 					
@@ -85,7 +93,10 @@ public class FilePanel extends JPanel {
 					
 					@Override
 					public void mouseClicked(MouseEvent arg0) {
-						// TODO Auto-generated method stub
+						deselectAll();
+						fileLabel.setOpaque(true);
+						fileLabel.setBackground(getBackground().darker().darker());
+						repaint();
 					}
 				});
 				
@@ -112,7 +123,25 @@ public class FilePanel extends JPanel {
         int ph = Math.abs(y-y2);
         g.fillRect(px, py, pw, ph);
     }
+    
+    private Image getScaledImage(Image srcImg, int w, int h){
+        BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = resizedImg.createGraphics();
 
+        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g2.drawImage(srcImg, 0, 0, w, h, null);
+        g2.dispose();
+
+        return resizedImg;
+    }
+    
+    private void deselectAll() {
+    	for (JLabel fileLabel : fileLabels) {
+    		fileLabel.setOpaque(false);
+    	}
+    }
+    
+    
     class MyMouseListener extends MouseAdapter {
 
         public void mousePressed(MouseEvent e) {
