@@ -61,6 +61,11 @@ public class FilePanel extends JPanel {
 					@Override
 					public void mousePressed(MouseEvent arg0) {
 						// TODO Auto-generated method stub
+						deselectAll();
+						fileLabel.setClicked(true);
+						fileLabel.setOpaque(true);
+						fileLabel.setBackground(getBackground().darker().darker());
+						repaint();
 					}
 					
 					@Override
@@ -84,11 +89,7 @@ public class FilePanel extends JPanel {
 					
 					@Override
 					public void mouseClicked(MouseEvent arg0) {
-						deselectAll();
-						fileLabel.setClicked(true);
-						fileLabel.setOpaque(true);
-						fileLabel.setBackground(getBackground().darker().darker());
-						repaint();
+						
 					}
 				});
 				

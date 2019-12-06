@@ -1,6 +1,8 @@
 import javax.swing.*;
 import javax.swing.tree.*;
 
+import View.ViewButton;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,6 +14,9 @@ import java.io.*;
  */
 public class Frame extends JFrame {
 	
+	//View
+	
+	
 	private Image icon;
 	private JPanel content;
 	private JPanel header;
@@ -19,15 +24,8 @@ public class Frame extends JFrame {
 	private JToolBar toolBar;
 	private JTree tree;
 	private JScrollPane treePane;
-//	= new TreePane(tree);
-	
-	//List View
 	private JScrollPane filePane;
-	
-	//Grid view
-//	private JScrollPane filePane = new FilePane(filePanel);
 	private JSplitPane split;
-//	new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treePane, filePane);
 	private Footer footer;
 	private SystemTray tray;
 	
@@ -49,14 +47,15 @@ public class Frame extends JFrame {
 		filePane = new FilePane(new FileTable(new FileTableModel()));
 		tree = new JTree();
 		footer = new Footer();
-		tray = new TrayIconJFM(this).getTray();		
+		tray = new TrayIconJFM(this).getTray();
+		
 		
 		
 		footer.addListListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent eve) {
-				footer.getList().setSelected(true);
-				footer.getGrid().setSelected(false);
+				footer.getListController().setSelected(true);
+				footer.getGridController().setSelected(false);
 				listView();
 			}
 		});
@@ -64,8 +63,8 @@ public class Frame extends JFrame {
 		footer.addGridListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent eve) {
-				footer.getGrid().setSelected(true);
-				footer.getList().setSelected(false);
+				footer.getGridController().setSelected(true);
+				footer.getListController().setSelected(false);
 				gridView();
 			}
 		});
