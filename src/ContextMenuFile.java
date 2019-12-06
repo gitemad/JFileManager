@@ -27,9 +27,13 @@ public class ContextMenuFile extends JPopupMenu {
 		
 		open.setMnemonic(KeyEvent.VK_O);
 		rename.setMnemonic(KeyEvent.VK_M);
+		rename.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0));
 		copy.setMnemonic(KeyEvent.VK_C);
+		copy.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_MASK));
 		cut.setMnemonic(KeyEvent.VK_T);
+		cut.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.CTRL_MASK));
 		delete.setMnemonic(KeyEvent.VK_D);
+		delete.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0));
 		properties.setMnemonic(KeyEvent.VK_R);
 		
 		properties.addActionListener(new ActionListener() {

@@ -8,7 +8,7 @@ import java.awt.*;
 public class ParentButton extends JButton {
 	
 	private Dimension size = new Dimension(20, 20);
-	private Boolean enable = false;
+	private Boolean enable = true;
 	
 	public ParentButton() {
 		super(new ImageIcon("img/parent.png"));

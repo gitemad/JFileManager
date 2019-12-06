@@ -8,7 +8,7 @@ import java.awt.*;
 public class BackButton extends JButton {
 	
 	private Dimension size = new Dimension(20, 20);
-	private Boolean enable = false;
+	private Boolean enable = true;
 	
 	public BackButton() {
 		super(new ImageIcon("img/back.png"));

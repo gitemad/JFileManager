@@ -21,8 +21,11 @@ public class ContextMenuEmptyPanel extends JPopupMenu {
 		properties = new JMenuItem("Properties");
 		
 		paste.setMnemonic(KeyEvent.VK_P);
+		paste.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.CTRL_MASK));
 		newFile.setMnemonic(KeyEvent.VK_F);
+		newFile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, InputEvent.CTRL_MASK));
 		newFolder.setMnemonic(KeyEvent.VK_N);
+		newFolder.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK));
 		properties.setMnemonic(KeyEvent.VK_R);
 		
 		add(paste);
