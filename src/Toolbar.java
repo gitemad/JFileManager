@@ -1,8 +1,8 @@
 import javax.swing.*;
 
-import Controller.NavigateButtonController;
-import Model.NavigateButtonModel;
-import View.NavigateButtonView;
+import Controller.*;
+import Model.*;
+import View.*;
 
 import java.awt.*;
 
@@ -12,15 +12,17 @@ import java.awt.*;
  */
 public class Toolbar extends JToolBar {
 	
-	//view
-	private NavigateButtonView backView;
-	private NavigateButtonView forwardView;
-	private NavigateButtonView parentView;
-	
 	//model
 	private NavigateButtonModel backModel;
 	private NavigateButtonModel forwardModel;
 	private NavigateButtonModel parentModel;
+	private AddressBarModel addressModel;
+	
+	//view
+	private NavigateButtonView backView;
+	private NavigateButtonView forwardView;
+	private NavigateButtonView parentView;
+	private AddressBarView addressView;
 	
 	//Controller
 	private NavigateButtonController backController;
@@ -28,7 +30,6 @@ public class Toolbar extends JToolBar {
 	private NavigateButtonController parentController;
 	
 	private JPanel buttonsPanel = new JPanel();
-	private JTextField address = new AddressBar();
 	private JTextField search = new Search();
 	private BorderLayout layout = new BorderLayout(15, 0);
 	private Insets margin = new Insets(0, 5, 0, 15);
@@ -36,17 +37,20 @@ public class Toolbar extends JToolBar {
 	public Toolbar() {
 		super();
 		
-		backView = new NavigateButtonView(new ImageIcon("img/back.png"));
-		forwardView = new NavigateButtonView(new ImageIcon("img/forward.png"));
-		parentView = new NavigateButtonView(new ImageIcon("img/parent.png"));
-		
 		backModel = new NavigateButtonModel(true);
 		forwardModel = new NavigateButtonModel(true);
 		parentModel = new NavigateButtonModel(true);
+		addressModel = new AddressBarModel("Desktop");
+		
+		backView = new NavigateButtonView(new ImageIcon("img/back.png"));
+		forwardView = new NavigateButtonView(new ImageIcon("img/forward.png"));
+		parentView = new NavigateButtonView(new ImageIcon("img/parent.png"));
+		addressView = new AddressBarView(addressModel);
 		
 		backController = new NavigateButtonController(backModel, backView);
 		forwardController = new NavigateButtonController(forwardModel, forwardView);
 		parentController = new NavigateButtonController(parentModel, parentView);
+		
 		
 		this.setLayout(layout);		
 		this.setMargin(margin);
@@ -57,7 +61,7 @@ public class Toolbar extends JToolBar {
 		
 		
 		this.add(buttonsPanel, BorderLayout.WEST);
-		this.add(address, BorderLayout.CENTER);
+		this.add(addressView, BorderLayout.CENTER);
 		this.add(search, BorderLayout.EAST);
 	}
 	
