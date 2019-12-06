@@ -83,6 +83,12 @@ public class FileTableModel extends AbstractTableModel {
         fireTableDataChanged();
     }
     
+//    private void setRClickMenu(File[] files) {
+//    	for (File file : files) {
+//			file.set
+//		}
+//    }
+    
     private String getFileType(File file) {
     	String extension = "";
     	String fileName = file.getName();

@@ -3,11 +3,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.nio.file.*;
 import java.nio.file.attribute.*;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 import javax.swing.*;
 import javax.swing.filechooser.*;
@@ -32,7 +31,7 @@ public class FileLabel extends JLabel {
 		this.setVerticalAlignment(JLabel.BOTTOM);
 		this.setHorizontalTextPosition(JLabel.CENTER);
 		this.setVerticalTextPosition(JLabel.BOTTOM);
-		rClick = new ContextMenuFile();
+		rClick = new ContextMenuFile(file);
 		this.setToolTipText(getToolTip(file));
 		
 		clicked = false;
@@ -67,7 +66,7 @@ public class FileLabel extends JLabel {
 	private String getToolTip(File file) {
 		String toolTip = "<html>";
 		toolTip += "Date Created: ";
-		toolTip += new Date(file.lastModified());
+		toolTip += getCreatedDate(file);
 		toolTip += "<br/>";
 		toolTip += "Size: ";
 		toolTip += getFileSize(file);
@@ -82,6 +81,27 @@ public class FileLabel extends JLabel {
 		toolTip += "</html>";
 		return toolTip;
 	}
+	
+	private Date getCreatedDate(File file) {
+		Path filePath;
+		try {
+			filePath = Paths.get(file.getPath());
+		} catch (Exception e) {
+			return new Date(file.length());
+		}
+        BasicFileAttributes attributes = null;
+        try {
+            attributes =
+                    Files.readAttributes(filePath, BasicFileAttributes.class);
+        } catch (IOException exception) {
+            System.out.println("Exception handled when trying to get file " +
+                    "attributes: " + exception.getMessage());
+        }
+        long milliseconds = attributes.creationTime().to(TimeUnit.MILLISECONDS);
+        Date creationDate = new Date(milliseconds);
+        return creationDate;
+	}
+	
 	
 	private String getSubFolders(File file) {
 		String subFolders = "";

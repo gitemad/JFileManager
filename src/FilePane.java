@@ -13,16 +13,18 @@ public class FilePane extends JScrollPane {
     private JPopupMenu rClickMenu;
 	private JPanel panel;
 	private JTable table;
-	private Dimension minSize = new Dimension(400, 300);
+	private Dimension minSize;
 	private RectangleDrawer rectDrawer;
 	
 	
 	public FilePane(JPanel panel) {
 		super(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		this.panel = panel;
-		this.setMinimumSize(minSize);
 		rClickMenu = new JPopupMenu();
 		rectDrawer = new RectangleDrawer();
+		minSize = new Dimension(400, 300);
+		
+		this.panel = panel;
+		this.setMinimumSize(minSize);
 
 	}
 	

@@ -21,14 +21,14 @@ public class FileTable extends JTable {
 	private RectangleDrawer rectDrawer;
     private JPopupMenu rClickMenu;
 	private FileTableModel fileTableModel;
-	private ListSelectionListener listSelectionListener;
+//	private ListSelectionListener listSelectionListener;
 	private boolean cellSizesSet = false;
 	
 
 	public FileTable(FileTableModel fileTableModel) {
 		super(fileTableModel);
 
-		rClickMenu = new ContextMenuFile();
+		rClickMenu = new ContextMenuFile(new File(""));
 		rectDrawer = new RectangleDrawer();
         DrawMouseListener listener = new DrawMouseListener();
         addMouseListener(listener);
@@ -61,9 +61,9 @@ public class FileTable extends JTable {
 	private void setTableData(final File[] files) {
       SwingUtilities.invokeLater(new Runnable() {
           public void run() {
-              FileTable.this.getSelectionModel().removeListSelectionListener(listSelectionListener);
+//              FileTable.this.getSelectionModel().removeListSelectionListener(listSelectionListener);
               fileTableModel.setFiles(files);
-              FileTable.this.getSelectionModel().addListSelectionListener(listSelectionListener);
+//              FileTable.this.getSelectionModel().addListSelectionListener(listSelectionListener);
               if (!cellSizesSet) {
 
                   setColumnWidth(0,-1);

@@ -26,7 +26,7 @@ public class Settings extends JFrame {
 		super("Settings");
 		this.setIconImage(icon);
 		this.setSize(720, 480);
-//		this.setResizable(false);
+		this.setResizable(false);
 		this.setMinimumSize(new Dimension(600, 480));
 		this.setLocation(100, 150);
 		this.setLayout(null);

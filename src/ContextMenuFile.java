@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.*;
 
 /**
  * @author Emad
@@ -8,15 +9,15 @@ import java.awt.event.*;
  */
 public class ContextMenuFile extends JPopupMenu {
 	
-	JMenuItem open;
-	JMenuItem rename;
-	JMenuItem copy;
-	JMenuItem cut;
-	JMenuItem delete;
-	JMenuItem properties;
+	private JMenuItem open;
+	private JMenuItem rename;
+	private JMenuItem copy;
+	private JMenuItem cut;
+	private JMenuItem delete;
+	private JMenuItem properties;
 	
 	
-	public ContextMenuFile() {
+	public ContextMenuFile(File file) {
 		open = new JMenuItem("Open");
 		rename = new JMenuItem("Rename");
 		copy = new JMenuItem("Copy");
@@ -30,6 +31,13 @@ public class ContextMenuFile extends JPopupMenu {
 		cut.setMnemonic(KeyEvent.VK_T);
 		delete.setMnemonic(KeyEvent.VK_D);
 		properties.setMnemonic(KeyEvent.VK_R);
+		
+		properties.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent eve) {
+				new Properties(file);
+			}
+		});
 		
 		add(open);
 		add(rename);
