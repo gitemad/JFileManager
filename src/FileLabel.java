@@ -3,6 +3,12 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.nio.file.attribute.*;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 import javax.swing.*;
 import javax.swing.filechooser.*;
 
@@ -17,7 +23,7 @@ public class FileLabel extends JLabel {
 	private ImageIcon icon;
 	private static Dimension size = new Dimension(130, 130);
 	private static FileSystemView fileSystemView = FileSystemView.getFileSystemView();
-	private JPopupMenu rClick;
+	private ContextMenuFile rClick;
 	
 	public FileLabel(File file) {
 		super();
@@ -27,8 +33,7 @@ public class FileLabel extends JLabel {
 		this.setHorizontalTextPosition(JLabel.CENTER);
 		this.setVerticalTextPosition(JLabel.BOTTOM);
 		rClick = new ContextMenuFile();
-		//TODO
-//		fileLabel.setToolTipText();
+		this.setToolTipText(getToolTip(file));
 		
 		clicked = false;
 		name = fileSystemView.getSystemDisplayName(file);
@@ -54,7 +59,92 @@ public class FileLabel extends JLabel {
 		this.clicked = clicked;
 	}
 
+	public ContextMenuFile getRightClickMenu() {
+		return rClick;
+	}
 
+	
+	private String getToolTip(File file) {
+		String toolTip = "<html>";
+		toolTip += "Date Created: ";
+		toolTip += new Date(file.lastModified());
+		toolTip += "<br/>";
+		toolTip += "Size: ";
+		toolTip += getFileSize(file);
+		if (file.isDirectory()) {
+			toolTip += "<br/>";
+			toolTip += "Folders: ";
+			toolTip += getSubFolders(file);
+			toolTip += "<br/>";
+			toolTip += "Files: ";
+			toolTip += getSubFiles(file);
+		}
+		toolTip += "</html>";
+		return toolTip;
+	}
+	
+	private String getSubFolders(File file) {
+		String subFolders = "";
+		File[] folders = file.listFiles(File::isDirectory);
+		int i = 0;
+		try {
+			for (File folder : folders) {
+				subFolders += folder.getName();
+				i++;
+				if (i == 3) {
+					break;
+				}
+				subFolders += ", ";
+			}
+		} catch (NullPointerException e) {
+			
+		} finally {
+			return subFolders;
+		}
+	}
+
+	private String getSubFiles(File file) {
+		String subFiles = "";
+		File[] files = file.listFiles(File::isFile);
+		int i = 0;
+		try {
+			for (File subFile : files) {
+				subFiles += subFile.getName();
+				i++;
+				if (i == 3) {
+					break;
+				}
+				subFiles += ", ";
+			}
+		} catch (NullPointerException e) {
+			
+		} finally {
+			return subFiles;
+		}
+	}
+	
+	private String getFileSize(File file) {
+    	if (!file.isFile())
+    		return "";
+    	
+    	long bytes = file.length();
+		long kilobytes = (bytes / 1024);
+		long megabytes = (kilobytes / 1024);
+		long gigabytes = (megabytes / 1024);
+		long terabytes = (gigabytes / 1024);
+		
+		if (terabytes > 0)
+			return terabytes + " TB";
+		if (gigabytes > 0)
+			return gigabytes + " GB";
+		if (megabytes > 0)
+			return megabytes + " MB";
+		if (kilobytes > 0)
+			return kilobytes + " KB";
+		if (bytes > 0)
+			return bytes + " B";
+		return "";
+    }
 
 	private ImageIcon enlargeIcon(File file) {
 		ImageIcon icon = (ImageIcon) fileSystemView.getSystemIcon(file);

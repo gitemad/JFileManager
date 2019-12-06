@@ -32,6 +32,7 @@ public class Frame extends JFrame {
 	
 	public Frame() {
 		super();
+		icon = new ImageIcon("img/icon.png").getImage();
 		this.setIconImage(icon);
 		this.setTitle("JFileManger");
 		this.setSize(1024, 720);
@@ -40,7 +41,6 @@ public class Frame extends JFrame {
 		this.setLayout(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		icon = new ImageIcon("img/icon.png").getImage();
 		content = new JPanel();
 		header = new JPanel();
 		menuBar = new Menu();

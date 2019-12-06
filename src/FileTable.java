@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -35,7 +36,7 @@ public class FileTable extends JTable {
         MyMouseListener listener = new MyMouseListener();
         addMouseListener(listener);
         addMouseMotionListener(listener);
-		
+        
 		this.fileTableModel = fileTableModel;
 	    
 		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -123,10 +124,16 @@ public class FileTable extends JTable {
         public void mouseReleased(MouseEvent e) {
             x = y = x2 = y2 = 0;
             repaint();
-            if (e.getButton() == MouseEvent.BUTTON3) {
-            	rClickMenu.show(e.getComponent(), e.getX(), e.getY());
+            if (e.isPopupTrigger()) {
+                JTable source = (JTable) e.getSource();
+                int row = source.rowAtPoint( e.getPoint() );
+                int column = source.columnAtPoint( e.getPoint() );
+                if (! source.isRowSelected(row))
+                    source.changeSelection(row, column, false, false);
+                rClickMenu.show(e.getComponent(), e.getX(), e.getY());
             }
         }
+        
     }
 
     public void paintComponent(Graphics g) {

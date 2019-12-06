@@ -22,7 +22,6 @@ public class FilePanel extends JPanel {
     private int x2;
     private int y2;
     private static int gap = 15;
-    private JPopupMenu rClickMenuFile;
     private JPopupMenu rClickMenuPane;
     private FileSystemView fileSystemView;
     private ArrayList<FileLabel> fileLabels;
@@ -33,7 +32,6 @@ public class FilePanel extends JPanel {
     public FilePanel() {
     	super(new WrapLayout(WrapLayout.LEFT, gap, gap));
     	rClickMenuPane = new ContextMenuEmptyPanel();
-    	rClickMenuFile = new ContextMenuFile();
         x = y = x2 = y2 = 0;
         MyMouseListener listener = new MyMouseListener();
         addMouseListener(listener);
@@ -52,7 +50,7 @@ public class FilePanel extends JPanel {
 					@Override
 					public void mouseReleased(MouseEvent e) {
 						if (e.getButton() == MouseEvent.BUTTON3) {
-			            	rClickMenuFile.show(e.getComponent(), e.getX(), e.getY());
+			            	fileLabel.getRightClickMenu().show(e.getComponent(), e.getX(), e.getY());
 			            }
 					}
 					

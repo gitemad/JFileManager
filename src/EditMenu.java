@@ -37,6 +37,13 @@ public class EditMenu extends JMenu {
 		
 		sync = new JMenuItem("Synchronize");
 		sync.setMnemonic(KeyEvent.VK_S);
+		sync.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent eve) {
+				new SyncFrame();
+			}
+		});
 		this.add(sync);
 	}
 	
