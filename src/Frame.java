@@ -1,7 +1,7 @@
 import javax.swing.*;
 import javax.swing.tree.*;
 
-import View.ViewButton;
+import View.*;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -15,13 +15,13 @@ import java.io.*;
 public class Frame extends JFrame {
 	
 	//View
+	private ToolBarView toolBarView;
 	
 	
 	private Image icon;
 	private JPanel content;
 	private JPanel header;
 	private JMenuBar menuBar;
-	private JToolBar toolBar;
 	private JTree tree;
 	private JScrollPane treePane;
 	private JScrollPane filePane;
@@ -43,7 +43,7 @@ public class Frame extends JFrame {
 		content = new JPanel();
 		header = new JPanel();
 		menuBar = new Menu();
-		toolBar = new Toolbar();
+		toolBarView = new ToolBarView();
 		filePane = new FilePane(new FileTable(new FileTableModel()));
 		tree = new JTree();
 		footer = new Footer();
@@ -76,7 +76,7 @@ public class Frame extends JFrame {
 	private void listView() {
 		header.setLayout(new BorderLayout());
 		header.add(menuBar, BorderLayout.NORTH);
-		header.add(toolBar, BorderLayout.SOUTH);
+		header.add(toolBarView, BorderLayout.SOUTH);
 		
 		content = new JPanel();
 		content.setLayout(new BorderLayout());
@@ -98,7 +98,7 @@ public class Frame extends JFrame {
 	private void gridView() {
 		header.setLayout(new BorderLayout());
 		header.add(menuBar, BorderLayout.NORTH);
-		header.add(toolBar, BorderLayout.SOUTH);
+		header.add(toolBarView, BorderLayout.SOUTH);
 		
 		content = new JPanel();
 		content.setLayout(new BorderLayout());
