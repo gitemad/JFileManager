@@ -17,14 +17,16 @@ import java.util.Date;
  */
 public class FilePanel extends JPanel {
 
-    private int x;
-    private int y;
-    private int x2;
-    private int y2;
+//    private int x;
+//    private int y;
+//    private int x2;
+//    private int y2;
+    private RectangleDrawer rectDrawer;
     private static int gap = 15;
     private JPopupMenu rClickMenuPane;
     private FileSystemView fileSystemView;
     private ArrayList<FileLabel> fileLabels;
+    private DrawMouseListener drawMouseListener;
 
 
 
@@ -32,10 +34,12 @@ public class FilePanel extends JPanel {
     public FilePanel() {
     	super(new WrapLayout(WrapLayout.LEFT, gap, gap));
     	rClickMenuPane = new ContextMenuEmptyPanel();
-        x = y = x2 = y2 = 0;
-        MyMouseListener listener = new MyMouseListener();
-        addMouseListener(listener);
-        addMouseMotionListener(listener);
+    	rectDrawer = new RectangleDrawer();
+    	
+//        x = y = x2 = y2 = 0;
+    	drawMouseListener = new DrawMouseListener();
+        addMouseListener(drawMouseListener);
+        addMouseMotionListener(drawMouseListener);
         
         fileSystemView = FileSystemView.getFileSystemView();
         File[] roots = fileSystemView.getRoots();
@@ -93,24 +97,6 @@ public class FilePanel extends JPanel {
 		}
 		
     }
-
-    public void setStartPoint(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    public void setEndPoint(int x, int y) {
-        x2 = (x);
-        y2 = (y);
-    }
-
-    public void drawPerfectRect(Graphics g, int x, int y, int x2, int y2) {
-        int px = Math.min(x,x2);
-        int py = Math.min(y,y2);
-        int pw = Math.abs(x-x2);
-        int ph = Math.abs(y-y2);
-        g.fillRect(px, py, pw, ph);
-    }
     
     private Image getScaledImage(Image srcImg, int w, int h){
         BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
@@ -131,21 +117,22 @@ public class FilePanel extends JPanel {
     }
     
     
-    class MyMouseListener extends MouseAdapter {
+    class DrawMouseListener extends MouseAdapter {
 
         public void mousePressed(MouseEvent e) {
-            setStartPoint(e.getX(), e.getY());
+            rectDrawer.setStartPoint(e.getX(), e.getY());
             deselectAll();
         }
 
         public void mouseDragged(MouseEvent e) {
-            setEndPoint(e.getX(), e.getY());
+            rectDrawer.setEndPoint(e.getX(), e.getY());
             repaint();
         }
 
         public void mouseReleased(MouseEvent e) {
-            x = y = x2 = y2 = 10000;
-            repaint();
+        	rectDrawer.setStartPoint(10000, 10000);
+        	rectDrawer.setEndPoint(10000, 10000);
+        	repaint();
             if (e.getButton() == MouseEvent.BUTTON3) {
             	rClickMenuPane.show(e.getComponent(), e.getX(), e.getY());
             }
@@ -155,9 +142,15 @@ public class FilePanel extends JPanel {
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        int x = rectDrawer.getX();
+        int y = rectDrawer.getY();
+        int x2 = rectDrawer.getX2();
+        int y2 = rectDrawer.getY2();
 //        g.clearRect(0, 0, getX(), getY());
+        g.setColor(new Color(0, 0, 255));
+        rectDrawer.drawRectBorder(g, x, y, x2, y2);
         g.setColor(new Color(0, 0, 255, 100));
-        drawPerfectRect(g, x, y, x2, y2);
+        rectDrawer.fillRect(g, x, y, x2, y2);
     }
     
 }

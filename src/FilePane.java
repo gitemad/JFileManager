@@ -10,20 +10,19 @@ import javax.swing.table.*;
  */
 public class FilePane extends JScrollPane {
 	
-    private int x;
-    private int y;
-    private int x2;
-    private int y2;
     private JPopupMenu rClickMenu;
 	private JPanel panel;
 	private JTable table;
 	private Dimension minSize = new Dimension(400, 300);
+	private RectangleDrawer rectDrawer;
+	
 	
 	public FilePane(JPanel panel) {
 		super(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		this.panel = panel;
 		this.setMinimumSize(minSize);
 		rClickMenu = new JPopupMenu();
+		rectDrawer = new RectangleDrawer();
 
 	}
 	
@@ -31,6 +30,7 @@ public class FilePane extends JScrollPane {
 		super(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		this.table = table;
 		rClickMenu = new ContextMenuEmptyPanel();
+		rectDrawer = new RectangleDrawer();
 //		this.getViewport().setBackground(Color.WHITE);
 //		this.getViewport().setOpaque(false);
 //		this.getViewport().getView().setBackground(new Color(0, 0, 0, 0));
@@ -40,23 +40,12 @@ public class FilePane extends JScrollPane {
 		this.getViewport().setOpaque(false);
 		this.setMinimumSize(minSize);
 
-		MyMouseListener listener = new MyMouseListener();
+		DrawMouseListener listener = new DrawMouseListener();
 		this.getViewport().addMouseListener(listener);
 		this.getViewport().addMouseMotionListener(listener);
 	}
 	
 	
-	
-	public void setStartPoint(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    public void setEndPoint(int x, int y) {
-        x2 = (x);
-        y2 = (y);
-    }
-
     public void drawPerfectRect(Graphics g, int x, int y, int x2, int y2) {
         int px = Math.min(x,x2);
         int py = Math.min(y,y2);
@@ -68,32 +57,40 @@ public class FilePane extends JScrollPane {
     
     
 
-    class MyMouseListener extends MouseAdapter {
+    class DrawMouseListener extends MouseAdapter {
 
         public void mousePressed(MouseEvent e) {
-            setStartPoint(e.getX(), e.getY());
+            rectDrawer.setStartPoint(e.getX(), e.getY());
         }
 
         public void mouseDragged(MouseEvent e) {
-            setEndPoint(e.getX(), e.getY());
+            rectDrawer.setEndPoint(e.getX(), e.getY());
             repaint();
         }
 
         public void mouseReleased(MouseEvent e) {
-            x = y = x2 = y2 = 0;
-            repaint();
-            if (e.getButton() == MouseEvent.BUTTON3) {
+        	rectDrawer.setStartPoint(10000, 10000);
+        	rectDrawer.setEndPoint(10000, 10000);
+        	repaint();
+            if (e.isPopupTrigger()) {
             	rClickMenu.show(e.getComponent(), e.getX(), e.getY());
             }
         }
+        
     }
     
     
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        int x = rectDrawer.getX();
+        int y = rectDrawer.getY();
+        int x2 = rectDrawer.getX2();
+        int y2 = rectDrawer.getY2();
 //        g.clearRect(0, 0, getX(), getY());
+        g.setColor(new Color(0, 0, 255));
+        rectDrawer.drawRectBorder(g, x, y, x2, y2);
         g.setColor(new Color(0, 0, 255, 100));
-        drawPerfectRect(g, x, y, x2, y2);
+        rectDrawer.fillRect(g, x, y, x2, y2);
     }
 
 }
