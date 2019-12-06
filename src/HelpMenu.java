@@ -41,6 +41,7 @@ public class HelpMenu extends JMenu {
 		
 		help = new JMenuItem("Help");
 		help.setMnemonic(KeyEvent.VK_H);
+		help.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
 		help.addActionListener(new ActionListener() {
 			
 			@Override

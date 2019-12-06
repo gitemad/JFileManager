@@ -19,10 +19,12 @@ public class FileMenu extends JMenu {
 		
 		newFile = new JMenuItem("New File");
 		newFile.setMnemonic(KeyEvent.VK_F);
+		newFile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, InputEvent.CTRL_MASK));
 		this.add(newFile);
 		
 		newFolder = new JMenuItem("New Folder");
 		newFolder.setMnemonic(KeyEvent.VK_N);
+		newFolder.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK));
 		this.add(newFolder);
 		
 		delete = new JMenuItem("Delete");
