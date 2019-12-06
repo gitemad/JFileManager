@@ -29,6 +29,7 @@ public class Frame extends JFrame {
 	private JSplitPane split;
 //	new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treePane, filePane);
 	private Footer footer;
+	private SystemTray tray;
 	
 	public Frame() {
 		super();
@@ -39,7 +40,7 @@ public class Frame extends JFrame {
 		this.setMinimumSize(new Dimension(600, 400));
 		this.setLocation(100, 150);
 		this.setLayout(null);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
 		content = new JPanel();
 		header = new JPanel();
@@ -48,6 +49,8 @@ public class Frame extends JFrame {
 		filePane = new FilePane(new FileTable(new FileTableModel()));
 		tree = new JTree();
 		footer = new Footer();
+		tray = new TrayIconJFM(this).getTray();		
+		
 		
 		footer.addListListener(new ActionListener() {
 			@Override
