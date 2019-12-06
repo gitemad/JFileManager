@@ -1,6 +1,7 @@
 import javax.swing.*;
 import javax.swing.tree.*;
 
+import Model.FileTableModel;
 import View.*;
 
 import java.awt.*;
@@ -16,6 +17,7 @@ public class Frame extends JFrame {
 	
 	//View
 	private ToolBarView toolBarView;
+	private FooterView footerView;
 	
 	
 	private Image icon;
@@ -26,7 +28,6 @@ public class Frame extends JFrame {
 	private JScrollPane treePane;
 	private JScrollPane filePane;
 	private JSplitPane split;
-	private Footer footer;
 	private SystemTray tray;
 	
 	public Frame() {
@@ -46,25 +47,25 @@ public class Frame extends JFrame {
 		toolBarView = new ToolBarView();
 		filePane = new FilePane(new FileTable(new FileTableModel()));
 		tree = new JTree();
-		footer = new Footer();
+		footerView = new FooterView();
 		tray = new TrayIconJFM(this).getTray();
 		
 		
 		
-		footer.addListListener(new ActionListener() {
+		footerView.addListListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent eve) {
-				footer.getListController().setSelected(true);
-				footer.getGridController().setSelected(false);
+				footerView.getListController().setSelected(true);
+				footerView.getGridController().setSelected(false);
 				listView();
 			}
 		});
 		
-		footer.addGridListener(new ActionListener() {
+		footerView.addGridListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent eve) {
-				footer.getGridController().setSelected(true);
-				footer.getListController().setSelected(false);
+				footerView.getGridController().setSelected(true);
+				footerView.getListController().setSelected(false);
 				gridView();
 			}
 		});
@@ -88,7 +89,7 @@ public class Frame extends JFrame {
 		split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treePane, filePane);
 		
 		content.add(split, BorderLayout.CENTER);		
-		content.add(footer, BorderLayout.SOUTH);
+		content.add(footerView, BorderLayout.SOUTH);
 		
 		this.setContentPane(content);
 	
@@ -110,7 +111,7 @@ public class Frame extends JFrame {
 		split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treePane, filePane);
 		content.add(split, BorderLayout.CENTER);
 		
-		content.add(footer, BorderLayout.SOUTH);
+		content.add(footerView, BorderLayout.SOUTH);
 		
 		this.setContentPane(content);
 		

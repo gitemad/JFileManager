@@ -1,3 +1,4 @@
+package Model;
 import java.io.*;
 import java.util.*;
 
@@ -18,11 +19,11 @@ public class FileTableModel extends AbstractTableModel {
         "Size",
     };
 
-    FileTableModel() {
+    public FileTableModel() {
         this(new File[0]);
     }
 
-    FileTableModel(File[] files) {
+    public FileTableModel(File[] files) {
         this.files = files;
     }
 

@@ -1,3 +1,4 @@
+package View;
 import javax.swing.*;
 
 import Controller.ViewButtonController;
@@ -11,7 +12,7 @@ import java.awt.event.*;
  * @author Emad
  *
  */
-public class Footer extends JPanel {
+public class FooterView extends JPanel {
 	
 	//View
 	private ViewButton listView;
@@ -27,7 +28,7 @@ public class Footer extends JPanel {
 
 	private FlowLayout layout;
 	
-	public Footer() {
+	public FooterView() {
 		super();
 		//list button
 		listView = new ViewButton(new ImageIcon("img/listshow.png"), true);
@@ -70,3 +71,4 @@ public class Footer extends JPanel {
 	
 	
 }
+

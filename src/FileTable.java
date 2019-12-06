@@ -11,6 +11,8 @@ import javax.swing.event.*;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.*;
 
+import Model.FileTableModel;
+
 
 /**
  * @author Emad
