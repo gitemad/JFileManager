@@ -1,3 +1,4 @@
+package View;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -13,9 +14,9 @@ import javax.swing.*;
  * @author Emad
  *
  */
-public class Properties extends JOptionPane {
+public class PropertiesView extends JOptionPane {
 		
-	public Properties(File file) {
+	public PropertiesView(File file) {
 		this.showMessageDialog(null, getData(file), "Properties", JOptionPane.PLAIN_MESSAGE);
 	}
 	

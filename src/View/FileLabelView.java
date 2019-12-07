@@ -1,3 +1,5 @@
+package View;
+
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -11,57 +13,48 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.*;
 import javax.swing.filechooser.*;
 
-import View.ContextMenuFileView;
+import Controller.ContextMenuFileController;
+import Model.FileLabelModel;
 
 /**
  * @author Emad
  *
  */
-public class FileLabel extends JLabel {
+public class FileLabelView extends JLabel {
 	
-	private boolean clicked;
 	private String name;
 	private ImageIcon icon;
-	private static Dimension size = new Dimension(130, 130);
-	private static FileSystemView fileSystemView = FileSystemView.getFileSystemView();
-	private ContextMenuFileView rClick;
+	private static Dimension size;
+	private static FileSystemView fileSystemView;
+	private ContextMenuFileView rClickView;
+	private ContextMenuFileController rClickController;
 	
-	public FileLabel(File file) {
+	public FileLabelView(FileLabelModel model) {
 		super();
+		
+		size = new Dimension(130, 130);
+		
 		this.setPreferredSize(size);
 		this.setHorizontalAlignment(JLabel.CENTER);
 		this.setVerticalAlignment(JLabel.BOTTOM);
 		this.setHorizontalTextPosition(JLabel.CENTER);
 		this.setVerticalTextPosition(JLabel.BOTTOM);
-		rClick = new ContextMenuFileView(file);
-		this.setToolTipText(getToolTip(file));
+		this.setToolTipText(getToolTip(model.getFile()));
 		
-		clicked = false;
-		name = fileSystemView.getSystemDisplayName(file);
-		icon = enlargeIcon(file);
+		fileSystemView = FileSystemView.getFileSystemView();
+		name = fileSystemView.getSystemDisplayName(model.getFile());
+		icon = enlargeIcon(model.getFile());
+		rClickView = new ContextMenuFileView(model.getFile());
+		rClickController = new ContextMenuFileController(rClickView);
 		
 		this.setIcon(icon);
 		this.setText(name);
 		
 	}
 	
-	/**
-	 * @return the clicked
-	 */
-	public boolean isClicked() {
-		return clicked;
-	}
-
-
-	/**
-	 * @param clicked the clicked to set
-	 */
-	public void setClicked(boolean clicked) {
-		this.clicked = clicked;
-	}
 
 	public ContextMenuFileView getRightClickMenu() {
-		return rClick;
+		return rClickView;
 	}
 
 	

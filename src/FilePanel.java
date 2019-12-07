@@ -2,6 +2,9 @@ import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.filechooser.FileSystemView;
 
+import Controller.FileLabelController;
+import Model.FileLabelModel;
+import View.FileLabelView;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -25,7 +28,9 @@ public class FilePanel extends JPanel {
     private static int gap = 15;
     private JPopupMenu rClickMenuPane;
     private FileSystemView fileSystemView;
-    private ArrayList<FileLabel> fileLabels;
+    private ArrayList<FileLabelModel> fileLabelsModel;
+    private ArrayList<FileLabelView> fileLabelsView;
+    private ArrayList<FileLabelController> fileLabelsController;
     private DrawMouseListener drawMouseListener;
 
 
@@ -45,16 +50,22 @@ public class FilePanel extends JPanel {
         File[] roots = fileSystemView.getRoots();
 		for (File fileSystemRoot : roots) {
 			File[] files = fileSystemView.getFiles(fileSystemRoot, true);
-			fileLabels = new ArrayList<FileLabel>();
+			fileLabelsModel = new ArrayList<FileLabelModel>();
+			fileLabelsView = new ArrayList<FileLabelView>();
+			fileLabelsController = new ArrayList<FileLabelController>();
 			for (File file : files) {
-				FileLabel fileLabel = new FileLabel(file);
-				fileLabels.add(fileLabel);				
+				FileLabelModel fileLabelModel = new FileLabelModel(file);
+				FileLabelView fileLabelView = new FileLabelView(fileLabelModel);
+				FileLabelController fileLabelController = new FileLabelController(fileLabelModel, fileLabelView);
+				fileLabelsModel.add(fileLabelModel);				
+				fileLabelsView.add(fileLabelView);				
+				fileLabelsController.add(fileLabelController);				
 				
-				fileLabel.addMouseListener(new MouseListener() {
+				fileLabelView.addMouseListener(new MouseListener() {
 					@Override
 					public void mouseReleased(MouseEvent e) {
-						if (e.getButton() == MouseEvent.BUTTON3) {
-			            	fileLabel.getRightClickMenu().show(e.getComponent(), e.getX(), e.getY());
+						if (e.isPopupTrigger()) {
+			            	fileLabelView.getRightClickMenu().show(e.getComponent(), e.getX(), e.getY());
 			            }
 					}
 					
@@ -62,17 +73,15 @@ public class FilePanel extends JPanel {
 					public void mousePressed(MouseEvent arg0) {
 						// TODO Auto-generated method stub
 						deselectAll();
-						fileLabel.setClicked(true);
-						fileLabel.setOpaque(true);
-						fileLabel.setBackground(getBackground().darker().darker());
+						fileLabelController.selected();
 						repaint();
 					}
 					
 					@Override
 					public void mouseExited(MouseEvent e) {
 						// TODO Auto-generated method stub
-						if (!fileLabel.isClicked()) {
-							fileLabel.setOpaque(false);
+						if (!fileLabelModel.isClicked()) {
+							fileLabelController.unSelected();
 							repaint();
 						}
 					}
@@ -80,9 +89,8 @@ public class FilePanel extends JPanel {
 					@Override
 					public void mouseEntered(MouseEvent arg0) {
 						// TODO Auto-generated method stub
-						if (!fileLabel.isClicked()) {
-							fileLabel.setOpaque(true);
-							fileLabel.setBackground(getBackground().darker());
+						if (!fileLabelModel.isClicked()) {
+							fileLabelController.hover();
 							repaint();
 						}
 					}
@@ -93,7 +101,7 @@ public class FilePanel extends JPanel {
 					}
 				});
 				
-				this.add(fileLabel);
+				this.add(fileLabelView);
 			}
 		}
 		
@@ -110,10 +118,10 @@ public class FilePanel extends JPanel {
         return resizedImg;
     }
     
+    //TODO
     private void deselectAll() {
-    	for (FileLabel fileLabel : fileLabels) {
-    		fileLabel.setClicked(false);
-    		fileLabel.setOpaque(false);
+    	for (FileLabelController fileLabel : fileLabelsController) {
+    		fileLabel.unSelected();
     	}
     }
     

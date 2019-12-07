@@ -12,6 +12,7 @@ import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.*;
 
 import Model.FileTableModel;
+import View.ContextMenuFileView;
 
 
 /**
@@ -30,7 +31,7 @@ public class FileTable extends JTable {
 	public FileTable(FileTableModel fileTableModel) {
 		super(fileTableModel);
 
-		rClickMenu = new ContextMenuFile(new File(""));
+		rClickMenu = new ContextMenuFileView(new File(""));
 		rectDrawer = new RectangleDrawer();
         DrawMouseListener listener = new DrawMouseListener();
         addMouseListener(listener);

@@ -1,4 +1,7 @@
+package View;
+
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
@@ -7,8 +10,9 @@ import java.io.*;
  * @author Emad
  *
  */
-public class ContextMenuFile extends JPopupMenu {
+public class ContextMenuFileView extends JPopupMenu {
 	
+	private File file;
 	private JMenuItem open;
 	private JMenuItem rename;
 	private JMenuItem copy;
@@ -17,7 +21,8 @@ public class ContextMenuFile extends JPopupMenu {
 	private JMenuItem properties;
 	
 	
-	public ContextMenuFile(File file) {
+	public ContextMenuFileView(File file) {
+		this.file = file;
 		open = new JMenuItem("Open");
 		rename = new JMenuItem("Rename");
 		copy = new JMenuItem("Copy");
@@ -36,12 +41,6 @@ public class ContextMenuFile extends JPopupMenu {
 		delete.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0));
 		properties.setMnemonic(KeyEvent.VK_R);
 		
-		properties.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent eve) {
-				new Properties(file);
-			}
-		});
 		
 		add(open);
 		add(rename);
@@ -49,5 +48,61 @@ public class ContextMenuFile extends JPopupMenu {
 		add(cut);
 		add(delete);
 		add(properties);
+	}
+
+
+	/**
+	 * @return the open
+	 */
+	public JMenuItem getOpen() {
+		return open;
+	}
+
+
+	/**
+	 * @return the rename
+	 */
+	public JMenuItem getRename() {
+		return rename;
+	}
+
+
+	/**
+	 * @return the copy
+	 */
+	public JMenuItem getCopy() {
+		return copy;
+	}
+
+
+	/**
+	 * @return the cut
+	 */
+	public JMenuItem getCut() {
+		return cut;
+	}
+
+
+	/**
+	 * @return the delete
+	 */
+	public JMenuItem getDelete() {
+		return delete;
+	}
+
+
+	/**
+	 * @return the properties
+	 */
+	public JMenuItem getProperties() {
+		return properties;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public File getFile() {
+		return file;
 	}
 }
