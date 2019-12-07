@@ -1,7 +1,8 @@
 import javax.swing.*;
 import javax.swing.tree.*;
 
-import Model.FileTableModel;
+import Controller.FileTreeController;
+import Model.*;
 import View.*;
 
 import java.awt.*;
@@ -15,17 +16,23 @@ import java.io.*;
  */
 public class Frame extends JFrame {
 	
+	//Model
+	private FileTreeModel treeModel;
+
+	
 	//View
 	private ToolBarView toolBarView;
 	private FooterView footerView;
+	private FileTreeView treeView;
+	
+	//Controller
+	private FileTreeController treeController;
 	
 	
 	private Image icon;
 	private JPanel content;
 	private JPanel header;
 	private JMenuBar menuBar;
-	private JTree tree;
-	private JScrollPane treePane;
 	private JScrollPane filePane;
 	private JSplitPane split;
 	private SystemTray tray;
@@ -46,7 +53,7 @@ public class Frame extends JFrame {
 		menuBar = new Menu();
 		toolBarView = new ToolBarView();
 		filePane = new FilePane(new FileTable(new FileTableModel()));
-		tree = new JTree();
+		treeModel = new FileTreeModel();
 		footerView = new FooterView();
 		tray = new TrayIconJFM(this).getTray();
 		
@@ -83,10 +90,11 @@ public class Frame extends JFrame {
 		content.setLayout(new BorderLayout());
 		content.add(header, BorderLayout.NORTH);
 	
-		tree = new FileExplorerTree().getTree();
-		treePane = new TreePane(tree);
+		treeModel = new FileTreeModel();
+		treeView = new FileTreeView(treeModel.getTree());
+		treeController = new FileTreeController(treeModel, treeView);
 		filePane = new FilePane(new FileTable(new FileTableModel()));				
-		split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treePane, filePane);
+		split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treeView, filePane);
 		
 		content.add(split, BorderLayout.CENTER);		
 		content.add(footerView, BorderLayout.SOUTH);
@@ -105,10 +113,12 @@ public class Frame extends JFrame {
 		content.setLayout(new BorderLayout());
 		content.add(header, BorderLayout.NORTH);
 			
-		tree = new FileExplorerTree().getTree();
-		treePane = new TreePane(tree);
+		treeModel = new FileTreeModel();
+		treeView = new FileTreeView(treeModel.getTree());
+		treeController = new FileTreeController(treeModel, treeView);
+
 		filePane = new FilePane(new FilePanel());
-		split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treePane, filePane);
+		split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treeView, filePane);
 		content.add(split, BorderLayout.CENTER);
 		
 		content.add(footerView, BorderLayout.SOUTH);

@@ -22,8 +22,7 @@ public class FileLabelController {
 		this.view = view;
 		unselect = view.getBackground();
 		hover = view.getBackground().darker();
-		select = view.getBackground().darker().darker();
-		
+		select = view.getBackground().darker().darker();		
 		
 	}
 
