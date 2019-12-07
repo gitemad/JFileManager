@@ -13,6 +13,7 @@ import javax.swing.table.*;
 
 import Model.FileTableModel;
 import View.ContextMenuFileView;
+import View.RectangleDrawerView;
 
 
 /**
@@ -21,7 +22,7 @@ import View.ContextMenuFileView;
  */
 public class FileTable extends JTable {
 	
-	private RectangleDrawer rectDrawer;
+	private RectangleDrawerView rectDrawer;
     private JPopupMenu rClickMenu;
 	private FileTableModel fileTableModel;
 //	private ListSelectionListener listSelectionListener;
@@ -32,7 +33,7 @@ public class FileTable extends JTable {
 		super(fileTableModel);
 
 		rClickMenu = new ContextMenuFileView(new File(""));
-		rectDrawer = new RectangleDrawer();
+		rectDrawer = new RectangleDrawerView();
         DrawMouseListener listener = new DrawMouseListener();
         addMouseListener(listener);
         addMouseMotionListener(listener);

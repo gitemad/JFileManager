@@ -4,6 +4,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.table.*;
 
+import View.RectangleDrawerView;
+
 /**
  * @author Emad
  *
@@ -14,13 +16,13 @@ public class FilePane extends JScrollPane {
 	private JPanel panel;
 	private JTable table;
 	private Dimension minSize;
-	private RectangleDrawer rectDrawer;
+	private RectangleDrawerView rectDrawer;
 	
 	
 	public FilePane(JPanel panel) {
 		super(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		rClickMenu = new JPopupMenu();
-		rectDrawer = new RectangleDrawer();
+		rectDrawer = new RectangleDrawerView();
 		minSize = new Dimension(400, 300);
 		
 		this.panel = panel;
@@ -32,7 +34,7 @@ public class FilePane extends JScrollPane {
 		super(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		this.table = table;
 		rClickMenu = new ContextMenuEmptyPanel();
-		rectDrawer = new RectangleDrawer();
+		rectDrawer = new RectangleDrawerView();
 //		this.getViewport().setBackground(Color.WHITE);
 //		this.getViewport().setOpaque(false);
 //		this.getViewport().getView().setBackground(new Color(0, 0, 0, 0));

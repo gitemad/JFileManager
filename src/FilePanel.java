@@ -5,6 +5,7 @@ import javax.swing.filechooser.FileSystemView;
 import Controller.FileLabelController;
 import Model.FileLabelModel;
 import View.FileLabelView;
+import View.RectangleDrawerView;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -24,7 +25,7 @@ public class FilePanel extends JPanel {
 //    private int y;
 //    private int x2;
 //    private int y2;
-    private RectangleDrawer rectDrawer;
+    private RectangleDrawerView rectDrawer;
     private static int gap = 15;
     private JPopupMenu rClickMenuPane;
     private FileSystemView fileSystemView;
@@ -39,7 +40,7 @@ public class FilePanel extends JPanel {
     public FilePanel() {
     	super(new WrapLayout(WrapLayout.LEFT, gap, gap));
     	rClickMenuPane = new ContextMenuEmptyPanel();
-    	rectDrawer = new RectangleDrawer();
+    	rectDrawer = new RectangleDrawerView();
     	
 //        x = y = x2 = y2 = 0;
     	drawMouseListener = new DrawMouseListener();

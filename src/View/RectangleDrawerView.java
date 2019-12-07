@@ -1,7 +1,8 @@
+package View;
 import java.awt.Graphics;
 import javax.swing.JComponent;
 
-public class RectangleDrawer extends JComponent {
+public class RectangleDrawerView extends JComponent {
 	
 	private int x;
     private int y;

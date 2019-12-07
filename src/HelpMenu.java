@@ -1,4 +1,7 @@
 import javax.swing.*;
+
+import View.SettingsView;
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -34,7 +37,7 @@ public class HelpMenu extends JMenu {
 			
 			@Override
 			public void actionPerformed(ActionEvent eve) {
-				Settings settings = new Settings();
+				SettingsView settings = new SettingsView();
 			}
 		});
 		this.add(settings);

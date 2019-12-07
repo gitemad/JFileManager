@@ -1,3 +1,4 @@
+package View;
 import javax.swing.*;
 import java.awt.*;
 
@@ -5,25 +6,42 @@ import java.awt.*;
  * @author Emad
  *
  */
-public class Settings extends JFrame {
+public class SettingsView extends JFrame {
 	
-	private Image icon = new ImageIcon("img/settings.png").getImage();
-	private JPanel panel = new JPanel(new GridBagLayout());
-	private JPanel adrsPanel = new JPanel(new GridBagLayout());
-	private JPanel sharePanel = new JPanel(new GridBagLayout());
-	private JPanel viewPanel = new JPanel(new GridBagLayout());
-	private JTextField address = new JTextField("Select default address");
-	private JTextField savePath = new JTextField("Select save path location");
-	private JTextField compAdrs = new JTextField("Select computer address to share files");
-	private JTextField compPort = new JTextField("Select computer port to share files");
-	private JComboBox<String> lookFeels = new JComboBox<String>();
-	private Checkbox view = new Checkbox("Set List View As Default View");
-	private JComboBox<String> syncTime = new JComboBox<String>();
-	private JButton ok = new JButton("OK");
-	private JButton cancel = new JButton("Cancel");
+	private Image icon;
+	private JPanel panel;
+	private JPanel adrsPanel;
+	private JPanel sharePanel;
+	private JPanel viewPanel;
+	private JTextField address;
+	private JTextField savePath;
+	private JTextField compAdrs;
+	private JTextField compPort;
+	private JComboBox<String> lookFeels;
+	private Checkbox view;
+	private JComboBox<String> syncTime;
+	private JButton ok;
+	private JButton cancel;
 	
-	public Settings() {
+	public SettingsView() {
 		super("Settings");
+		
+		icon = new ImageIcon("img/settings.png").getImage();
+		panel = new JPanel(new GridBagLayout());
+		adrsPanel = new JPanel(new GridBagLayout());
+		sharePanel = new JPanel(new GridBagLayout());
+		viewPanel = new JPanel(new GridBagLayout());
+		address = new JTextField("Select default address");
+		savePath = new JTextField("Select save path location");
+		compAdrs = new JTextField("Select computer address to share files");
+		compPort = new JTextField("Select computer port to share files");
+		lookFeels = new JComboBox<String>();
+		view = new Checkbox("Set List View As Default View");
+		syncTime = new JComboBox<String>();
+		ok = new JButton("OK");
+		cancel = new JButton("Cancel");
+		
+		
 		this.setIconImage(icon);
 		this.setSize(720, 480);
 		this.setResizable(false);
@@ -51,7 +69,6 @@ public class Settings extends JFrame {
         gbc.anchor = GridBagConstraints.EAST;
 
         adrsPanel.add(new JLabel("Default address: "), gbc);
-        
         
         sharePanel.add(new JLabel("Computer address to file sharing: "), gbc);
         gbc.gridy++;
