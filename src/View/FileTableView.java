@@ -1,3 +1,4 @@
+package View;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
@@ -12,15 +13,13 @@ import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.*;
 
 import Model.FileTableModel;
-import View.ContextMenuFileView;
-import View.RectangleDrawerView;
 
 
 /**
  * @author Emad
  *
  */
-public class FileTable extends JTable {
+public class FileTableView extends JTable {
 	
 	private RectangleDrawerView rectDrawer;
     private JPopupMenu rClickMenu;
@@ -29,7 +28,7 @@ public class FileTable extends JTable {
 	private boolean cellSizesSet = false;
 	
 
-	public FileTable(FileTableModel fileTableModel) {
+	public FileTableView(FileTableModel fileTableModel) {
 		super(fileTableModel);
 
 		rClickMenu = new ContextMenuFileView(new File(""));
@@ -75,7 +74,7 @@ public class FileTable extends JTable {
                   setColumnWidth(2,150);
                   setColumnWidth(3,112);
                   setColumnWidth(4,112);
-                  FileTable.this.setFillsViewportHeight(true);
+                  FileTableView.this.setFillsViewportHeight(true);
                   cellSizesSet = true;
               }
           }

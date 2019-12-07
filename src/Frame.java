@@ -55,7 +55,7 @@ public class Frame extends JFrame {
 		header = new JPanel();
 		menuBar = new MenuView();
 		toolBarView = new ToolBarView();
-		filePane = new FilePane(new FileTable(new FileTableModel()));
+		filePane = new FilePaneView(new FileTableView(new FileTableModel()));
 		treeModel = new FileTreeModel();
 		footerView = new FooterView();
 		tray = new TrayIconJFM(this).getTray();
@@ -96,7 +96,7 @@ public class Frame extends JFrame {
 		treeModel = new FileTreeModel();
 		treeView = new FileTreeView(treeModel.getTree());
 		treeController = new FileTreeController(treeModel, treeView);
-		filePane = new FilePane(new FileTable(new FileTableModel()));				
+		filePane = new FilePaneView(new FileTableView(new FileTableModel()));				
 		split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treeView, filePane);
 		
 		content.add(split, BorderLayout.CENTER);		
@@ -121,7 +121,7 @@ public class Frame extends JFrame {
 		treeController = new FileTreeController(treeModel, treeView);
 
 		filePanelView = new FilePanelView();
-		filePane = new FilePane(filePanelView);
+		filePane = new FilePaneView(filePanelView);
 		split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treeView, filePane);
 		content.add(split, BorderLayout.CENTER);
 		

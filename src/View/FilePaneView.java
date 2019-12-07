@@ -1,17 +1,15 @@
+package View;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.table.*;
 
-import View.ContextMenuPanelView;
-import View.RectangleDrawerView;
-
 /**
  * @author Emad
  *
  */
-public class FilePane extends JScrollPane {
+public class FilePaneView extends JScrollPane {
 	
     private JPopupMenu rClickMenu;
 	private JPanel panel;
@@ -20,7 +18,7 @@ public class FilePane extends JScrollPane {
 	private RectangleDrawerView rectDrawer;
 	
 	
-	public FilePane(JPanel panel) {
+	public FilePaneView(JPanel panel) {
 		super(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		rClickMenu = new JPopupMenu();
 		rectDrawer = new RectangleDrawerView();
@@ -31,7 +29,7 @@ public class FilePane extends JScrollPane {
 
 	}
 	
-	public FilePane(JTable table) {
+	public FilePaneView(JTable table) {
 		super(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		this.table = table;
 		rClickMenu = new ContextMenuPanelView();
@@ -50,17 +48,6 @@ public class FilePane extends JScrollPane {
 		this.getViewport().addMouseMotionListener(listener);
 	}
 	
-	
-    public void drawPerfectRect(Graphics g, int x, int y, int x2, int y2) {
-        int px = Math.min(x,x2);
-        int py = Math.min(y,y2);
-        int pw = Math.abs(x-x2);
-        int ph = Math.abs(y-y2);
-        g.fillRect(px, py, pw, ph);
-        this.getViewport().paint(g);
-    }
-    
-    
 
     class DrawMouseListener extends MouseAdapter {
 
