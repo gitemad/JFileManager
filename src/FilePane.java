@@ -4,6 +4,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.table.*;
 
+import View.ContextMenuPanelView;
 import View.RectangleDrawerView;
 
 /**
@@ -33,7 +34,7 @@ public class FilePane extends JScrollPane {
 	public FilePane(JTable table) {
 		super(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		this.table = table;
-		rClickMenu = new ContextMenuEmptyPanel();
+		rClickMenu = new ContextMenuPanelView();
 		rectDrawer = new RectangleDrawerView();
 //		this.getViewport().setBackground(Color.WHITE);
 //		this.getViewport().setOpaque(false);

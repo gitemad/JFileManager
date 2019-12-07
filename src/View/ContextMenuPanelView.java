@@ -1,3 +1,4 @@
+package View;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -6,7 +7,7 @@ import java.awt.event.*;
  * @author Emad
  *
  */
-public class ContextMenuEmptyPanel extends JPopupMenu {
+public class ContextMenuPanelView extends JPopupMenu {
 	
 	JMenuItem paste;
 	JMenuItem newFile;
@@ -14,7 +15,7 @@ public class ContextMenuEmptyPanel extends JPopupMenu {
 	JMenuItem properties;
 	
 	
-	public ContextMenuEmptyPanel() {
+	public ContextMenuPanelView() {
 		paste = new JMenuItem("Paste");
 		newFile = new JMenuItem("New File");
 		newFolder = new JMenuItem("New Folder");

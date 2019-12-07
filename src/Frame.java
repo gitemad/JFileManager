@@ -1,6 +1,7 @@
 import javax.swing.*;
 import javax.swing.tree.*;
 
+import Controller.FilePanelController;
 import Controller.FileTreeController;
 import Model.*;
 import View.*;
@@ -24,9 +25,11 @@ public class Frame extends JFrame {
 	private ToolBarView toolBarView;
 	private FooterView footerView;
 	private FileTreeView treeView;
+	private FilePanelView filePanelView;
 	
 	//Controller
 	private FileTreeController treeController;
+//	private FilePanelController filePanelController;
 	
 	
 	private Image icon;
@@ -117,7 +120,8 @@ public class Frame extends JFrame {
 		treeView = new FileTreeView(treeModel.getTree());
 		treeController = new FileTreeController(treeModel, treeView);
 
-		filePane = new FilePane(new FilePanel());
+		filePanelView = new FilePanelView();
+		filePane = new FilePane(filePanelView);
 		split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treeView, filePane);
 		content.add(split, BorderLayout.CENTER);
 		
