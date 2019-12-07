@@ -1,3 +1,4 @@
+package View;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -6,14 +7,14 @@ import java.awt.event.*;
  * @author Emad
  *
  */
-public class FileMenu extends JMenu {
+public class FileMenuView extends JMenu {
 	
 	private JMenuItem newFile;
 	private JMenuItem newFolder;
 	private JMenuItem delete;
 	private JMenuItem sync;
 	
-	public FileMenu() {
+	public FileMenuView() {
 		super("File");
 		this.setMnemonic(KeyEvent.VK_F);
 		

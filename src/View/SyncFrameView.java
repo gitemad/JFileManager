@@ -1,8 +1,9 @@
+package View;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class SyncFrame extends JFrame  {
+public class SyncFrameView extends JFrame  {
 
 	JPanel panel;
 	JButton start;
@@ -10,7 +11,7 @@ public class SyncFrame extends JFrame  {
 	static final int MY_MINIMUM = 0;
 	static final int MY_MAXIMUM = 100;
 
-	public SyncFrame() {
+	public SyncFrameView() {
 		this.setSize(720, 480);
 		this.setResizable(false);
 		this.setMinimumSize(new Dimension(600, 480));
@@ -27,12 +28,6 @@ public class SyncFrame extends JFrame  {
 		pbar.setMaximum(MY_MAXIMUM);
 		pbar.setStringPainted(true);
 		
-		start.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent eve) {
-				updateBar();
-			}
-		});
 		
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.gridx = 0;
@@ -47,6 +42,20 @@ public class SyncFrame extends JFrame  {
 		panel.add(start, gbc);
 		this.setContentPane(panel);
 		this.setVisible(true);
+	}
+
+	/**
+	 * @return the start
+	 */
+	public JButton getStart() {
+		return start;
+	}
+
+	/**
+	 * @return the pbar
+	 */
+	public JProgressBar getPbar() {
+		return pbar;
 	}
 
 //	public void run() {
@@ -65,24 +74,6 @@ public class SyncFrame extends JFrame  {
 //		}
 //	}
 
-	public void updateBar() {
-		start.setEnabled(false);
-
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-//				repaint();
-				for (int i = 0; i <= 100; i++) {
-					pbar.setValue(i);
-					pbar.paintImmediately(0, 0, 200, 200);
-					try {
-						Thread.sleep(10);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-				start.setEnabled(true);
-			}
-		});
-	}
+	
 
 }

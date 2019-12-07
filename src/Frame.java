@@ -50,7 +50,7 @@ public class Frame extends JFrame {
 
 		content = new JPanel();
 		header = new JPanel();
-		menuBar = new Menu();
+		menuBar = new MenuView();
 		toolBarView = new ToolBarView();
 		filePane = new FilePane(new FileTable(new FileTableModel()));
 		treeModel = new FileTreeModel();

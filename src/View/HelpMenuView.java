@@ -1,6 +1,5 @@
+package View;
 import javax.swing.*;
-
-import View.SettingsView;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -9,13 +8,13 @@ import java.awt.event.*;
  * @author Emad
  *
  */
-public class HelpMenu extends JMenu {
+public class HelpMenuView extends JMenu {
 	
 	private JMenuItem about;
 	private JMenuItem settings;
 	private JMenuItem help;
 		
-	public HelpMenu() {
+	public HelpMenuView() {
 		super("Help");
 		this.setMnemonic(KeyEvent.VK_H);
 		

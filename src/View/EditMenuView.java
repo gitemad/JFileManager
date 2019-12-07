@@ -1,4 +1,7 @@
+package View;
 import javax.swing.*;
+
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -6,15 +9,15 @@ import java.awt.event.*;
  * @author Emad
  *
  */
-public class EditMenu extends JMenu {
+public class EditMenuView extends JMenu {
 	
 	private JMenuItem rename;
 	private JMenuItem copy;
 	private JMenuItem cut;
 	private JMenuItem paste;
 	private JMenuItem sync;
-	
-	public EditMenu() {
+		
+	public EditMenuView() {
 		super("Edit");
 		this.setMnemonic(KeyEvent.VK_E);
 		
@@ -41,14 +44,45 @@ public class EditMenu extends JMenu {
 		
 		sync = new JMenuItem("Synchronize");
 		sync.setMnemonic(KeyEvent.VK_S);
-		sync.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent eve) {
-				new SyncFrame();
-			}
-		});
+		
 		this.add(sync);
 	}
+
+	/**
+	 * @return the rename
+	 */
+	public JMenuItem getRename() {
+		return rename;
+	}
+
+	/**
+	 * @return the copy
+	 */
+	public JMenuItem getCopy() {
+		return copy;
+	}
+
+	/**
+	 * @return the cut
+	 */
+	public JMenuItem getCut() {
+		return cut;
+	}
+
+	/**
+	 * @return the paste
+	 */
+	public JMenuItem getPaste() {
+		return paste;
+	}
+
+	/**
+	 * @return the sync
+	 */
+	public JMenuItem getSync() {
+		return sync;
+	}
+	
+	
 	
 }
