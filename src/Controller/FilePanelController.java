@@ -14,7 +14,8 @@ public class FilePanelController {
 	
 
 	/**
-	 * @param view
+	 * Only constructor of class with following parameter requirement
+	 * @param view the file panel view
 	 */
 	public FilePanelController(FilePanelView view) {
 		this.view = view;

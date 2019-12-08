@@ -1,24 +1,22 @@
+package View;
 import javax.swing.*;
-import javax.swing.tree.*;
 
-import Controller.FilePanelController;
-import Controller.FileTreeController;
+import Controller.*;
 import Model.*;
-import View.*;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.*;
 
 /**
  * @author Emad
  *
  */
-public class Frame extends JFrame {
+public class FrameView extends JFrame {
 	
 	//Model
 	private FileTreeModel treeModel;
+	private FileTableModel fileTableModel;
 
 	
 	//View
@@ -26,6 +24,9 @@ public class Frame extends JFrame {
 	private FooterView footerView;
 	private FileTreeView treeView;
 	private FilePanelView filePanelView;
+	private MenuView menuBarView;
+	private FilePaneView filePane;
+	private FileTableView fileTableView;
 	
 	//Controller
 	private FileTreeController treeController;
@@ -35,12 +36,13 @@ public class Frame extends JFrame {
 	private Image icon;
 	private JPanel content;
 	private JPanel header;
-	private JMenuBar menuBar;
-	private JScrollPane filePane;
 	private JSplitPane split;
 	private SystemTray tray;
 	
-	public Frame() {
+	/**
+	 * Only constructor of class without any parameter requirement
+	 */
+	public FrameView() {
 		super();
 		icon = new ImageIcon("img/icon.png").getImage();
 		this.setIconImage(icon);
@@ -53,10 +55,8 @@ public class Frame extends JFrame {
 
 		content = new JPanel();
 		header = new JPanel();
-		menuBar = new MenuView();
+		menuBarView = new MenuView();
 		toolBarView = new ToolBarView();
-		filePane = new FilePaneView(new FileTableView(new FileTableModel()));
-		treeModel = new FileTreeModel();
 		footerView = new FooterView();
 		tray = new TrayIconJFM(this).getTray();
 		
@@ -84,9 +84,10 @@ public class Frame extends JFrame {
 	}
 	
 	
+	// a function for list view
 	private void listView() {
 		header.setLayout(new BorderLayout());
-		header.add(menuBar, BorderLayout.NORTH);
+		header.add(menuBarView, BorderLayout.NORTH);
 		header.add(toolBarView, BorderLayout.SOUTH);
 		
 		content = new JPanel();
@@ -96,7 +97,9 @@ public class Frame extends JFrame {
 		treeModel = new FileTreeModel();
 		treeView = new FileTreeView(treeModel.getTree());
 		treeController = new FileTreeController(treeModel, treeView);
-		filePane = new FilePaneView(new FileTableView(new FileTableModel()));				
+		fileTableModel = new FileTableModel();
+		fileTableView = new FileTableView(fileTableModel);
+		filePane = new FilePaneView(fileTableView);				
 		split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treeView, filePane);
 		
 		content.add(split, BorderLayout.CENTER);		
@@ -107,9 +110,10 @@ public class Frame extends JFrame {
 		this.setVisible(true);
 	}
 	
+	//a function for grid view
 	private void gridView() {
 		header.setLayout(new BorderLayout());
-		header.add(menuBar, BorderLayout.NORTH);
+		header.add(menuBarView, BorderLayout.NORTH);
 		header.add(toolBarView, BorderLayout.SOUTH);
 		
 		content = new JPanel();

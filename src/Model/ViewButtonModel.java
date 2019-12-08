@@ -5,6 +5,10 @@ public class ViewButtonModel {
 	
 	private Boolean selected;
 
+	/**
+	 * Only constructor of class with following parameter requirement
+	 * @param selected selected state of button
+	 */
 	public ViewButtonModel(boolean selected) {
 		this.selected = selected;
 	}

@@ -14,6 +14,9 @@ public class FileMenuView extends JMenu {
 	private JMenuItem delete;
 	private JMenuItem sync;
 	
+	/**
+	 * Only constructor of class without any parameter requirement
+	 */
 	public FileMenuView() {
 		super("File");
 		this.setMnemonic(KeyEvent.VK_F);

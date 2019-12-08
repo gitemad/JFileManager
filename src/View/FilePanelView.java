@@ -37,9 +37,9 @@ public class FilePanelView extends JPanel {
     private FileSystemView fileSystemView;
     private DrawMouseListener drawMouseListener;
 
-
-
-    
+    /**
+     * Only constructor of class without any parameter requirement
+     */
     public FilePanelView() {
     	super(new WrapLayout(WrapLayout.LEFT, gap, gap));
     	rClickMenuView = new ContextMenuPanelView();
@@ -100,14 +100,14 @@ public class FilePanelView extends JPanel {
     
     
     /**
+     * get the right click menu
 	 * @return the rClickMenuView
 	 */
 	public ContextMenuPanelView getrClickMenuView() {
 		return rClickMenuView;
 	}
 
-
-
+	//get the image size in desired width and height
 	private Image getScaledImage(Image srcImg, int w, int h){
         BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = resizedImg.createGraphics();
@@ -119,16 +119,14 @@ public class FilePanelView extends JPanel {
         return resizedImg;
     }
 	
-	public RectangleDrawerView getRectangleDrawerView() {
-		return rectDrawer;
-	}
-    
-	public void deselectAll() {
+	//deselect all files
+	private void deselectAll() {
 		for (FileLabelController fileLabel : fileLabelsController) {
 			fileLabel.unSelected();
 		}
 	}
     
+	//deselect all files except the parameter
     private void deselectOther(FileLabelController thisController) {
     	for (FileLabelController fileLabel : fileLabelsController) {
     		if (fileLabel != thisController)
@@ -160,7 +158,7 @@ public class FilePanelView extends JPanel {
         
     }
 
-    
+   
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         int x = rectDrawer.getX();

@@ -23,6 +23,9 @@ public class SettingsView extends JFrame {
 	private JButton ok;
 	private JButton cancel;
 	
+	/**
+	 * Only constructor of class without any parameter requirement
+	 */
 	public SettingsView() {
 		super("Settings");
 		

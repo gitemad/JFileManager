@@ -14,9 +14,11 @@ public class FileTreeController {
 	
 	private FileTreeModel model;
 	private FileTreeView view;
+	
 	/**
-	 * @param model
-	 * @param view
+	 * Only constructor of class with following parameter requirement
+	 * @param model the file tree model
+	 * @param view the file tree view
 	 */
 	public FileTreeController(FileTreeModel model, FileTreeView view) {
 		this.model = model;
@@ -33,7 +35,7 @@ public class FileTreeController {
 		
 	}
 	
-	
+	//add children to a node of tree
 	private void addChildren(final DefaultMutableTreeNode node) {
 		FileSystemView fileSystemView = FileSystemView.getFileSystemView();
 		SwingWorker worker = new SwingWorker() {

@@ -29,6 +29,10 @@ public class FileLabelView extends JLabel {
 	private ContextMenuFileView rClickView;
 	private ContextMenuFileController rClickController;
 	
+	/**
+	 * Only constructor of class with following parameter requirement
+	 * @param model the file label model 
+	 */
 	public FileLabelView(FileLabelModel model) {
 		super();
 		
@@ -52,12 +56,15 @@ public class FileLabelView extends JLabel {
 		
 	}
 	
-
+	/**
+	 * Get the right click context menu
+	 * @return the right click menu
+	 */
 	public ContextMenuFileView getRightClickMenu() {
 		return rClickView;
 	}
 
-	
+	//get the tool tip for input file
 	private String getToolTip(File file) {
 		String toolTip = "<html>";
 		toolTip += "Date Created: ";
@@ -77,6 +84,7 @@ public class FileLabelView extends JLabel {
 		return toolTip;
 	}
 	
+	//get the created date for input file
 	private Date getCreatedDate(File file) {
 		Path filePath;
 		try {
@@ -97,7 +105,7 @@ public class FileLabelView extends JLabel {
         return creationDate;
 	}
 	
-	
+	//get 3 first sub folders of a directory
 	private String getSubFolders(File file) {
 		String subFolders = "";
 		File[] folders = file.listFiles(File::isDirectory);
@@ -118,6 +126,7 @@ public class FileLabelView extends JLabel {
 		}
 	}
 
+	// get 3 first sub files of a directory
 	private String getSubFiles(File file) {
 		String subFiles = "";
 		File[] files = file.listFiles(File::isFile);
@@ -138,6 +147,7 @@ public class FileLabelView extends JLabel {
 		}
 	}
 	
+	//get the input file size
 	private String getFileSize(File file) {
     	if (!file.isFile())
     		return "";
@@ -161,6 +171,7 @@ public class FileLabelView extends JLabel {
 		return "";
     }
 
+	// enlarge input icon
 	private ImageIcon enlargeIcon(File file) {
 		ImageIcon icon = (ImageIcon) fileSystemView.getSystemIcon(file);
 		Image imgIcon = icon.getImage();
@@ -174,7 +185,7 @@ public class FileLabelView extends JLabel {
 		return icon;
 	}
 	
-	
+	//scaled image to desired width and height
 	private Image getScaledImage(Image srcImg, int w, int h){
         BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = resizedImg.createGraphics();

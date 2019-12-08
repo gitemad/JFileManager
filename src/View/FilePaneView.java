@@ -17,7 +17,10 @@ public class FilePaneView extends JScrollPane {
 	private Dimension minSize;
 	private RectangleDrawerView rectDrawer;
 	
-	
+	/**
+	 * first constructor of class with following parameter requirement
+	 * @param panel the panel you want to add to pane for grid view 
+	 */
 	public FilePaneView(JPanel panel) {
 		super(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		rClickMenu = new JPopupMenu();
@@ -29,6 +32,10 @@ public class FilePaneView extends JScrollPane {
 
 	}
 	
+	/**
+	 * second constructor of class with following parameter requirement
+	 * @param table the table you want to show files in list view
+	 */
 	public FilePaneView(JTable table) {
 		super(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		this.table = table;

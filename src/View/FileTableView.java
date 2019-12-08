@@ -27,7 +27,10 @@ public class FileTableView extends JTable {
 //	private ListSelectionListener listSelectionListener;
 	private boolean cellSizesSet = false;
 	
-
+	/**
+	 * Only constructor of class with following parameter requirement
+	 * @param fileTableModel the model of file table
+	 */
 	public FileTableView(FileTableModel fileTableModel) {
 		super(fileTableModel);
 
@@ -42,12 +45,12 @@ public class FileTableView extends JTable {
 		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 //	    this.setAutoCreateRowSorter(true);
 		
-		//Sort by name and then by date
+		//Sort by type and then by name
 	    TableRowSorter<FileTableModel> sorter = new TableRowSorter<FileTableModel>(fileTableModel);
         this.setRowSorter(sorter);
         List<RowSorter.SortKey> sortKeys = new ArrayList<RowSorter.SortKey>();
+        sortKeys.add(new RowSorter.SortKey(3, SortOrder.ASCENDING));
         sortKeys.add(new RowSorter.SortKey(1, SortOrder.ASCENDING));
-        sortKeys.add(new RowSorter.SortKey(2, SortOrder.ASCENDING));
         sorter.setSortable(0, false);
         sorter.setSortKeys(sortKeys);
         
@@ -60,7 +63,7 @@ public class FileTableView extends JTable {
 	}
 	
 	
-		
+	// a method to set table data by passing files to it
 	private void setTableData(final File[] files) {
       SwingUtilities.invokeLater(new Runnable() {
           public void run() {
@@ -81,6 +84,7 @@ public class FileTableView extends JTable {
       });
   }
 	
+	// a method to set column width
     private void setColumnWidth(int column, int width) {
         TableColumn tableColumn = this.getColumnModel().getColumn(column);
         if (width < 0) {

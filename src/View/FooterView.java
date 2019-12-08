@@ -3,7 +3,7 @@ import javax.swing.*;
 
 import Controller.ViewButtonController;
 import Model.ViewButtonModel;
-import View.ViewButton;
+import View.ViewButtonView;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -15,8 +15,8 @@ import java.awt.event.*;
 public class FooterView extends JPanel {
 	
 	//View
-	private ViewButton listView;
-	private ViewButton gridView;
+	private ViewButtonView listView;
+	private ViewButtonView gridView;
 	
 	//Model
 	private ViewButtonModel listModel;
@@ -28,15 +28,18 @@ public class FooterView extends JPanel {
 
 	private FlowLayout layout;
 	
+	/**
+	 * Only constructor of class without any parameter requirement
+	 */
 	public FooterView() {
 		super();
 		//list button
-		listView = new ViewButton(new ImageIcon("img/listshow.png"), true);
+		listView = new ViewButtonView(new ImageIcon("img/listshow.png"), true);
 		listModel = new ViewButtonModel(true);
 		listController = new ViewButtonController(listModel, listView);
 		
 		//grid button
-		gridView = new ViewButton(new ImageIcon("img/gridshow.png"), false);
+		gridView = new ViewButtonView(new ImageIcon("img/gridshow.png"), false);
 		gridModel = new ViewButtonModel(false);
 		gridController = new ViewButtonController(gridModel, gridView);
 		
@@ -47,15 +50,24 @@ public class FooterView extends JPanel {
 		this.add(gridView);
 	}
 	
+	/**
+	 * add action listener to list view button
+	 * @param actionListener action listener you want to add to list view button
+	 */
 	public void addListListener(ActionListener actionListener) {
 		listView.addActionListener(actionListener);
 	}
 	
+	/**
+	 * add action listener to grid view button
+	 * @param actionListener
+	 */
 	public void addGridListener(ActionListener actionListener) {
 		gridView.addActionListener(actionListener);
 	}
 
 	/**
+	 * get the view button controller
 	 * @return the listController
 	 */
 	public ViewButtonController getListController() {
@@ -63,6 +75,7 @@ public class FooterView extends JPanel {
 	}
 
 	/**
+	 * get the view button controller
 	 * @return the gridController
 	 */
 	public ViewButtonController getGridController() {

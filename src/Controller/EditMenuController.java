@@ -11,7 +11,8 @@ public class EditMenuController {
 	private EditMenuView view;
 
 	/**
-	 * @param view
+	 * Only constructor of class with following parameter requirement
+	 * @param view the edit menu view
 	 */
 	public EditMenuController(EditMenuView view) {
 		this.view = view;

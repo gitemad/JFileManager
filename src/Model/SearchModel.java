@@ -4,7 +4,10 @@ public class SearchModel{
 	
 	private String text;
 	
-	
+	/**
+	 * Only constructor of class with following parameter requirement
+	 * @param text the text you want to search
+	 */
 	public SearchModel(String text) {
 		this.text = text;
 	}

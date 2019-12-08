@@ -1,3 +1,4 @@
+package View;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -10,8 +11,11 @@ public class TrayIconJFM {
 	private ActionListener open;
 	private ActionListener exit;
 	
-	
-	public TrayIconJFM(Frame frame) {
+	/**
+	 * Only constructor of class with following parameters requirement
+	 * @param frame the main frame of program
+	 */
+	public TrayIconJFM(FrameView frame) {
 	    tray = SystemTray.getSystemTray();
 	    image = Toolkit.getDefaultToolkit().getImage("img/icon.png");
 	    open = new ActionListener() {
@@ -22,7 +26,6 @@ public class TrayIconJFM {
 	    exit = new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
 	    		System.exit(0);
-//	    		frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 	    	}
 	    };
 	    
@@ -42,6 +45,10 @@ public class TrayIconJFM {
 	    }
 	}
 	
+	/**
+	 * get the system tray
+	 * @return the system tray
+	 */
 	public SystemTray getTray() {
 		return tray;
 	}

@@ -16,15 +16,18 @@ public class FileLabelController {
 	private Color select;
 	
 	/**
-	 * @param model
-	 * @param view
+	 * Only constructor of class with following parameter requirement
+	 * @param model the file label model
+	 * @param view the file label view 
 	 */
 	public FileLabelController(FileLabelModel model, FileLabelView view) {
 		this.model = model;
 		this.view = view;
 		unselect = view.getBackground();
-		hover = view.getBackground().darker();
-		select = view.getBackground().darker().darker();		
+		hover = new Color(0, 0, 255, 50);
+		select = new Color(0, 0, 255, 100);
+//		hover = view.getBackground().darker();
+//		select = view.getBackground().darker().darker();		
 		
 		view.addMouseListener(new MouseListener() {
 			
@@ -61,28 +64,42 @@ public class FileLabelController {
 		});
 	}
 
+	/**
+	 * set label to selected mode
+	 */
 	public void selected() {
 		model.setClicked(true);
 		view.setOpaque(true);
 		view.setBackground(select);
 	}
 	
+	/**
+	 * sert label to hover mode
+	 */
 	public void hover() {
 		view.setOpaque(true);
 		view.setBackground(hover);
 	}
 	
+	/**
+	 * set label to unselected mode
+	 */
 	public void unSelected() {
 		model.setClicked(false);
 		view.setBackground(unselect);
 		view.setOpaque(false);
 	}
 	
+	/**
+	 * Add mouse listener to file label
+	 * @param listener the listener to add
+	 */
 	public void addMouseListener(MouseListener listener) {
 		view.addMouseListener(listener);
 	}
 
 	/**
+	 * get the file label model
 	 * @return the model
 	 */
 	public FileLabelModel getModel() {
@@ -90,6 +107,7 @@ public class FileLabelController {
 	}
 
 	/**
+	 * get the file label view
 	 * @return the view
 	 */
 	public FileLabelView getView() {

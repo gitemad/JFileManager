@@ -17,6 +17,9 @@ public class EditMenuView extends JMenu {
 	private JMenuItem paste;
 	private JMenuItem sync;
 		
+	/**
+	 * Only constructor of class without any parameter requirement
+	 */
 	public EditMenuView() {
 		super("Edit");
 		this.setMnemonic(KeyEvent.VK_E);
@@ -49,6 +52,7 @@ public class EditMenuView extends JMenu {
 	}
 
 	/**
+	 * get the rename menu item
 	 * @return the rename
 	 */
 	public JMenuItem getRename() {
@@ -56,6 +60,7 @@ public class EditMenuView extends JMenu {
 	}
 
 	/**
+	 * get the copy menu item
 	 * @return the copy
 	 */
 	public JMenuItem getCopy() {
@@ -63,6 +68,7 @@ public class EditMenuView extends JMenu {
 	}
 
 	/**
+	 * get the cut menu item
 	 * @return the cut
 	 */
 	public JMenuItem getCut() {
@@ -70,6 +76,7 @@ public class EditMenuView extends JMenu {
 	}
 
 	/**
+	 * get the paste menu item
 	 * @return the paste
 	 */
 	public JMenuItem getPaste() {
@@ -77,6 +84,7 @@ public class EditMenuView extends JMenu {
 	}
 
 	/**
+	 * get the sync menu item
 	 * @return the sync
 	 */
 	public JMenuItem getSync() {

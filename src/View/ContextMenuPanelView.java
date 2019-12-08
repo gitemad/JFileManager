@@ -14,7 +14,9 @@ public class ContextMenuPanelView extends JPopupMenu {
 	JMenuItem newFolder;
 	JMenuItem properties;
 	
-	
+	/**
+	 * Only constructor of class without any parameter requirement
+	 */
 	public ContextMenuPanelView() {
 		paste = new JMenuItem("Paste");
 		newFile = new JMenuItem("New File");

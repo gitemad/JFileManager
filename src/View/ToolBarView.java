@@ -35,6 +35,9 @@ public class ToolBarView extends JToolBar {
 	private BorderLayout layout = new BorderLayout(15, 0);
 	private Insets margin = new Insets(0, 5, 0, 15);
 	
+	/**
+	 * Only constructor of class without any parameter requirement
+	 */
 	public ToolBarView() {
 		super();
 		

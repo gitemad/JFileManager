@@ -7,6 +7,10 @@ public class FileLabelModel {
 	private File file;
 	private boolean clicked;
 	
+	/**
+	 * Only constructor of class with following parameter requirement
+	 * @param file file you want to create label model of it
+	 */
 	public FileLabelModel(File file) {
 		
 		this.file = file;

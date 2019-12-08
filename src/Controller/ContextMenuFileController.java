@@ -10,6 +10,10 @@ public class ContextMenuFileController {
 
 	private ContextMenuFileView view;
 	
+	/**
+	 * Only constructor of class with following parameter requirement
+	 * @param view the context menu file view
+	 */
 	public ContextMenuFileController(ContextMenuFileView view) {
 		this.view = view;
 		

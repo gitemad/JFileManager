@@ -11,6 +11,9 @@ public class SyncFrameView extends JFrame  {
 	static final int MY_MINIMUM = 0;
 	static final int MY_MAXIMUM = 100;
 
+	/**
+	 * Only constructor of class without any parameter requirement
+	 */
 	public SyncFrameView() {
 		this.setSize(720, 480);
 		this.setResizable(false);
@@ -45,6 +48,7 @@ public class SyncFrameView extends JFrame  {
 	}
 
 	/**
+	 * get the start button
 	 * @return the start
 	 */
 	public JButton getStart() {
@@ -52,6 +56,7 @@ public class SyncFrameView extends JFrame  {
 	}
 
 	/**
+	 * get the progress bar
 	 * @return the pbar
 	 */
 	public JProgressBar getPbar() {

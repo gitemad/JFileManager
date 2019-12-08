@@ -19,14 +19,26 @@ public class FileTableModel extends AbstractTableModel {
         "Size",
     };
 
+    /**
+     * first constructor of class without parameter requirement
+     */
     public FileTableModel() {
         this(new File[0]);
     }
 
+    /**
+     * second constructor of class with following parameter requirement
+     * @param files the files you want to crate table model of them
+     */
     public FileTableModel(File[] files) {
         this.files = files;
     }
 
+    /**
+     * get value at specific row and column
+     * @param row the row number
+     * @param column the column number
+     */
     public Object getValueAt(int row, int column) {
         File file = files[row];
         switch (column) {
@@ -51,10 +63,16 @@ public class FileTableModel extends AbstractTableModel {
         return "";
     }
 
+    /**
+     * count the columns
+     */
     public int getColumnCount() {
         return columns.length;
     }
 
+    /**
+     * get the column class
+     */
     public Class<?> getColumnClass(int column) {
         switch (column) {
             case 0:
@@ -67,18 +85,33 @@ public class FileTableModel extends AbstractTableModel {
         return String.class;
     }
 
+    /**
+     * get column name
+     */
     public String getColumnName(int column) {
         return columns[column];
     }
 
+    /**
+     * get row count
+     */
     public int getRowCount() {
         return files.length;
     }
 
+    /**
+     * get the file at specific row
+     * @param row the row number
+     * @return the file i the entered row
+     */
     public File getFile(int row) {
         return files[row];
     }
 
+    /**
+     * set the files into table
+     * @param files the files to set
+     */
     public void setFiles(File[] files) {
         this.files = files;
         fireTableDataChanged();
@@ -90,6 +123,7 @@ public class FileTableModel extends AbstractTableModel {
 //		}
 //    }
     
+    // get the file type
     private String getFileType(File file) {
     	String extension = "";
     	String fileName = file.getName();
@@ -103,6 +137,7 @@ public class FileTableModel extends AbstractTableModel {
     	return extension;
     }
     
+    //get the file size
     private String getFileSize(File file) {
     	if (!file.isFile())
     		return "";

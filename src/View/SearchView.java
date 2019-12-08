@@ -16,6 +16,10 @@ public class SearchView extends JTextField {
 	private Border iconBorder;
 	private CompoundBorder border;
 
+	/**
+	 * Only constructor of class with following parameter requirement
+	 * @param model the search model
+	 */
 	public SearchView(SearchModel model) {
 		super(model.getText());
 		

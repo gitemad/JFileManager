@@ -11,7 +11,9 @@ public class FileTreeModel {
 	private FileSystemView fileSystemView;
 	private JTree tree;
 
-	
+	/**
+	 * Only constructor of class without parameter requirement
+	 */
 	public FileTreeModel() {
 		DefaultMutableTreeNode root = new DefaultMutableTreeNode();
 		fileSystemView = FileSystemView.getFileSystemView();
@@ -44,6 +46,9 @@ class FileTreeCellRenderer extends DefaultTreeCellRenderer {
     private FileSystemView fileSystemView;
     private JLabel label;
 
+    /**
+     * Only constructor of class without any parameter requirement
+     */
     public FileTreeCellRenderer() {
         label = new JLabel();
         label.setOpaque(true);

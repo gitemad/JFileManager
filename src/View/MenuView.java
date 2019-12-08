@@ -3,6 +3,7 @@ package View;
 import javax.swing.*;
 
 import Controller.EditMenuController;
+import Controller.HelpMenuController;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -20,7 +21,11 @@ public class MenuView extends JMenuBar{
 	
 	//Controller
 	private EditMenuController editController;
+	private HelpMenuController helpController;
 	
+	/**
+	 * Only constructor of class without any parameter requirement
+	 */
 	public MenuView() {
 		super();
 		fileView = new FileMenuView();
@@ -31,6 +36,7 @@ public class MenuView extends JMenuBar{
 		this.add(editView);
 
 		helpView = new HelpMenuView();
+		helpController = new HelpMenuController(helpView);
 		this.add(helpView);
 		
 	}

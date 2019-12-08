@@ -20,7 +20,10 @@ public class ContextMenuFileView extends JPopupMenu {
 	private JMenuItem delete;
 	private JMenuItem properties;
 	
-	
+	/**
+	 * Only constructor of class with following parameter requirement
+	 * @param file the file you want to add context menu to it
+	 */
 	public ContextMenuFileView(File file) {
 		this.file = file;
 		open = new JMenuItem("Open");
@@ -52,6 +55,7 @@ public class ContextMenuFileView extends JPopupMenu {
 
 
 	/**
+	 * get the open menu item
 	 * @return the open
 	 */
 	public JMenuItem getOpen() {
@@ -60,6 +64,7 @@ public class ContextMenuFileView extends JPopupMenu {
 
 
 	/**
+	 * get the rename menu item
 	 * @return the rename
 	 */
 	public JMenuItem getRename() {
@@ -68,6 +73,7 @@ public class ContextMenuFileView extends JPopupMenu {
 
 
 	/**
+	 * get the copy menu item
 	 * @return the copy
 	 */
 	public JMenuItem getCopy() {
@@ -76,6 +82,7 @@ public class ContextMenuFileView extends JPopupMenu {
 
 
 	/**
+	 * get the cut menu item
 	 * @return the cut
 	 */
 	public JMenuItem getCut() {
@@ -84,6 +91,7 @@ public class ContextMenuFileView extends JPopupMenu {
 
 
 	/**
+	 * get the delete menu item
 	 * @return the delete
 	 */
 	public JMenuItem getDelete() {
@@ -92,6 +100,7 @@ public class ContextMenuFileView extends JPopupMenu {
 
 
 	/**
+	 * get the properties menu item
 	 * @return the properties
 	 */
 	public JMenuItem getProperties() {
@@ -99,8 +108,8 @@ public class ContextMenuFileView extends JPopupMenu {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * get the file
+	 * @return the file
 	 */
 	public File getFile() {
 		return file;

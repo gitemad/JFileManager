@@ -11,6 +11,10 @@ public class AddressBarView extends JTextField {
 	private Font font;
 	private Insets margin = new Insets(0, 15, 0, 0);
 	
+	/**
+	 * Only constructor of class with following parameter requirement
+	 * @param model the address bar model
+	 */
 	public AddressBarView(AddressBarModel model) {
 		super(model.getPath());
 		font = new Font("Calibri", 20, 20);

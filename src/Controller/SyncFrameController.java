@@ -12,7 +12,8 @@ public class SyncFrameController {
 	private SyncFrameView view;
 
 	/**
-	 * @param view
+	 * Only constructor of class with following parameter requirement
+	 * @param view the sync frame view
 	 */
 	public SyncFrameController(SyncFrameView view) {
 		this.view = view;
@@ -26,6 +27,9 @@ public class SyncFrameController {
 	}
 	
 
+	/**
+	 * Update the progress bar
+	 */
 	public void updateBar() {
 		view.getStart().setEnabled(false);
 

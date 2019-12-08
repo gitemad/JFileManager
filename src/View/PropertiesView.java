@@ -16,10 +16,15 @@ import javax.swing.*;
  */
 public class PropertiesView extends JOptionPane {
 		
+	/**
+	 * Only constructor of class with following parameter requirement
+	 * @param file the file you want to see properties of it
+	 */
 	public PropertiesView(File file) {
 		this.showMessageDialog(null, getData(file), "Properties", JOptionPane.PLAIN_MESSAGE);
 	}
 	
+	//get data of file
 	private String getData(File file) {
 		String props = "<html>";
 		props += "Type:&ensp&emsp &emsp &emsp ";
@@ -46,6 +51,7 @@ public class PropertiesView extends JOptionPane {
 		return props;
 	}
 	
+	//get type of file
 	private String getType(File file) {
 		if (file.isDirectory()) {
 			return "Folder";
@@ -54,6 +60,7 @@ public class PropertiesView extends JOptionPane {
 		}
 	}
 	
+	//get created date of file
 	private Date getCreatedDate(File file) {
 		Path filePath;
 		try {
@@ -74,6 +81,7 @@ public class PropertiesView extends JOptionPane {
         return creationDate;
 	}
 	
+	// get the size of file
 	private String getFileSize(File file) {
 		long bytes;
     	if (!file.isFile()) {
@@ -100,6 +108,7 @@ public class PropertiesView extends JOptionPane {
 		return "";
     }
 	
+	//get the size of folder
 	private long folderSize(File directory) {
 	    long length = 0;
 	    for (File file : directory.listFiles()) {
@@ -111,6 +120,7 @@ public class PropertiesView extends JOptionPane {
 	    return length;
 	}
 	
+	//count number of childs of a directory
 	private String countChilds(File file) {
 		String childs = "";
 		File[] subFolders = file.listFiles(File::isDirectory);
