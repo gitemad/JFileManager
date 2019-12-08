@@ -14,6 +14,7 @@ public class NavigateButtonView extends JButton {
 	public NavigateButtonView(ImageIcon icon) {
 		super(icon);
 		
+		this.setEnabled(false);
 		this.setPreferredSize(size);
 	}
 }

@@ -1,4 +1,5 @@
 package View;
+
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
@@ -19,15 +20,14 @@ import java.io.File;
  *
  */
 public class FrameView extends JFrame {
-	
-	//Model
+
+	// Model
 	private FileTreeModel treeModel;
 	private FileTableModel fileTableModel;
 	private FilePanelModel filePanelModel;
 	private AddressBarModel addressBarModel;
 
-	
-	//View
+	// View
 	private ToolBarView toolBarView;
 	private FooterView footerView;
 	private FileTreeView treeView;
@@ -35,20 +35,20 @@ public class FrameView extends JFrame {
 	private MenuView menuBarView;
 	private FilePaneView filePane;
 	private FileTableView fileTableView;
-	
-	//Controller
+
+	// Controller
 	private FileTreeController treeController;
 	private AddressBarController addressBarController;
 	private FilePanelController filePanelController;
-//	private FilePanelController filePanelController;
-	
-	
+	private NavigateButtonController backButtonController;
+	private NavigateButtonController forwardButtonController;
+
 	private Image icon;
 	private JPanel content;
 	private JPanel header;
 	private JSplitPane split;
 	private SystemTray tray;
-	
+
 	/**
 	 * Only constructor of class without any parameter requirement
 	 */
@@ -69,52 +69,87 @@ public class FrameView extends JFrame {
 		toolBarView = new ToolBarView();
 		footerView = new FooterView();
 		tray = new TrayIconJFM(this).getTray();
-		
+
 		fileTableModel = new FileTableModel();
 		fileTableView = new FileTableView(fileTableModel);
-		
-		
-		
+
 		treeModel = new FileTreeModel();
 		treeView = new FileTreeView(treeModel.getTree());
 		treeController = new FileTreeController(treeModel, treeView);
-		
+
 		addressBarController = toolBarView.getAddressBarController();
 		addressBarModel = addressBarController.getModel();
-		
+
+		backButtonController = toolBarView.getBackController();
+		forwardButtonController = toolBarView.getForwardController();
+
 		filePanelModel = new FilePanelModel(new File(addressBarModel.getPath()));
 		filePanelView = new FilePanelView(filePanelModel);
 		filePanelController = new FilePanelController(filePanelModel, filePanelView);
-		
+
 		addressBarController.addKeyListener(new KeyListener() {
 			@Override
 			public void keyTyped(KeyEvent arg0) {
 			}
+
 			@Override
 			public void keyReleased(KeyEvent arg0) {
 			}
+
 			@Override
 			public void keyPressed(KeyEvent k) {
 				if (k.getKeyCode() == KeyEvent.VK_ENTER) {
-					File f = new File(addressBarModel.getPath());
-					fileTableModel.setTableData(f.listFiles());
-					filePanelController.setFolder(f);
+					File f = new File(addressBarController.getView().getText());
+					if (f.exists() && f.isDirectory()) {
+						backButtonController.addMemento(addressBarModel.getPath());
+						addressBarController.setPath(f.getPath());
+					} else {
+						addressBarController.getView().setText(addressBarModel.getPath());
+					}
+					if (k.getKeyCode() == KeyEvent.VK_ENTER) {
+						File ff = new File(addressBarModel.getPath());
+						fileTableModel.setTableData(ff.listFiles());
+						filePanelController.setFolder(ff);
+					}
 				}
 			}
 		});
-		
+
+		backButtonController.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				forwardButtonController.addMemento(addressBarModel.getPath());
+				addressBarController.setPath(backButtonController.restoreMemento());
+				File f = new File(addressBarModel.getPath());
+				fileTableModel.setTableData(f.listFiles());
+				filePanelController.setFolder(f);
+			}
+		});
+
+		forwardButtonController.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				backButtonController.addMemento(addressBarModel.getPath());
+				addressBarController.setPath(forwardButtonController.restoreMemento());
+				File f = new File(addressBarModel.getPath());
+				fileTableModel.setTableData(f.listFiles());
+				filePanelController.setFolder(f);
+			}
+		});
+
 		treeController.addTreeSelectionListener(new TreeSelectionListener() {
 			@Override
 			public void valueChanged(TreeSelectionEvent tse) {
 				DefaultMutableTreeNode node = (DefaultMutableTreeNode) tse.getPath().getLastPathComponent();
 				treeModel.setCurrentNode((File) node.getUserObject());
 				treeController.addChildren(node);
+				backButtonController.addMemento(addressBarModel.getPath());
 				addressBarController.setPath(treeModel.getCurrentNode().getPath());
 				fileTableModel.setTableData(treeModel.getCurrentNode().listFiles());
 				filePanelController.setFolder(treeModel.getCurrentNode());
 			}
 		});
-		
+
 		footerView.addListListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent eve) {
@@ -123,7 +158,7 @@ public class FrameView extends JFrame {
 				listView();
 			}
 		});
-		
+
 		footerView.addGridListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent eve) {
@@ -132,51 +167,49 @@ public class FrameView extends JFrame {
 				gridView();
 			}
 		});
-		
+
 		listView();
 	}
-	
-	
+
 	// a function for list view
 	private void listView() {
 		reconstruct();
-		
-		
-		filePane = new FilePaneView(fileTableView);				
+
+		filePane = new FilePaneView(fileTableView);
 		split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treeView, filePane);
-		
-		content.add(split, BorderLayout.CENTER);		
+
+		content.add(split, BorderLayout.CENTER);
 		content.add(footerView, BorderLayout.SOUTH);
-		
+
 		this.setContentPane(content);
-	
+
 		this.setVisible(true);
 	}
-	
-	//a function for grid view
+
+	// a function for grid view
 	private void gridView() {
 		reconstruct();
-		
+
 		filePane = new FilePaneView(filePanelView);
 		split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treeView, filePane);
 		content.add(split, BorderLayout.CENTER);
-		
+
 		content.add(footerView, BorderLayout.SOUTH);
-		
+
 		this.setContentPane(content);
-		
+
 		this.setVisible(true);
 	}
-	
+
 	private void reconstruct() {
 		header.setLayout(new BorderLayout());
 		header.add(menuBarView, BorderLayout.NORTH);
 		header.add(toolBarView, BorderLayout.SOUTH);
-		
+
 		content = new JPanel();
 		content.setLayout(new BorderLayout());
 		content.add(header, BorderLayout.NORTH);
-	
+
 	}
-	
+
 }

@@ -5,6 +5,8 @@ import Controller.*;
 import Model.*;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * @author Emad
@@ -42,9 +44,9 @@ public class ToolBarView extends JToolBar {
 	public ToolBarView() {
 		super();
 		
-		backModel = new NavigateButtonModel(true);
-		forwardModel = new NavigateButtonModel(true);
-		parentModel = new NavigateButtonModel(true);
+		backModel = new NavigateButtonModel(false, 10);
+		forwardModel = new NavigateButtonModel(false, 10);
+		parentModel = new NavigateButtonModel(false, 10);
 		addressModel = new AddressBarModel("Desktop");
 		searchModel = new SearchModel("Search");
 		

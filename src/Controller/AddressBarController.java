@@ -27,29 +27,29 @@ public class AddressBarController {
 		this.view = view;
 		
 		
-		KeyListener k = new KeyListener() {
-			@Override
-			public void keyTyped(KeyEvent arg0) {
-			}
-			
-			@Override
-			public void keyReleased(KeyEvent arg0) {
-			}
-			
-			@Override
-			public void keyPressed(KeyEvent k) {
-				if (k.getKeyCode() == KeyEvent.VK_ENTER) {
-					File f = new File(view.getText());
-					if (f.exists() && f.isDirectory()) {
-						setPath(f.getPath());
-					} else {
-						view.setText(model.getPath());
-					}
-				}
-			}
-		};
+//		KeyListener k = new KeyListener() {
+//			@Override
+//			public void keyTyped(KeyEvent arg0) {
+//			}
+//			
+//			@Override
+//			public void keyReleased(KeyEvent arg0) {
+//			}
+//			
+//			@Override
+//			public void keyPressed(KeyEvent k) {
+//				if (k.getKeyCode() == KeyEvent.VK_ENTER) {
+//					File f = new File(view.getText());
+//					if (f.exists() && f.isDirectory()) {
+//						setPath(f.getPath());
+//					} else {
+//						view.setText(model.getPath());
+//					}
+//				}
+//			}
+//		};
 		
-		this.view.addKeyListener(k);
+//		this.view.addKeyListener(k);
 	}
 	
 	

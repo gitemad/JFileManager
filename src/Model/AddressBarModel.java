@@ -1,5 +1,7 @@
 package Model;
 
+import Model.Originator.Memento;
+
 public class AddressBarModel {
 	
 	private String path;
