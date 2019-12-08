@@ -42,6 +42,7 @@ public class FrameView extends JFrame {
 	private FilePanelController filePanelController;
 	private NavigateButtonController backButtonController;
 	private NavigateButtonController forwardButtonController;
+	private NavigateButtonController parentButtonController;
 
 	private Image icon;
 	private JPanel content;
@@ -82,6 +83,7 @@ public class FrameView extends JFrame {
 
 		backButtonController = toolBarView.getBackController();
 		forwardButtonController = toolBarView.getForwardController();
+		parentButtonController = toolBarView.getParentController();
 
 		filePanelModel = new FilePanelModel(new File(addressBarModel.getPath()));
 		filePanelView = new FilePanelView(filePanelModel);
@@ -106,10 +108,13 @@ public class FrameView extends JFrame {
 					} else {
 						addressBarController.getView().setText(addressBarModel.getPath());
 					}
-					if (k.getKeyCode() == KeyEvent.VK_ENTER) {
-						File ff = new File(addressBarModel.getPath());
-						fileTableModel.setTableData(ff.listFiles());
-						filePanelController.setFolder(ff);
+					File ff = new File(addressBarModel.getPath());
+					fileTableModel.setTableData(ff.listFiles());
+					filePanelController.setFolder(ff);
+					if (ff.getParentFile() != null) {
+						parentButtonController.setEnable(true);
+					} else {
+						parentButtonController.setEnable(false);
 					}
 				}
 			}
@@ -123,6 +128,11 @@ public class FrameView extends JFrame {
 				File f = new File(addressBarModel.getPath());
 				fileTableModel.setTableData(f.listFiles());
 				filePanelController.setFolder(f);
+				if (f.getParentFile() != null) {
+					parentButtonController.setEnable(true);
+				} else {
+					parentButtonController.setEnable(false);
+				}
 			}
 		});
 
@@ -134,6 +144,27 @@ public class FrameView extends JFrame {
 				File f = new File(addressBarModel.getPath());
 				fileTableModel.setTableData(f.listFiles());
 				filePanelController.setFolder(f);
+				if (f.getParentFile() != null) {
+					parentButtonController.setEnable(true);
+				} else {
+					parentButtonController.setEnable(false);
+				}
+			}
+		});
+		
+		parentButtonController.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				File f = new File(addressBarModel.getPath());
+				f = f.getParentFile();
+				addressBarController.setPath(f.getPath());
+				fileTableModel.setTableData(f.listFiles());
+				filePanelController.setFolder(f);
+				if (f.getParentFile() != null) {
+					parentButtonController.setEnable(true);
+				} else {
+					parentButtonController.setEnable(false);
+				}
 			}
 		});
 
@@ -147,6 +178,11 @@ public class FrameView extends JFrame {
 				addressBarController.setPath(treeModel.getCurrentNode().getPath());
 				fileTableModel.setTableData(treeModel.getCurrentNode().listFiles());
 				filePanelController.setFolder(treeModel.getCurrentNode());
+				if (treeModel.getCurrentNode().getParentFile() != null) {
+					parentButtonController.setEnable(true);
+				} else {
+					parentButtonController.setEnable(false);
+				}
 			}
 		});
 
@@ -170,6 +206,8 @@ public class FrameView extends JFrame {
 
 		listView();
 	}
+	
+	
 
 	// a function for list view
 	private void listView() {
