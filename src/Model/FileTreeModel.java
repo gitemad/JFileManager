@@ -10,6 +10,7 @@ public class FileTreeModel {
 
 	private FileSystemView fileSystemView;
 	private JTree tree;
+	private File currentNode;
 
 	/**
 	 * Only constructor of class without parameter requirement
@@ -20,6 +21,7 @@ public class FileTreeModel {
 		File[] roots = fileSystemView.getRoots();
 		for (File fileSystemRoot : roots) {
 			DefaultMutableTreeNode node = new DefaultMutableTreeNode(fileSystemRoot);
+			this.currentNode = (File) node.getUserObject();
 			root.add(node);
 			File[] files = fileSystemView.getFiles(fileSystemRoot, true);
 			for (File file : files) {
@@ -33,8 +35,26 @@ public class FileTreeModel {
 		tree.expandRow(0);
 	}
 	
+	
+	
+	/**
+	 * @param currentNode the currentNode to set
+	 */
+	public void setCurrentNode(File currentNode) {
+		this.currentNode = currentNode;
+	}
+
+
+
 	public JTree getTree() {
 		return tree;
+	}
+
+	/**
+	 * @return the currentNode
+	 */
+	public File getCurrentNode() {
+		return currentNode;
 	}
 
 	

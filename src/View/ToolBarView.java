@@ -30,6 +30,7 @@ public class ToolBarView extends JToolBar {
 	private NavigateButtonController backController;
 	private NavigateButtonController forwardController;
 	private NavigateButtonController parentController;
+	private AddressBarController addressBarController;
 	
 	private JPanel buttonsPanel = new JPanel();
 	private BorderLayout layout = new BorderLayout(15, 0);
@@ -56,6 +57,7 @@ public class ToolBarView extends JToolBar {
 		backController = new NavigateButtonController(backModel, backView);
 		forwardController = new NavigateButtonController(forwardModel, forwardView);
 		parentController = new NavigateButtonController(parentModel, parentView);
+		addressBarController = new AddressBarController(addressModel, addressView);
 		
 		
 		this.setLayout(layout);		
@@ -70,7 +72,34 @@ public class ToolBarView extends JToolBar {
 		this.add(addressView, BorderLayout.CENTER);
 		this.add(searchView, BorderLayout.EAST);
 	}
-	
+
+	/**
+	 * @return the backController
+	 */
+	public NavigateButtonController getBackController() {
+		return backController;
+	}
+
+	/**
+	 * @return the forwardController
+	 */
+	public NavigateButtonController getForwardController() {
+		return forwardController;
+	}
+
+	/**
+	 * @return the parentController
+	 */
+	public NavigateButtonController getParentController() {
+		return parentController;
+	}
+
+	/**
+	 * @return the addressBarController
+	 */
+	public AddressBarController getAddressBarController() {
+		return addressBarController;
+	}
 	
 }
 

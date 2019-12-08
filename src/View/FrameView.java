@@ -1,5 +1,8 @@
 package View;
 import javax.swing.*;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 import Controller.*;
 import Model.*;
@@ -7,6 +10,7 @@ import Model.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 /**
  * @author Emad
@@ -61,7 +65,6 @@ public class FrameView extends JFrame {
 		tray = new TrayIconJFM(this).getTray();
 		
 		
-		
 		footerView.addListListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent eve) {
@@ -86,17 +89,7 @@ public class FrameView extends JFrame {
 	
 	// a function for list view
 	private void listView() {
-		header.setLayout(new BorderLayout());
-		header.add(menuBarView, BorderLayout.NORTH);
-		header.add(toolBarView, BorderLayout.SOUTH);
-		
-		content = new JPanel();
-		content.setLayout(new BorderLayout());
-		content.add(header, BorderLayout.NORTH);
-	
-		treeModel = new FileTreeModel();
-		treeView = new FileTreeView(treeModel.getTree());
-		treeController = new FileTreeController(treeModel, treeView);
+		reconstruct();
 		fileTableModel = new FileTableModel();
 		fileTableView = new FileTableView(fileTableModel);
 		filePane = new FilePaneView(fileTableView);				
@@ -112,17 +105,7 @@ public class FrameView extends JFrame {
 	
 	//a function for grid view
 	private void gridView() {
-		header.setLayout(new BorderLayout());
-		header.add(menuBarView, BorderLayout.NORTH);
-		header.add(toolBarView, BorderLayout.SOUTH);
-		
-		content = new JPanel();
-		content.setLayout(new BorderLayout());
-		content.add(header, BorderLayout.NORTH);
-			
-		treeModel = new FileTreeModel();
-		treeView = new FileTreeView(treeModel.getTree());
-		treeController = new FileTreeController(treeModel, treeView);
+		reconstruct();
 
 		filePanelView = new FilePanelView();
 		filePane = new FilePaneView(filePanelView);
@@ -134,6 +117,29 @@ public class FrameView extends JFrame {
 		this.setContentPane(content);
 		
 		this.setVisible(true);
+	}
+	
+	private void reconstruct() {
+		header.setLayout(new BorderLayout());
+		header.add(menuBarView, BorderLayout.NORTH);
+		header.add(toolBarView, BorderLayout.SOUTH);
+		
+		content = new JPanel();
+		content.setLayout(new BorderLayout());
+		content.add(header, BorderLayout.NORTH);
+	
+		treeModel = new FileTreeModel();
+		treeView = new FileTreeView(treeModel.getTree());
+		treeController = new FileTreeController(treeModel, treeView);
+		treeController.addTreeSelectionListener(new TreeSelectionListener() {
+			@Override
+			public void valueChanged(TreeSelectionEvent tse) {
+				DefaultMutableTreeNode node = (DefaultMutableTreeNode) tse.getPath().getLastPathComponent();
+				treeModel.setCurrentNode((File) node.getUserObject());
+				treeController.addChildren(node);
+				toolBarView.getAddressBarController().setPath(treeModel.getCurrentNode().getPath());
+			}
+		});
 	}
 	
 }

@@ -1,5 +1,7 @@
 package Controller;
 
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 
 import javax.swing.*;
@@ -24,19 +26,53 @@ public class FileTreeController {
 		this.model = model;
 		this.view = view;
 		
-		TreeSelectionListener treeSelectionListener = new TreeSelectionListener() {
-			public void valueChanged(TreeSelectionEvent tse) {
-				DefaultMutableTreeNode node = (DefaultMutableTreeNode) tse.getPath().getLastPathComponent();
-				addChildren(node);
+		model.getTree().addMouseListener(new MouseListener() {
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
 			}
-		};
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+			}
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+			}
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				JTree jTree = model.getTree();
+				if(jTree.isCollapsed(jTree.getRowForLocation(e.getX(),e.getY()))) {
+					jTree.expandRow(jTree.getRowForLocation(e.getX(),e.getY()));
+				}
+				else {
+					jTree.collapseRow(jTree.getRowForLocation(e.getX(),e.getY()));
+				}				
+			}
+		});
 
-		model.getTree().addTreeSelectionListener(treeSelectionListener);
+//		TreeSelectionListener treeSelectionListener = new TreeSelectionListener() {
+//			@Override
+//			public void valueChanged(TreeSelectionEvent tse) {
+//				DefaultMutableTreeNode node = (DefaultMutableTreeNode) tse.getPath().getLastPathComponent();
+//				FileTreeController.this.model.setCurrentNode((File) node.getUserObject());
+//				addChildren(node);
+//			}
+//		};
+
+//		FileTreeController.this.model.getTree().addTreeSelectionListener(treeSelectionListener);
 		
 	}
 	
-	//add children to a node of tree
-	private void addChildren(final DefaultMutableTreeNode node) {
+	public void addTreeSelectionListener(TreeSelectionListener tse) {
+		model.getTree().addTreeSelectionListener(tse);
+	}
+	
+	/**
+	 * add children of a node
+	 * @param node the parent node
+	 */
+	public void addChildren(final DefaultMutableTreeNode node) {
 		FileSystemView fileSystemView = FileSystemView.getFileSystemView();
 		SwingWorker worker = new SwingWorker() {
 			@Override
