@@ -111,11 +111,7 @@ public class FrameView extends JFrame {
 					File ff = new File(addressBarModel.getPath());
 					fileTableModel.setTableData(ff.listFiles());
 					filePanelController.setFolder(ff);
-					if (ff.getParentFile() != null) {
-						parentButtonController.setEnable(true);
-					} else {
-						parentButtonController.setEnable(false);
-					}
+					hasParent(ff);
 				}
 			}
 		});
@@ -128,11 +124,7 @@ public class FrameView extends JFrame {
 				File f = new File(addressBarModel.getPath());
 				fileTableModel.setTableData(f.listFiles());
 				filePanelController.setFolder(f);
-				if (f.getParentFile() != null) {
-					parentButtonController.setEnable(true);
-				} else {
-					parentButtonController.setEnable(false);
-				}
+				hasParent(f);
 			}
 		});
 
@@ -144,11 +136,7 @@ public class FrameView extends JFrame {
 				File f = new File(addressBarModel.getPath());
 				fileTableModel.setTableData(f.listFiles());
 				filePanelController.setFolder(f);
-				if (f.getParentFile() != null) {
-					parentButtonController.setEnable(true);
-				} else {
-					parentButtonController.setEnable(false);
-				}
+				hasParent(f);
 			}
 		});
 		
@@ -160,11 +148,7 @@ public class FrameView extends JFrame {
 				addressBarController.setPath(f.getPath());
 				fileTableModel.setTableData(f.listFiles());
 				filePanelController.setFolder(f);
-				if (f.getParentFile() != null) {
-					parentButtonController.setEnable(true);
-				} else {
-					parentButtonController.setEnable(false);
-				}
+				hasParent(f);
 			}
 		});
 
@@ -178,11 +162,7 @@ public class FrameView extends JFrame {
 				addressBarController.setPath(treeModel.getCurrentNode().getPath());
 				fileTableModel.setTableData(treeModel.getCurrentNode().listFiles());
 				filePanelController.setFolder(treeModel.getCurrentNode());
-				if (treeModel.getCurrentNode().getParentFile() != null) {
-					parentButtonController.setEnable(true);
-				} else {
-					parentButtonController.setEnable(false);
-				}
+				hasParent(treeModel.getCurrentNode());
 			}
 		});
 
@@ -250,4 +230,11 @@ public class FrameView extends JFrame {
 
 	}
 
+	private void hasParent(File file) {
+		if (file.getParentFile() != null) {
+			parentButtonController.setEnable(true);
+		} else {
+			parentButtonController.setEnable(false);
+		}
+	}
 }
