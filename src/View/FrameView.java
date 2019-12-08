@@ -4,8 +4,6 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import com.sun.media.sound.ModelAbstractChannelMixer;
-
 import Controller.*;
 import Model.*;
 
@@ -72,6 +70,14 @@ public class FrameView extends JFrame {
 		footerView = new FooterView();
 		tray = new TrayIconJFM(this).getTray();
 		
+		fileTableModel = new FileTableModel();
+		fileTableView = new FileTableView(fileTableModel);
+		
+		
+		
+		treeModel = new FileTreeModel();
+		treeView = new FileTreeView(treeModel.getTree());
+		treeController = new FileTreeController(treeModel, treeView);
 		
 		addressBarController = toolBarView.getAddressBarController();
 		addressBarModel = addressBarController.getModel();
@@ -94,6 +100,18 @@ public class FrameView extends JFrame {
 					fileTableModel.setTableData(f.listFiles());
 					filePanelController.setFolder(f);
 				}
+			}
+		});
+		
+		treeController.addTreeSelectionListener(new TreeSelectionListener() {
+			@Override
+			public void valueChanged(TreeSelectionEvent tse) {
+				DefaultMutableTreeNode node = (DefaultMutableTreeNode) tse.getPath().getLastPathComponent();
+				treeModel.setCurrentNode((File) node.getUserObject());
+				treeController.addChildren(node);
+				addressBarController.setPath(treeModel.getCurrentNode().getPath());
+				fileTableModel.setTableData(treeModel.getCurrentNode().listFiles());
+				filePanelController.setFolder(treeModel.getCurrentNode());
 			}
 		});
 		
@@ -123,19 +141,7 @@ public class FrameView extends JFrame {
 	private void listView() {
 		reconstruct();
 		
-		treeController.addTreeSelectionListener(new TreeSelectionListener() {
-			@Override
-			public void valueChanged(TreeSelectionEvent tse) {
-				DefaultMutableTreeNode node = (DefaultMutableTreeNode) tse.getPath().getLastPathComponent();
-				treeModel.setCurrentNode((File) node.getUserObject());
-				treeController.addChildren(node);
-				addressBarController.setPath(treeModel.getCurrentNode().getPath());
-				fileTableModel.setTableData(treeModel.getCurrentNode().listFiles());
-			}
-		});
 		
-		fileTableModel = new FileTableModel();
-		fileTableView = new FileTableView(fileTableModel);
 		filePane = new FilePaneView(fileTableView);				
 		split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treeView, filePane);
 		
@@ -150,23 +156,6 @@ public class FrameView extends JFrame {
 	//a function for grid view
 	private void gridView() {
 		reconstruct();
-		
-		filePanelModel = new FilePanelModel(new File(addressBarModel.getPath()));
-		filePanelView = new FilePanelView(filePanelModel);
-		filePanelController = new FilePanelController(filePanelModel, filePanelView);
-		
-		treeController.addTreeSelectionListener(new TreeSelectionListener() {
-			@Override
-			public void valueChanged(TreeSelectionEvent tse) {
-				DefaultMutableTreeNode node = (DefaultMutableTreeNode) tse.getPath().getLastPathComponent();
-				treeModel.setCurrentNode((File) node.getUserObject());
-				treeController.addChildren(node);
-				addressBarController.setPath(treeModel.getCurrentNode().getPath());
-				filePanelController.setFolder(treeModel.getCurrentNode());
-			}
-		});
-		
-		
 		
 		filePane = new FilePaneView(filePanelView);
 		split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treeView, filePane);
@@ -188,9 +177,6 @@ public class FrameView extends JFrame {
 		content.setLayout(new BorderLayout());
 		content.add(header, BorderLayout.NORTH);
 	
-		treeModel = new FileTreeModel();
-		treeView = new FileTreeView(treeModel.getTree());
-		treeController = new FileTreeController(treeModel, treeView);
 	}
 	
 }
