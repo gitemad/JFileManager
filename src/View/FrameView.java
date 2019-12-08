@@ -4,12 +4,16 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import com.sun.media.sound.ModelAbstractChannelMixer;
+
 import Controller.*;
 import Model.*;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 
 /**
@@ -21,6 +25,8 @@ public class FrameView extends JFrame {
 	//Model
 	private FileTreeModel treeModel;
 	private FileTableModel fileTableModel;
+	private FilePanelModel filePanelModel;
+	private AddressBarModel addressBarModel;
 
 	
 	//View
@@ -34,6 +40,8 @@ public class FrameView extends JFrame {
 	
 	//Controller
 	private FileTreeController treeController;
+	private AddressBarController addressBarController;
+	private FilePanelController filePanelController;
 //	private FilePanelController filePanelController;
 	
 	
@@ -65,6 +73,30 @@ public class FrameView extends JFrame {
 		tray = new TrayIconJFM(this).getTray();
 		
 		
+		addressBarController = toolBarView.getAddressBarController();
+		addressBarModel = addressBarController.getModel();
+		
+		filePanelModel = new FilePanelModel(new File(addressBarModel.getPath()));
+		filePanelView = new FilePanelView(filePanelModel);
+		filePanelController = new FilePanelController(filePanelModel, filePanelView);
+		
+		addressBarController.addKeyListener(new KeyListener() {
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+			}
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+			}
+			@Override
+			public void keyPressed(KeyEvent k) {
+				if (k.getKeyCode() == KeyEvent.VK_ENTER) {
+					File f = new File(addressBarModel.getPath());
+					fileTableModel.setTableData(f.listFiles());
+					filePanelController.setFolder(f);
+				}
+			}
+		});
+		
 		footerView.addListListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent eve) {
@@ -90,6 +122,18 @@ public class FrameView extends JFrame {
 	// a function for list view
 	private void listView() {
 		reconstruct();
+		
+		treeController.addTreeSelectionListener(new TreeSelectionListener() {
+			@Override
+			public void valueChanged(TreeSelectionEvent tse) {
+				DefaultMutableTreeNode node = (DefaultMutableTreeNode) tse.getPath().getLastPathComponent();
+				treeModel.setCurrentNode((File) node.getUserObject());
+				treeController.addChildren(node);
+				addressBarController.setPath(treeModel.getCurrentNode().getPath());
+				fileTableModel.setTableData(treeModel.getCurrentNode().listFiles());
+			}
+		});
+		
 		fileTableModel = new FileTableModel();
 		fileTableView = new FileTableView(fileTableModel);
 		filePane = new FilePaneView(fileTableView);				
@@ -106,8 +150,24 @@ public class FrameView extends JFrame {
 	//a function for grid view
 	private void gridView() {
 		reconstruct();
-
-		filePanelView = new FilePanelView();
+		
+		filePanelModel = new FilePanelModel(new File(addressBarModel.getPath()));
+		filePanelView = new FilePanelView(filePanelModel);
+		filePanelController = new FilePanelController(filePanelModel, filePanelView);
+		
+		treeController.addTreeSelectionListener(new TreeSelectionListener() {
+			@Override
+			public void valueChanged(TreeSelectionEvent tse) {
+				DefaultMutableTreeNode node = (DefaultMutableTreeNode) tse.getPath().getLastPathComponent();
+				treeModel.setCurrentNode((File) node.getUserObject());
+				treeController.addChildren(node);
+				addressBarController.setPath(treeModel.getCurrentNode().getPath());
+				filePanelController.setFolder(treeModel.getCurrentNode());
+			}
+		});
+		
+		
+		
 		filePane = new FilePaneView(filePanelView);
 		split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treeView, filePane);
 		content.add(split, BorderLayout.CENTER);
@@ -131,15 +191,6 @@ public class FrameView extends JFrame {
 		treeModel = new FileTreeModel();
 		treeView = new FileTreeView(treeModel.getTree());
 		treeController = new FileTreeController(treeModel, treeView);
-		treeController.addTreeSelectionListener(new TreeSelectionListener() {
-			@Override
-			public void valueChanged(TreeSelectionEvent tse) {
-				DefaultMutableTreeNode node = (DefaultMutableTreeNode) tse.getPath().getLastPathComponent();
-				treeModel.setCurrentNode((File) node.getUserObject());
-				treeController.addChildren(node);
-				toolBarView.getAddressBarController().setPath(treeModel.getCurrentNode().getPath());
-			}
-		});
 	}
 	
 }

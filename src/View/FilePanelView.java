@@ -6,6 +6,7 @@ import javax.swing.filechooser.FileSystemView;
 import Controller.ContextMenuFileController;
 import Controller.FileLabelController;
 import Model.FileLabelModel;
+import Model.FilePanelModel;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -40,7 +41,7 @@ public class FilePanelView extends JPanel {
     /**
      * Only constructor of class without any parameter requirement
      */
-    public FilePanelView() {
+    public FilePanelView(FilePanelModel model) {
     	super(new WrapLayout(WrapLayout.LEFT, gap, gap));
     	rClickMenuView = new ContextMenuPanelView();
     	rectDrawer = new RectangleDrawerView();
@@ -98,6 +99,53 @@ public class FilePanelView extends JPanel {
 		
     }
     
+    public void setPanelData(File folder) {
+    	this.removeAll();
+    	this.updateUI();
+    	fileSystemView = FileSystemView.getFileSystemView();
+		File[] files = folder.listFiles();
+		fileLabelsModel = new ArrayList<FileLabelModel>();
+		fileLabelsView = new ArrayList<FileLabelView>();
+		fileLabelsController = new ArrayList<FileLabelController>();
+		for (File file : files) {
+			FileLabelModel fileLabelModel = new FileLabelModel(file);
+			FileLabelView fileLabelView = new FileLabelView(fileLabelModel);
+			FileLabelController fileLabelController = new FileLabelController(fileLabelModel, fileLabelView);
+			fileLabelsModel.add(fileLabelModel);				
+			fileLabelsView.add(fileLabelView);				
+			fileLabelsController.add(fileLabelController);				
+			
+			fileLabelController.addMouseListener(new MouseListener() {
+				@Override
+				public void mouseReleased(MouseEvent e) {
+				}
+				
+				@Override
+				public void mousePressed(MouseEvent arg0) {
+					// TODO Auto-generated method stub
+					deselectOther(fileLabelController);
+					repaint();
+				}
+				
+				@Override
+				public void mouseExited(MouseEvent e) {
+					repaint();
+				}
+				
+				@Override
+				public void mouseEntered(MouseEvent arg0) {
+					repaint();
+				}
+				
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					
+				}
+			});
+			
+			this.add(fileLabelView);
+		}
+    }
     
     /**
      * get the right click menu

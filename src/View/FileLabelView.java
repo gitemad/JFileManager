@@ -68,7 +68,11 @@ public class FileLabelView extends JLabel {
 	private String getToolTip(File file) {
 		String toolTip = "<html>";
 		toolTip += "Date Created: ";
-		toolTip += getCreatedDate(file);
+		try {
+			toolTip += getCreatedDate(file);
+		} catch (Exception e) {
+			return "";
+		}
 		toolTip += "<br/>";
 		toolTip += "Size: ";
 		toolTip += getFileSize(file);

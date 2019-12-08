@@ -117,6 +117,15 @@ public class FileTableModel extends AbstractTableModel {
         fireTableDataChanged();
     }
     
+    
+    public void setTableData(final File[] files) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                FileTableModel.this.setFiles(files);
+            }
+        });
+    }
+    
 //    private void setRClickMenu(File[] files) {
 //    	for (File file : files) {
 //			file.set
