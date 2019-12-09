@@ -2,6 +2,8 @@ package Controller;
 
 import java.awt.event.ActionListener;
 
+import javax.swing.*;
+
 import Model.NavigateButtonModel;
 import Model.Originator;
 import View.NavigateButtonView;
@@ -44,6 +46,24 @@ public class NavigateButtonController {
 	 */
 	public void addActionListener(ActionListener listener) {
 		this.view.addActionListener(listener);
+	}
+	
+	public void setAction(Action action) {
+		this.view.setAction(action);
+	}
+	
+	public void putInputMap(KeyStroke keyStroke, String key) {
+		this.view.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(keyStroke, key);
+	}
+	
+	public void putActionMap(Action action, String key) {
+		this.view.getActionMap().put(key, action);
+		this.view.setEnabled(this.model.isEnable());
+		this.view.setIcon(view.getIcon());
+	}
+	
+	public void setMnemonic(int key) {
+		this.view.setMnemonic(key);
 	}
 	
 	/**

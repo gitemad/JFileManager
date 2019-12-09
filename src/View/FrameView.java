@@ -88,83 +88,7 @@ public class FrameView extends JFrame {
 		filePanelModel = new FilePanelModel(new File(addressBarModel.getPath()));
 		filePanelView = new FilePanelView(filePanelModel);
 		filePanelController = new FilePanelController(filePanelModel, filePanelView);
-
-		addressBarController.addKeyListener(new KeyListener() {
-			@Override
-			public void keyTyped(KeyEvent arg0) {
-			}
-
-			@Override
-			public void keyReleased(KeyEvent arg0) {
-			}
-
-			@Override
-			public void keyPressed(KeyEvent k) {
-				if (k.getKeyCode() == KeyEvent.VK_ENTER) {
-					File f = new File(addressBarController.getView().getText());
-					if (f.exists() && f.isDirectory()) {
-						backButtonController.addMemento(addressBarModel.getPath());
-						addressBarController.setPath(f.getPath());
-					} else {
-						addressBarController.getView().setText(addressBarModel.getPath());
-					}
-					File ff = new File(addressBarModel.getPath());
-					fileTableModel.setTableData(ff.listFiles());
-					filePanelController.setFolder(ff);
-					hasParent(ff);
-				}
-			}
-		});
-
-		backButtonController.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				forwardButtonController.addMemento(addressBarModel.getPath());
-				addressBarController.setPath(backButtonController.restoreMemento());
-				File f = new File(addressBarModel.getPath());
-				fileTableModel.setTableData(f.listFiles());
-				filePanelController.setFolder(f);
-				hasParent(f);
-			}
-		});
-
-		forwardButtonController.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				backButtonController.addMemento(addressBarModel.getPath());
-				addressBarController.setPath(forwardButtonController.restoreMemento());
-				File f = new File(addressBarModel.getPath());
-				fileTableModel.setTableData(f.listFiles());
-				filePanelController.setFolder(f);
-				hasParent(f);
-			}
-		});
 		
-		parentButtonController.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				File f = new File(addressBarModel.getPath());
-				f = f.getParentFile();
-				addressBarController.setPath(f.getPath());
-				fileTableModel.setTableData(f.listFiles());
-				filePanelController.setFolder(f);
-				hasParent(f);
-			}
-		});
-
-		treeController.addTreeSelectionListener(new TreeSelectionListener() {
-			@Override
-			public void valueChanged(TreeSelectionEvent tse) {
-				DefaultMutableTreeNode node = (DefaultMutableTreeNode) tse.getPath().getLastPathComponent();
-				treeModel.setCurrentNode((File) node.getUserObject());
-				treeController.addChildren(node);
-				backButtonController.addMemento(addressBarModel.getPath());
-				addressBarController.setPath(treeModel.getCurrentNode().getPath());
-				fileTableModel.setTableData(treeModel.getCurrentNode().listFiles());
-				filePanelController.setFolder(treeModel.getCurrentNode());
-				hasParent(treeModel.getCurrentNode());
-			}
-		});
 
 		footerView.addListListener(new ActionListener() {
 			@Override
@@ -188,6 +112,101 @@ public class FrameView extends JFrame {
 	}
 	
 	
+	/**
+	 * @return the treeModel
+	 */
+	public FileTreeModel getTreeModel() {
+		return treeModel;
+	}
+
+
+
+	/**
+	 * @return the fileTableModel
+	 */
+	public FileTableModel getFileTableModel() {
+		return fileTableModel;
+	}
+
+
+
+	/**
+	 * @return the filePanelModel
+	 */
+	public FilePanelModel getFilePanelModel() {
+		return filePanelModel;
+	}
+
+
+
+	/**
+	 * @return the addressBarModel
+	 */
+	public AddressBarModel getAddressBarModel() {
+		return addressBarModel;
+	}
+
+
+
+	/**
+	 * @return the treeController
+	 */
+	public FileTreeController getTreeController() {
+		return treeController;
+	}
+
+
+	/**
+	 * @return the addressBarController
+	 */
+	public AddressBarController getAddressBarController() {
+		return addressBarController;
+	}
+
+
+
+
+
+	/**
+	 * @return the filePanelController
+	 */
+	public FilePanelController getFilePanelController() {
+		return filePanelController;
+	}
+
+
+
+
+
+	/**
+	 * @return the backButtonController
+	 */
+	public NavigateButtonController getBackButtonController() {
+		return backButtonController;
+	}
+
+
+
+
+
+	/**
+	 * @return the forwardButtonController
+	 */
+	public NavigateButtonController getForwardButtonController() {
+		return forwardButtonController;
+	}
+
+
+
+
+
+	/**
+	 * @return the parentButtonController
+	 */
+	public NavigateButtonController getParentButtonController() {
+		return parentButtonController;
+	}
+
 
 	// a function for list view
 	private void listView() {
@@ -230,11 +249,4 @@ public class FrameView extends JFrame {
 
 	}
 
-	private void hasParent(File file) {
-		if (file.getParentFile() != null) {
-			parentButtonController.setEnable(true);
-		} else {
-			parentButtonController.setEnable(false);
-		}
-	}
 }
