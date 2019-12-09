@@ -9,12 +9,14 @@ import java.util.ArrayList;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.KeyStroke;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import View.ContextMenuFileView;
 import View.FrameView;
 
 /**
@@ -75,6 +77,13 @@ public class FrameController {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				File f = view.getFileTableModel().getCurrentFiles()[0];
+//				if (e.getButton() == MouseEvent.BUTTON3_MASK) {
+//					System.out.println("NDN");
+//					System.out.println(f.getName());
+//					ContextMenuFileView menu = new ContextMenuFileView(f);
+//					view.getFileTableView().setRClickMenu(menu);
+//					view.getFileTableView().getrClickMenu().getOpen().addActionListener(open(f));					
+//				}
 				if (e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1) {
 					if (f.exists() && f.isDirectory()) {
 						backButtonController.addMemento(view.getAddressBarModel().getPath());
@@ -93,7 +102,36 @@ public class FrameController {
 				}
 			}
 		});
+		
+		view.getFileTableView().addKeyListener(new KeyAdapter() {
+			
+			public void keyPressed(KeyEvent k) {
+				if (k.getKeyCode() == KeyEvent.VK_ENTER) {
+					try {
+						File f = view.getFileTableModel().getCurrentFiles()[0];
+						if (f.exists() && f.isDirectory()) {
+							backButtonController.addMemento(view.getAddressBarModel().getPath());
+							addressBarController.setPath(f.getPath());
+							view.getFileTableModel().setTableData(f.listFiles());
+							filePanelController.setFolder(f);
+							addOpenListener(filePanelController.getView().getFileLabelsController());
+							hasParent(f);
+						} else {
+							try {
+								desktop.open(f);
+							} catch (IOException e1) {
+								e1.printStackTrace();
+							}
+						}
+					} catch (Exception e) {
+						
+					}
+				}
+			}
+		});
 
+		
+		
 	}
 
 	private KeyListener confirmAddress() {

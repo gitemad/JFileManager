@@ -17,6 +17,7 @@ public class ContextMenuFileController {
 	public ContextMenuFileController(ContextMenuFileView view) {
 		this.view = view;
 		
+		
 		view.getProperties().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent eve) {

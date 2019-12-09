@@ -185,7 +185,13 @@ public class SettingsView extends JFrame {
 			model.setLookAndFeel(lf);
 			UIManager.setLookAndFeel(lf);
 			for(Window window: Window.getWindows()) {
-			    SwingUtilities.updateComponentTreeUI(window);
+				for(Component component : window.getComponents()) {
+					try {
+						SwingUtilities.updateComponentTreeUI(component);
+					} catch (Exception e) {
+						continue;
+					}
+				}
 			}
 		} catch (Exception ignored) {
 		} finally {

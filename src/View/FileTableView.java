@@ -22,7 +22,7 @@ import Model.FileTableModel;
 public class FileTableView extends JTable {
 	
 	private RectangleDrawerView rectDrawer;
-    private JPopupMenu rClickMenu;
+    private ContextMenuFileView rClickMenu;
 	private FileTableModel fileTableModel;
 //	private ListSelectionListener listSelectionListener;
 	private boolean cellSizesSet = false;
@@ -76,6 +76,19 @@ public class FileTableView extends JTable {
         };
         this.getSelectionModel().addListSelectionListener(listSelectionListener);
 	  	    
+	}
+	
+	
+	/**
+	 * @return the rClickMenu
+	 */
+	public ContextMenuFileView getrClickMenu() {
+		return rClickMenu;
+	}
+
+
+	public void setRClickMenu(ContextMenuFileView menu) {
+		rClickMenu = menu;
 	}
 	
 	

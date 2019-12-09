@@ -114,4 +114,15 @@ public class ContextMenuFileView extends JPopupMenu {
 	public File getFile() {
 		return file;
 	}
+
+
+	/**
+	 * @param file the file to set
+	 */
+	public void setFile(File file) {
+		this.file = file;
+	}
+	
+	
+	
 }
