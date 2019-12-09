@@ -29,4 +29,20 @@ public class FilePanelController {
 		model.setFolder(folder);
 		view.setPanelData(folder);
 	}
+
+	/**
+	 * @return the model
+	 */
+	public FilePanelModel getModel() {
+		return model;
+	}
+
+	/**
+	 * @return the view
+	 */
+	public FilePanelView getView() {
+		return view;
+	}
+	
+	
 }

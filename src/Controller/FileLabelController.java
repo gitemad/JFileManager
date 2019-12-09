@@ -39,20 +39,20 @@ public class FileLabelController {
 			}
 			
 			@Override
-			public void mousePressed(MouseEvent arg0) {
+			public void mousePressed(MouseEvent e) {
 				FileLabelController.this.selected();
 			}
 			
 			@Override
 			public void mouseExited(MouseEvent arg0) {
-				if (!model.isClicked()) {
+				if (!model.isSelected()) {
 					FileLabelController.this.unSelected();
 				}
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
-				if (!model.isClicked()) {
+				if (!model.isSelected()) {
 					FileLabelController.this.hover();
 				}
 			}
@@ -68,7 +68,7 @@ public class FileLabelController {
 	 * set label to selected mode
 	 */
 	public void selected() {
-		model.setClicked(true);
+		model.setSelected(true);
 		view.setOpaque(true);
 		view.setBackground(select);
 	}
@@ -85,9 +85,13 @@ public class FileLabelController {
 	 * set label to unselected mode
 	 */
 	public void unSelected() {
-		model.setClicked(false);
+		model.setSelected(false);
 		view.setBackground(unselect);
 		view.setOpaque(false);
+	}
+	
+	public boolean getSelected() {
+		return model.isSelected();
 	}
 	
 	/**

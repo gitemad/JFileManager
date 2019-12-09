@@ -4,6 +4,7 @@ import java.awt.Desktop;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -70,6 +71,7 @@ public class FrameController {
 		parentButtonController.putInputMap( KeyStroke.getKeyStroke(KeyEvent.VK_BACK_SPACE, 0), key);
 		parentButtonController.putActionMap(goParent, key);
 
+		addOpenListener(filePanelController.getView().getFileLabelsController());
 		
 		view.getFileTableView().addMouseListener(new MouseAdapter() {
 			@Override
@@ -81,6 +83,8 @@ public class FrameController {
 						addressBarController.setPath(f.getPath());
 						view.getFileTableModel().setTableData(f.listFiles());
 						filePanelController.setFolder(f);
+						addOpenListener(filePanelController.getView().getFileLabelsController());
+						hasParent(f);
 					} else {
 						try {
 							desktop.open(f);
@@ -88,7 +92,6 @@ public class FrameController {
 							e1.printStackTrace();
 						}
 					}
-					hasParent(f);
 				}
 			}
 		});
@@ -119,6 +122,7 @@ public class FrameController {
 					File ff = new File(view.getAddressBarModel().getPath());
 					view.getFileTableModel().setTableData(ff.listFiles());
 					filePanelController.setFolder(ff);
+					addOpenListener(filePanelController.getView().getFileLabelsController());
 					hasParent(ff);
 				}
 			}
@@ -166,12 +170,16 @@ public class FrameController {
 			public void actionPerformed(ActionEvent e) {
 				File f = new File(view.getAddressBarModel().getPath());
 				f = f.getParentFile();
-				addressBarController.setPath(f.getPath());
-				if (f.listFiles() != null) {
-					view.getFileTableModel().setTableData(f.listFiles());
-					filePanelController.setFolder(f);
+				if (f != null) {
+					addressBarController.setPath(f.getPath());
+					if (f.listFiles() != null) {
+						view.getFileTableModel().setTableData(f.listFiles());
+						filePanelController.setFolder(f);
+					}
+					hasParent(f);
+				} else {
+					parentButtonController.setEnable(false);
 				}
-				hasParent(f);
 			}
 		};
 		return a;
@@ -187,6 +195,7 @@ public class FrameController {
 					addressBarController.setPath(f.getPath());
 					view.getFileTableModel().setTableData(f.listFiles());
 					filePanelController.setFolder(f);
+					addOpenListener(filePanelController.getView().getFileLabelsController());
 				} else {
 					try {
 						desktop.open(f);
@@ -212,6 +221,7 @@ public class FrameController {
 				if (view.getTreeModel().getCurrentNode().listFiles() != null) {
 					view.getFileTableModel().setTableData(view.getTreeModel().getCurrentNode().listFiles());
 					filePanelController.setFolder(view.getTreeModel().getCurrentNode());
+					addOpenListener(filePanelController.getView().getFileLabelsController());
 				}
 				hasParent(view.getTreeModel().getCurrentNode());
 			}
@@ -225,6 +235,33 @@ public class FrameController {
 			parentButtonController.setEnable(true);
 		} else {
 			parentButtonController.setEnable(false);
+		}
+	}
+	
+	private void addOpenListener(ArrayList<FileLabelController> flcs) {
+		for (FileLabelController flc : flcs) {
+			flc.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					File f = flc.getModel().getFile();
+					if (e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1) {
+						if (f.exists() && f.isDirectory()) {
+							backButtonController.addMemento(view.getAddressBarModel().getPath());
+							addressBarController.setPath(f.getPath());
+							view.getFileTableModel().setTableData(f.listFiles());
+							filePanelController.setFolder(f);
+							addOpenListener(filePanelController.getView().getFileLabelsController());
+							hasParent(f);
+						} else {
+							try {
+								desktop.open(f);
+							} catch (IOException e1) {
+								e1.printStackTrace();
+							}
+						}
+					}
+				}
+			});
 		}
 	}
 }

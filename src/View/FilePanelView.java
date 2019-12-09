@@ -24,6 +24,7 @@ public class FilePanelView extends JPanel {
 
 	//Model
 	private ArrayList<FileLabelModel> fileLabelsModel;
+	private FilePanelModel model;
 	
 	//View
 	private ContextMenuPanelView rClickMenuView;
@@ -37,6 +38,7 @@ public class FilePanelView extends JPanel {
     private static int gap = 15;
     private FileSystemView fileSystemView;
     private DrawMouseListener drawMouseListener;
+    private boolean ctrlDown;
 
     /**
      * Only constructor of class without any parameter requirement
@@ -45,6 +47,8 @@ public class FilePanelView extends JPanel {
     	super(new WrapLayout(WrapLayout.LEFT, gap, gap));
     	rClickMenuView = new ContextMenuPanelView();
     	rectDrawer = new RectangleDrawerView();
+    	ctrlDown = false;
+    	this.model = model;
     	
     	drawMouseListener = new DrawMouseListener();
         addMouseListener(drawMouseListener);
@@ -68,11 +72,11 @@ public class FilePanelView extends JPanel {
 				fileLabelController.addMouseListener(new MouseListener() {
 					@Override
 					public void mouseReleased(MouseEvent e) {
+						
 					}
 					
 					@Override
-					public void mousePressed(MouseEvent arg0) {
-						// TODO Auto-generated method stub
+					public void mousePressed(MouseEvent e) {
 						deselectOther(fileLabelController);
 						repaint();
 					}
@@ -115,6 +119,7 @@ public class FilePanelView extends JPanel {
 			fileLabelsView.add(fileLabelView);				
 			fileLabelsController.add(fileLabelController);				
 			
+			
 			fileLabelController.addMouseListener(new MouseListener() {
 				@Override
 				public void mouseReleased(MouseEvent e) {
@@ -122,9 +127,16 @@ public class FilePanelView extends JPanel {
 				
 				@Override
 				public void mousePressed(MouseEvent arg0) {
-					// TODO Auto-generated method stub
+					
 					deselectOther(fileLabelController);
 					repaint();
+					ArrayList<File> currentFiles = new ArrayList<File>();
+					for (FileLabelController fileLabel : fileLabelsController) {
+						if (fileLabel.getModel().isSelected()) {
+							currentFiles.add(fileLabel.getModel().getFile());
+						}
+					}
+					model.setCurrentFiles(currentFiles);
 				}
 				
 				@Override
@@ -153,6 +165,20 @@ public class FilePanelView extends JPanel {
 	 */
 	public ContextMenuPanelView getrClickMenuView() {
 		return rClickMenuView;
+	}
+
+	/**
+	 * @return the fileLabelsController
+	 */
+	public ArrayList<FileLabelController> getFileLabelsController() {
+		return fileLabelsController;
+	}
+
+	/**
+	 * @param fileLabelsController the fileLabelsController to set
+	 */
+	public void setFileLabelsController(ArrayList<FileLabelController> fileLabelsController) {
+		this.fileLabelsController = fileLabelsController;
 	}
 
 	//get the image size in desired width and height
@@ -188,6 +214,7 @@ public class FilePanelView extends JPanel {
         public void mousePressed(MouseEvent e) {
             rectDrawer.setStartPoint(e.getX(), e.getY());
             deselectAll();
+
         }
 
         public void mouseDragged(MouseEvent e) {

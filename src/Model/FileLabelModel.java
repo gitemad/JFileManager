@@ -5,7 +5,7 @@ import java.io.*;
 public class FileLabelModel {
 	
 	private File file;
-	private boolean clicked;
+	private boolean selected;
 	
 	/**
 	 * Only constructor of class with following parameter requirement
@@ -14,7 +14,7 @@ public class FileLabelModel {
 	public FileLabelModel(File file) {
 		
 		this.file = file;
-		this.clicked = false;
+		this.selected = false;
 		
 	}
 
@@ -33,17 +33,17 @@ public class FileLabelModel {
 	}
 
 	/**
-	 * @return the clicked
+	 * @return the selected
 	 */
-	public boolean isClicked() {
-		return clicked;
+	public boolean isSelected() {
+		return selected;
 	}
 
 	/**
-	 * @param clicked the clicked to set
+	 * @param clicked the selected state to set
 	 */
-	public void setClicked(boolean clicked) {
-		this.clicked = clicked;
+	public void setSelected(boolean clicked) {
+		this.selected = clicked;
 	}
 	
 	
