@@ -2,10 +2,13 @@ package Controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.nio.channels.SeekableByteChannel;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import Model.SettingsModel;
+import View.FrameView;
 import View.HelpMenuView;
 import View.SettingsView;
 
@@ -14,6 +17,7 @@ public class HelpMenuController {
 	private HelpMenuView view;
 	
 	private SettingsModel settingsModel;
+	private SettingsView settingsView;
 	
 	/**
 	 * Only constructor of class with following parameter requirement
@@ -22,6 +26,7 @@ public class HelpMenuController {
 	public HelpMenuController(HelpMenuView view) {
 		this.view = view;
 		settingsModel = new SettingsModel();
+		settingsView = new SettingsView(settingsModel);
 		
 		view.getAbout().addActionListener(new ActionListener() {
 			
@@ -35,7 +40,7 @@ public class HelpMenuController {
 			
 			@Override
 			public void actionPerformed(ActionEvent eve) {
-				SettingsView settings = new SettingsView(settingsModel);
+				settingsView.setVisible(true);
 			}
 		});
 		
@@ -62,4 +67,29 @@ public class HelpMenuController {
 			}
 		});
 	}
+
+	/**
+	 * @return the settingsModel
+	 */
+	public SettingsModel getSettingsModel() {
+		return settingsModel;
+	}
+	
+
+	/**
+	 * @return the settingsView
+	 */
+	public SettingsView getSettingsView() {
+		return settingsView;
+	}
+
+	/**
+	 * @return the view
+	 */
+	public HelpMenuView getView() {
+		return view;
+	}
+	
+	
+	
 }

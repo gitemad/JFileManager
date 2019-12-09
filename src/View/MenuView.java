@@ -12,7 +12,7 @@ import java.awt.event.*;
  * @author Emad
  *
  */
-public class MenuView extends JMenuBar{
+public class MenuView extends JMenuBar {
 	
 	//View
 	private FileMenuView fileView;
@@ -40,4 +40,22 @@ public class MenuView extends JMenuBar{
 		this.add(helpView);
 		
 	}
+
+	/**
+	 * @return the helpView
+	 */
+	public HelpMenuView getHelpView() {
+		return helpView;
+	}
+
+	/**
+	 * @return the helpController
+	 */
+	public HelpMenuController getHelpController() {
+		return helpController;
+	}
+	
+	
+	
+	
 }

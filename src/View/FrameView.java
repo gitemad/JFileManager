@@ -90,7 +90,6 @@ public class FrameView extends JFrame {
 		filePanelView = new FilePanelView(filePanelModel);
 		filePanelController = new FilePanelController(filePanelModel, filePanelView);
 		
-		
 
 		footerView.addListListener(new ActionListener() {
 			@Override
@@ -109,6 +108,13 @@ public class FrameView extends JFrame {
 				gridView();
 			}
 		});
+		
+		try {
+			UIManager.setLookAndFeel(menuBarView.getHelpController().getSettingsModel().getLookAndFeel());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
 
 		listView();
 	}
@@ -215,6 +221,16 @@ public class FrameView extends JFrame {
 	 */
 	public NavigateButtonController getParentButtonController() {
 		return parentButtonController;
+	}
+	
+	
+
+
+	/**
+	 * @return the menuBarView
+	 */
+	public MenuView getMenuBarView() {
+		return menuBarView;
 	}
 
 

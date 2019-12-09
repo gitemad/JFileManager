@@ -1,5 +1,9 @@
 package Model;
 
+import javax.swing.*;
+
+import View.FrameView;
+
 /**
  * @author Emad
  *
@@ -7,9 +11,11 @@ package Model;
 public class SettingsModel {
 	
 	private String defaultAddress;
+	private String lookAndFeel;
 	
 	public SettingsModel() {
 		defaultAddress = System.getProperty("user.home") + "\\Desktop";
+		lookAndFeel = UIManager.getInstalledLookAndFeels()[0].getClassName();
 	}
 
 	/**
@@ -25,6 +31,20 @@ public class SettingsModel {
 	public void setDefaultAddress(String defaultAddress) {
 		this.defaultAddress = defaultAddress;
 	}
+
+	/**
+	 * @return the lookAndFeel
+	 */
+	public String getLookAndFeel() {
+		return lookAndFeel;
+	}
+
+	/**
+	 * @param lookAndFeel the lookAndFeel to set
+	 */
+	public void setLookAndFeel(String lookAndFeel) {
+		this.lookAndFeel = lookAndFeel;
+	}	
 	
 	
 }

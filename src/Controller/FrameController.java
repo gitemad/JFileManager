@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.KeyStroke;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -21,55 +23,54 @@ import View.FrameView;
  *
  */
 public class FrameController {
-	
+
 	private FrameView view;
-	
-	//Controllers
+
+	// Controllers
 	private FileTreeController treeController;
 	private AddressBarController addressBarController;
 	private FilePanelController filePanelController;
 	private NavigateButtonController backButtonController;
 	private NavigateButtonController forwardButtonController;
 	private NavigateButtonController parentButtonController;
-	
-	
+
 	private Desktop desktop;
-	
+
 	public FrameController(FrameView view) {
 		this.view = view;
-		
+
 		this.desktop = Desktop.getDesktop();
-		
+
 		treeController = this.view.getTreeController();
 		addressBarController = this.view.getAddressBarController();
 		filePanelController = this.view.getFilePanelController();
 		backButtonController = this.view.getBackButtonController();
 		forwardButtonController = this.view.getForwardButtonController();
 		parentButtonController = this.view.getParentButtonController();
-		
-		addressBarController.addKeyListener(confirmAddress());		
+
+		addressBarController.addKeyListener(confirmAddress());
 		treeController.addTreeSelectionListener(treeSelection());
-		
+
 		String key = "Back";
 		Action goBack = goBack();
 		backButtonController.setAction(goBack);
-		backButtonController.putInputMap( KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, KeyEvent.ALT_MASK), key);
+		backButtonController.putInputMap(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, KeyEvent.ALT_MASK), key);
 		backButtonController.putActionMap(goBack, key);
 
 		key = "Forward";
 		Action goForward = goForward();
 		forwardButtonController.setAction(goForward);
-		forwardButtonController.putInputMap( KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, KeyEvent.ALT_MASK), key);
+		forwardButtonController.putInputMap(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, KeyEvent.ALT_MASK), key);
 		forwardButtonController.putActionMap(goForward, key);
-		
+
 		key = "Parent";
 		Action goParent = goParent();
 		parentButtonController.setAction(goParent);
-		parentButtonController.putInputMap( KeyStroke.getKeyStroke(KeyEvent.VK_BACK_SPACE, 0), key);
+		parentButtonController.putInputMap(KeyStroke.getKeyStroke(KeyEvent.VK_BACK_SPACE, 0), key);
 		parentButtonController.putActionMap(goParent, key);
 
 		addOpenListener(filePanelController.getView().getFileLabelsController());
-		
+
 		view.getFileTableView().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -92,14 +93,13 @@ public class FrameController {
 				}
 			}
 		});
-		
-		
+
 	}
-	
+
 	private KeyListener confirmAddress() {
 		KeyListener k = new KeyListener() {
 			@Override
-			public void keyTyped(KeyEvent arg0) {				
+			public void keyTyped(KeyEvent arg0) {
 			}
 
 			@Override
@@ -126,7 +126,7 @@ public class FrameController {
 		};
 		return k;
 	}
-	
+
 	private Action goBack() {
 		Action a = new AbstractAction() {
 			@Override
@@ -144,7 +144,7 @@ public class FrameController {
 		};
 		return a;
 	}
-	
+
 	private Action goForward() {
 		Action a = new AbstractAction() {
 			@Override
@@ -162,9 +162,9 @@ public class FrameController {
 		};
 		return a;
 	}
-	
+
 	private Action goParent() {
-		Action a = new AbstractAction() {	
+		Action a = new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				File f = new File(view.getAddressBarModel().getPath());
@@ -187,7 +187,7 @@ public class FrameController {
 
 	private Action open(File f) {
 		Action a = new AbstractAction() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (f.exists() && f.isDirectory()) {
@@ -208,7 +208,7 @@ public class FrameController {
 		};
 		return a;
 	}
-	
+
 	private TreeSelectionListener treeSelection() {
 		TreeSelectionListener t = new TreeSelectionListener() {
 			@Override
@@ -227,9 +227,9 @@ public class FrameController {
 			}
 		};
 		return t;
-		
+
 	}
-	
+
 	private void hasParent(File file) {
 		if (file.getParentFile() != null) {
 			parentButtonController.setEnable(true);
@@ -237,7 +237,7 @@ public class FrameController {
 			parentButtonController.setEnable(false);
 		}
 	}
-	
+
 	private void addOpenListener(ArrayList<FileLabelController> flcs) {
 		for (FileLabelController flc : flcs) {
 			flc.addMouseListener(new MouseAdapter() {
@@ -264,4 +264,6 @@ public class FrameController {
 			});
 		}
 	}
+
+
 }
