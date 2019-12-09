@@ -6,8 +6,6 @@ import Model.SettingsModel;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeListener;
-import java.nio.channels.SeekableByteChannel;
 
 /**
  * @author Emad
@@ -27,7 +25,7 @@ public class SettingsView extends JFrame {
 	private JTextField compAdrs;
 	private JTextField compPort;
 	private JComboBox<String> lookFeels;
-	private Checkbox view;
+	private JCheckBox view;
 	private JComboBox<String> syncTime;
 	private JButton ok;
 	private JButton cancel;
@@ -49,12 +47,13 @@ public class SettingsView extends JFrame {
 		compAdrs = new JTextField("Select computer address to share files");
 		compPort = new JTextField("Select computer port to share files");
 		lookFeels = new JComboBox<String>();
-		view = new Checkbox("Set List View As Default View");
+		view = new JCheckBox("Set List View As Default View", model.isList());
 		syncTime = new JComboBox<String>();
 		ok = new JButton("OK");
 		cancel = new JButton("Cancel");
 
 		ok.addActionListener(confirm());
+		cancel.addActionListener(cancel());
 
 		this.setIconImage(icon);
 		this.setSize(720, 480);
@@ -67,6 +66,8 @@ public class SettingsView extends JFrame {
 		for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 			lookFeels.addItem(info.getName());
 		}
+		
+		lookFeels.setSelectedIndex(model.getlNum());
 
 		String[] times = { "1 minute", "5 minutes", "10 minutes", "30 minutes", "60 minutes", "never" };
 
@@ -74,8 +75,7 @@ public class SettingsView extends JFrame {
 			syncTime.addItem(time);
 		}
 
-		view.setState(true);
-
+		
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -157,21 +157,44 @@ public class SettingsView extends JFrame {
 		Action a = new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int i = lookFeels.getSelectedIndex();
-				try {
-					String lf = UIManager.getInstalledLookAndFeels()[i].getClassName();
-					model.setLookAndFeel(lf);
-					UIManager.setLookAndFeel(lf);
-					for(Window window: Window.getWindows()) {
-					    SwingUtilities.updateComponentTreeUI(window);
-					}
-				} catch (Exception ignored) {
-					System.out.println("Catched");
-				} finally {
-					SettingsView.this.setVisible(false);
-				}
+				setLookAndFeels();
+				setView();
 			}
 		};
 		return a;
+	}
+	
+	private Action cancel() {
+		Action a = new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				address.setText(model.getDefaultAddress());
+				lookFeels.setSelectedIndex(model.getlNum());
+				view.setSelected(model.isList());
+				SettingsView.this.setVisible(false);
+			}
+		};
+		return a;
+	}
+		
+	private void setLookAndFeels() {
+		int i = lookFeels.getSelectedIndex();
+		try {
+			String lf = UIManager.getInstalledLookAndFeels()[i].getClassName();
+			model.setlNum(i);
+			model.setLookAndFeel(lf);
+			UIManager.setLookAndFeel(lf);
+			for(Window window: Window.getWindows()) {
+			    SwingUtilities.updateComponentTreeUI(window);
+			}
+		} catch (Exception ignored) {
+		} finally {
+			SettingsView.this.setVisible(false);
+		}
+	}
+	
+	private void setView() {
+		model.setList(view.isSelected());
+		view.setSelected(model.isList());
 	}
 }

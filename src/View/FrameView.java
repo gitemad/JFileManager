@@ -116,7 +116,15 @@ public class FrameView extends JFrame {
 			e.printStackTrace();
 		}
 
-		listView();
+		if (menuBarView.getHelpController().getSettingsModel().isList()) {
+			listView();
+			footerView.getListController().setSelected(true);
+			footerView.getGridController().setSelected(false);
+		} else {
+			footerView.getGridController().setSelected(true);
+			footerView.getListController().setSelected(false);
+			gridView();
+		}
 	}
 	
 	
@@ -211,10 +219,6 @@ public class FrameView extends JFrame {
 	public NavigateButtonController getForwardButtonController() {
 		return forwardButtonController;
 	}
-
-
-
-
 
 	/**
 	 * @return the parentButtonController

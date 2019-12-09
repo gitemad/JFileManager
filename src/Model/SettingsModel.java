@@ -12,10 +12,14 @@ public class SettingsModel {
 	
 	private String defaultAddress;
 	private String lookAndFeel;
+	private int lNum;
+	private boolean list;
 	
 	public SettingsModel() {
 		defaultAddress = System.getProperty("user.home") + "\\Desktop";
-		lookAndFeel = UIManager.getInstalledLookAndFeels()[0].getClassName();
+		lNum = 1;
+		lookAndFeel = UIManager.getInstalledLookAndFeels()[lNum].getClassName();
+		list = true;
 	}
 
 	/**
@@ -44,6 +48,34 @@ public class SettingsModel {
 	 */
 	public void setLookAndFeel(String lookAndFeel) {
 		this.lookAndFeel = lookAndFeel;
+	}
+
+	/**
+	 * @return the list
+	 */
+	public boolean isList() {
+		return list;
+	}
+
+	/**
+	 * @param list the list to set
+	 */
+	public void setList(boolean list) {
+		this.list = list;
+	}
+
+	/**
+	 * @return the lNum
+	 */
+	public int getlNum() {
+		return lNum;
+	}
+
+	/**
+	 * @param lNum the lNum to set
+	 */
+	public void setlNum(int lNum) {
+		this.lNum = lNum;
 	}	
 	
 	
