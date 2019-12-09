@@ -10,6 +10,7 @@ import java.io.File;
 public class FilePanelModel {
 	
 	private File folder;
+	private File[] currentFiles;
 	
 	public FilePanelModel(File folder) {
 		this.folder = folder;
@@ -27,6 +28,20 @@ public class FilePanelModel {
 	 */
 	public void setFolder(File folder) {
 		this.folder = folder;
+	}
+
+	/**
+	 * @return the currentFiles
+	 */
+	public File[] getCurrentFiles() {
+		return currentFiles;
+	}
+
+	/**
+	 * @param currentFiles the currentFiles to set
+	 */
+	public void setCurrentFiles(File[] currentFiles) {
+		this.currentFiles = currentFiles;
 	}
 	
 	

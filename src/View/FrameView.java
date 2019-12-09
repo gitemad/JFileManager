@@ -147,6 +147,14 @@ public class FrameView extends JFrame {
 		return addressBarModel;
 	}
 
+	
+
+	/**
+	 * @return the fileTableView
+	 */
+	public FileTableView getFileTableView() {
+		return fileTableView;
+	}
 
 
 	/**

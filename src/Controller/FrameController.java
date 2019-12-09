@@ -1,7 +1,9 @@
 package Controller;
 
+import java.awt.Desktop;
 import java.awt.event.*;
 import java.io.File;
+import java.io.IOException;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -13,6 +15,7 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import View.FrameView;
+import javafx.scene.input.MouseButton;
 
 /**
  * 
@@ -31,8 +34,13 @@ public class FrameController {
 	private NavigateButtonController forwardButtonController;
 	private NavigateButtonController parentButtonController;
 	
+	
+	private Desktop desktop;
+	
 	public FrameController(FrameView view) {
 		this.view = view;
+		
+		this.desktop = Desktop.getDesktop();
 		
 		treeController = this.view.getTreeController();
 		addressBarController = this.view.getAddressBarController();
@@ -62,6 +70,28 @@ public class FrameController {
 		parentButtonController.putInputMap( KeyStroke.getKeyStroke(KeyEvent.VK_BACK_SPACE, 0), key);
 		parentButtonController.putActionMap(goParent, key);
 
+		
+		view.getFileTableView().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				File f = view.getFileTableModel().getCurrentFiles()[0];
+				if (e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1) {
+					if (f.exists() && f.isDirectory()) {
+						backButtonController.addMemento(view.getAddressBarModel().getPath());
+						addressBarController.setPath(f.getPath());
+						view.getFileTableModel().setTableData(f.listFiles());
+						filePanelController.setFolder(f);
+					} else {
+						try {
+							desktop.open(f);
+						} catch (IOException e1) {
+							e1.printStackTrace();
+						}
+					}
+					hasParent(f);
+				}
+			}
+		});
 		
 		
 	}
@@ -147,6 +177,28 @@ public class FrameController {
 		return a;
 	}
 
+	private Action open(File f) {
+		Action a = new AbstractAction() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (f.exists() && f.isDirectory()) {
+					backButtonController.addMemento(view.getAddressBarModel().getPath());
+					addressBarController.setPath(f.getPath());
+					view.getFileTableModel().setTableData(f.listFiles());
+					filePanelController.setFolder(f);
+				} else {
+					try {
+						desktop.open(f);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				}
+				hasParent(f);
+			}
+		};
+		return a;
+	}
 	
 	private TreeSelectionListener treeSelection() {
 		TreeSelectionListener t = new TreeSelectionListener() {
