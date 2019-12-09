@@ -60,6 +60,7 @@ public class FilePaneView extends JScrollPane {
 
         public void mousePressed(MouseEvent e) {
             rectDrawer.setStartPoint(e.getX(), e.getY());
+            table.clearSelection();
         }
 
         public void mouseDragged(MouseEvent e) {

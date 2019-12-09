@@ -42,7 +42,7 @@ public class FileTableView extends JTable {
         
 		this.fileTableModel = fileTableModel;
 	    
-		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		this.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 //	    this.setAutoCreateRowSorter(true);
 		
 		//Sort by type and then by name
@@ -59,6 +59,22 @@ public class FileTableView extends JTable {
 	    this.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	    this.setRowHeight( (int)(this.getRowHeight() * 1.5) );
 	    setTableData(FileSystemView.getFileSystemView().getFiles(FileSystemView.getFileSystemView().getRoots()[0], true));
+	    
+	    ListSelectionListener listSelectionListener = new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent lse) {
+                int[] rows = FileTableView.this.getSelectedRows();
+                File[] files = new File[rows.length];
+                int i = 0;
+                for (int row : rows) {
+                	row = sorter.convertRowIndexToModel(row);
+                	files[i] = fileTableModel.getFile(row);
+                	i++;
+                }
+                fileTableModel.setCurrentFiles(files);
+            }
+        };
+        this.getSelectionModel().addListSelectionListener(listSelectionListener);
 	  	    
 	}
 	
@@ -98,7 +114,13 @@ public class FileTableView extends JTable {
     class DrawMouseListener extends MouseAdapter {
 
         public void mousePressed(MouseEvent e) {
+        	int w = FileTableView.this.getWidth();
+        	int h = FileTableView.this.getRowCount() * FileTableView.this.getRowHeight();
+        	if (e.getX() > w || h < e.getY()) {
+        		FileTableView.this.clearSelection();
+        	}
             rectDrawer.setStartPoint(e.getX(), e.getY());
+            
         }
 
         public void mouseDragged(MouseEvent e) {

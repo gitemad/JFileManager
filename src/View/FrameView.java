@@ -89,6 +89,7 @@ public class FrameView extends JFrame {
 		filePanelView = new FilePanelView(filePanelModel);
 		filePanelController = new FilePanelController(filePanelModel, filePanelView);
 		
+				
 
 		footerView.addListListener(new ActionListener() {
 			@Override

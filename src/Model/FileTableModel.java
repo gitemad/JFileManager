@@ -9,6 +9,7 @@ import javax.swing.table.*;
 
 public class FileTableModel extends AbstractTableModel {
 
+	private File[] currentFiles;
     private File[] files;
     private FileSystemView fileSystemView = FileSystemView.getFileSystemView();
     private String[] columns = {
@@ -126,13 +127,29 @@ public class FileTableModel extends AbstractTableModel {
         });
     }
     
+    
+    
 //    private void setRClickMenu(File[] files) {
 //    	for (File file : files) {
 //			file.set
 //		}
 //    }
     
-    // get the file type
+    /**
+	 * @return the currentFiles
+	 */
+	public File[] getCurrentFiles() {
+		return currentFiles;
+	}
+
+	/**
+	 * @param currentFile the currentFiles to set
+	 */
+	public void setCurrentFiles(File[] currentFiles) {
+		this.currentFiles = currentFiles;
+	}
+
+	// get the file type
     private String getFileType(File file) {
     	String extension = "";
     	String fileName = file.getName();

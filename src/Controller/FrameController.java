@@ -6,6 +6,8 @@ import java.io.File;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.KeyStroke;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -62,13 +64,12 @@ public class FrameController {
 
 		
 		
-		
 	}
 	
 	private KeyListener confirmAddress() {
 		KeyListener k = new KeyListener() {
 			@Override
-			public void keyTyped(KeyEvent arg0) {
+			public void keyTyped(KeyEvent arg0) {				
 			}
 
 			@Override
