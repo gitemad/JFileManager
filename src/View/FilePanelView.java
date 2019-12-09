@@ -54,54 +54,49 @@ public class FilePanelView extends JPanel {
         addMouseListener(drawMouseListener);
         addMouseMotionListener(drawMouseListener);
         
-        fileSystemView = FileSystemView.getFileSystemView();
-        File[] roots = fileSystemView.getRoots();
-		for (File fileSystemRoot : roots) {
-			File[] files = fileSystemView.getFiles(fileSystemRoot, true);
-			fileLabelsModel = new ArrayList<FileLabelModel>();
-			fileLabelsView = new ArrayList<FileLabelView>();
-			fileLabelsController = new ArrayList<FileLabelController>();
-			for (File file : files) {
-				FileLabelModel fileLabelModel = new FileLabelModel(file);
-				FileLabelView fileLabelView = new FileLabelView(fileLabelModel);
-				FileLabelController fileLabelController = new FileLabelController(fileLabelModel, fileLabelView);
-				fileLabelsModel.add(fileLabelModel);				
-				fileLabelsView.add(fileLabelView);				
-				fileLabelsController.add(fileLabelController);				
+        File[] files = model.getFolder().listFiles();
+		fileLabelsModel = new ArrayList<FileLabelModel>();
+		fileLabelsView = new ArrayList<FileLabelView>();
+		fileLabelsController = new ArrayList<FileLabelController>();
+		for (File file : files) {
+			FileLabelModel fileLabelModel = new FileLabelModel(file);
+			FileLabelView fileLabelView = new FileLabelView(fileLabelModel);
+			FileLabelController fileLabelController = new FileLabelController(fileLabelModel, fileLabelView);
+			fileLabelsModel.add(fileLabelModel);				
+			fileLabelsView.add(fileLabelView);				
+			fileLabelsController.add(fileLabelController);				
+			
+			fileLabelController.addMouseListener(new MouseListener() {
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					
+				}
 				
-				fileLabelController.addMouseListener(new MouseListener() {
-					@Override
-					public void mouseReleased(MouseEvent e) {
-						
-					}
-					
-					@Override
-					public void mousePressed(MouseEvent e) {
-						deselectOther(fileLabelController);
-						repaint();
-					}
-					
-					@Override
-					public void mouseExited(MouseEvent e) {
-						repaint();
-					}
-					
-					@Override
-					public void mouseEntered(MouseEvent arg0) {
-						repaint();
-					}
-					
-					@Override
-					public void mouseClicked(MouseEvent arg0) {
-						
-					}
-				});
+				@Override
+				public void mousePressed(MouseEvent e) {
+					deselectOther(fileLabelController);
+					repaint();
+				}
 				
-				this.add(fileLabelView);
-			}
+				@Override
+				public void mouseExited(MouseEvent e) {
+					repaint();
+				}
+				
+				@Override
+				public void mouseEntered(MouseEvent arg0) {
+					repaint();
+				}
+				
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					
+				}
+			});
+			
+			this.add(fileLabelView);
 		}
-		
-    }
+	}
     
     public void setPanelData(File folder) {
     	this.removeAll();

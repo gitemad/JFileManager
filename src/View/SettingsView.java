@@ -1,12 +1,18 @@
 package View;
 import javax.swing.*;
+
+import Model.SettingsModel;
+
 import java.awt.*;
+import java.nio.channels.SeekableByteChannel;
 
 /**
  * @author Emad
  *
  */
 public class SettingsView extends JFrame {
+	
+	private SettingsModel model;
 	
 	private Image icon;
 	private JPanel panel;
@@ -26,15 +32,16 @@ public class SettingsView extends JFrame {
 	/**
 	 * Only constructor of class without any parameter requirement
 	 */
-	public SettingsView() {
+	public SettingsView(SettingsModel model) {
 		super("Settings");
+		this.model = model;
 		
 		icon = new ImageIcon("img/settings.png").getImage();
 		panel = new JPanel(new GridBagLayout());
 		adrsPanel = new JPanel(new GridBagLayout());
 		sharePanel = new JPanel(new GridBagLayout());
 		viewPanel = new JPanel(new GridBagLayout());
-		address = new JTextField("Select default address");
+		address = new JTextField(model.getDefaultAddress());
 		savePath = new JTextField("Select save path location");
 		compAdrs = new JTextField("Select computer address to share files");
 		compPort = new JTextField("Select computer port to share files");
@@ -132,5 +139,9 @@ public class SettingsView extends JFrame {
 		panel.add(cancel, gbc);
 		this.setContentPane(panel);
 		this.setVisible(true);
+	}
+	
+	public String getDefaultAddress() {
+		return address.getText();
 	}
 }

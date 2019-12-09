@@ -9,14 +9,11 @@ import java.util.ArrayList;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.KeyStroke;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import View.FrameView;
-import javafx.scene.input.MouseButton;
 
 /**
  * 
@@ -140,6 +137,7 @@ public class FrameController {
 				if (f.listFiles() != null) {
 					view.getFileTableModel().setTableData(f.listFiles());
 					filePanelController.setFolder(f);
+					addOpenListener(filePanelController.getView().getFileLabelsController());
 				}
 				hasParent(f);
 			}
@@ -157,6 +155,7 @@ public class FrameController {
 				if (f.listFiles() != null) {
 					view.getFileTableModel().setTableData(f.listFiles());
 					filePanelController.setFolder(f);
+					addOpenListener(filePanelController.getView().getFileLabelsController());
 				}
 				hasParent(f);
 			}
@@ -175,6 +174,7 @@ public class FrameController {
 					if (f.listFiles() != null) {
 						view.getFileTableModel().setTableData(f.listFiles());
 						filePanelController.setFolder(f);
+						addOpenListener(filePanelController.getView().getFileLabelsController());
 					}
 					hasParent(f);
 				} else {

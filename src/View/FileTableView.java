@@ -58,7 +58,7 @@ public class FileTableView extends JTable {
 	    this.setShowHorizontalLines(false);
 	    this.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	    this.setRowHeight( (int)(this.getRowHeight() * 1.5) );
-	    setTableData(FileSystemView.getFileSystemView().getFiles(FileSystemView.getFileSystemView().getRoots()[0], true));
+	    setTableData(fileTableModel.getFiles());
 	    
 	    ListSelectionListener listSelectionListener = new ListSelectionListener() {
             @Override

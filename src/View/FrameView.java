@@ -71,25 +71,26 @@ public class FrameView extends JFrame {
 		footerView = new FooterView();
 		tray = new TrayIconJFM(this).getTray();
 
-		fileTableModel = new FileTableModel();
-		fileTableView = new FileTableView(fileTableModel);
-
 		treeModel = new FileTreeModel();
 		treeView = new FileTreeView(treeModel.getTree());
 		treeController = new FileTreeController(treeModel, treeView);
 
 		addressBarController = toolBarView.getAddressBarController();
 		addressBarModel = addressBarController.getModel();
-
+		
+		
 		backButtonController = toolBarView.getBackController();
 		forwardButtonController = toolBarView.getForwardController();
 		parentButtonController = toolBarView.getParentController();
+		
+		fileTableModel = new FileTableModel(new File(addressBarModel.getPath()).listFiles());
+		fileTableView = new FileTableView(fileTableModel);
 
 		filePanelModel = new FilePanelModel(new File(addressBarModel.getPath()));
 		filePanelView = new FilePanelView(filePanelModel);
 		filePanelController = new FilePanelController(filePanelModel, filePanelView);
 		
-				
+		
 
 		footerView.addListListener(new ActionListener() {
 			@Override

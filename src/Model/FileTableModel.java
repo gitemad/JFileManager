@@ -32,7 +32,7 @@ public class FileTableModel extends AbstractTableModel {
      * @param files the files you want to crate table model of them
      */
     public FileTableModel(File[] files) {
-        this.files = files;
+        setFiles(files);
     }
 
     /**
@@ -116,6 +116,15 @@ public class FileTableModel extends AbstractTableModel {
     public void setFiles(File[] files) {
         this.files = files;
         fireTableDataChanged();
+    }
+    
+    
+    /**
+     * 
+     * @return
+     */
+    public File[] getFiles() {
+    	return this.files;
     }
     
     

@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
+import Model.SettingsModel;
 import View.HelpMenuView;
 import View.SettingsView;
 
@@ -12,12 +13,15 @@ public class HelpMenuController {
 	
 	private HelpMenuView view;
 	
+	private SettingsModel settingsModel;
+	
 	/**
 	 * Only constructor of class with following parameter requirement
 	 * @param view the help menu view
 	 */
 	public HelpMenuController(HelpMenuView view) {
 		this.view = view;
+		settingsModel = new SettingsModel();
 		
 		view.getAbout().addActionListener(new ActionListener() {
 			
@@ -31,7 +35,7 @@ public class HelpMenuController {
 			
 			@Override
 			public void actionPerformed(ActionEvent eve) {
-				SettingsView settings = new SettingsView();
+				SettingsView settings = new SettingsView(settingsModel);
 			}
 		});
 		

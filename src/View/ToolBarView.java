@@ -7,6 +7,7 @@ import Model.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.nio.channels.SeekableByteChannel;
 
 /**
  * @author Emad
@@ -20,6 +21,7 @@ public class ToolBarView extends JToolBar {
 	private NavigateButtonModel parentModel;
 	private AddressBarModel addressModel;
 	private SearchModel searchModel;
+	private SettingsModel settingsModel;
 	
 	//view
 	private NavigateButtonView backView;
@@ -46,9 +48,10 @@ public class ToolBarView extends JToolBar {
 		
 		backModel = new NavigateButtonModel(false, 10);
 		forwardModel = new NavigateButtonModel(false, 10);
-		parentModel = new NavigateButtonModel(false, 10);
-		addressModel = new AddressBarModel("Desktop");
+		parentModel = new NavigateButtonModel(true, 10);
 		searchModel = new SearchModel("Search");
+		settingsModel = new SettingsModel(); 
+		addressModel = new AddressBarModel(settingsModel.getDefaultAddress());
 		
 		backView = new NavigateButtonView(new ImageIcon("img/back.png"));
 		forwardView = new NavigateButtonView(new ImageIcon("img/forward.png"));
