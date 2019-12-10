@@ -16,6 +16,7 @@ public class FilePanelModel {
 	
 	public FilePanelModel(File folder) {
 		this.folder = folder;
+		currentFiles = new ArrayList<File>();
 		ctrlDown = false;
 	}
 
@@ -45,6 +46,10 @@ public class FilePanelModel {
 	 */
 	public void setCurrentFiles(ArrayList<File> currentFiles) {
 		this.currentFiles = currentFiles;
+	}
+	
+	public void addCurrentFile(File file) {
+		this.currentFiles.add(file);
 	}
 
 	/**

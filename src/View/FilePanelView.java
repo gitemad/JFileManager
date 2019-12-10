@@ -193,6 +193,7 @@ public class FilePanelView extends JPanel {
 		for (FileLabelController fileLabel : fileLabelsController) {
 			fileLabel.unSelected();
 		}
+		model.getCurrentFiles().removeAll(model.getCurrentFiles());
 	}
     
 	//deselect all files except the parameter
@@ -201,6 +202,8 @@ public class FilePanelView extends JPanel {
     		if (fileLabel != thisController)
     			fileLabel.unSelected();
     	}
+    	model.getCurrentFiles().removeAll(model.getCurrentFiles());
+    	model.addCurrentFile(thisController.getModel().getFile());
     }
     
     

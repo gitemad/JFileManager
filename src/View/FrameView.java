@@ -263,7 +263,7 @@ public class FrameView extends JFrame {
 
 
 	// a function for list view
-	private void listView() {
+	public void listView() {
 		reconstruct();
 
 		filePane = new FilePaneView(fileTableView);

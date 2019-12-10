@@ -151,6 +151,7 @@ public class FrameController {
 					ContextMenuPanelView menu = view.getFilePane().getrClickMenu();
 					menu.show(e.getComponent(), e.getX(), e.getY());
 					setPanMenuActions(menu);
+
 				}
 			}
 		});
@@ -180,6 +181,7 @@ public class FrameController {
 				}
 			}
 		});
+		
 	}
 
 	private KeyListener confirmAddress() {
@@ -227,6 +229,7 @@ public class FrameController {
 					setFileMenuActions(view.getMenuBarView().getFileView());
 					setEditMenuActions(view.getMenuBarView().getEditView());
 					setPanMenuActions(view.getFilePanelController().getView().getrClickMenuView());
+					setPanMenuActions(view.getFilePane().getrClickMenu());
 					addLabelsListener(filePanelController.getView().getFileLabelsController());
 				}
 				hasParent(f);
@@ -249,6 +252,7 @@ public class FrameController {
 					setFileMenuActions(view.getMenuBarView().getFileView());
 					setEditMenuActions(view.getMenuBarView().getEditView());
 					setPanMenuActions(view.getFilePanelController().getView().getrClickMenuView());
+					setPanMenuActions(view.getFilePane().getrClickMenu());
 					addLabelsListener(filePanelController.getView().getFileLabelsController());
 				}
 				hasParent(f);
@@ -273,6 +277,7 @@ public class FrameController {
 						setFileMenuActions(view.getMenuBarView().getFileView());
 						setEditMenuActions(view.getMenuBarView().getEditView());
 						setPanMenuActions(view.getFilePanelController().getView().getrClickMenuView());
+						setPanMenuActions(view.getFilePane().getrClickMenu());
 						addLabelsListener(filePanelController.getView().getFileLabelsController());
 					}
 					hasParent(f);
@@ -311,7 +316,7 @@ public class FrameController {
 		for (FileLabelController flc : flcs) {
 			File f = flc.getModel().getFile();
 			File[] fs = new File[1];
-			fs[0] = flc.getModel().getFile();
+			fs[0] = f;
 			flc.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -326,6 +331,20 @@ public class FrameController {
 							@Override
 							public void actionPerformed(ActionEvent arg0) {
 								new Open(f).execute();
+							}
+						});
+						
+						flc.getView().getRightClickMenu().getCopy().addActionListener(new AbstractAction() {
+							@Override
+							public void actionPerformed(ActionEvent arg0) {
+								new Copy(fs).execute();
+							}
+						});
+						
+						flc.getView().getRightClickMenu().getCut().addActionListener(new AbstractAction() {
+							@Override
+							public void actionPerformed(ActionEvent arg0) {
+								new Cut(fs).execute();
 							}
 						});
 
@@ -527,6 +546,7 @@ public class FrameController {
 	private void search(File path, String text) {
 		view.getFooterView().getGridController().setSelected(false);
 		view.getFooterView().getListController().setSelected(true);
+		view.listView();
 		for (File file : path.listFiles()) {
 			String fileName = file.getName().toLowerCase();
 			text = text.toLowerCase();
@@ -558,6 +578,7 @@ public class FrameController {
 				setPanMenuActions(filePanelController.getView().getrClickMenuView());
 				setFileMenuActions(view.getMenuBarView().getFileView());
 				setPanMenuActions(view.getFilePanelController().getView().getrClickMenuView());
+				setPanMenuActions(view.getFilePane().getrClickMenu());
 				addLabelsListener(filePanelController.getView().getFileLabelsController());
 			} else {
 				try {
@@ -581,25 +602,12 @@ public class FrameController {
 			FileInputStream is = null;
 			FileOutputStream os = null;
 			String newName;
+			File f2;
+			do {
 			newName = JOptionPane.showInputDialog("Enter new file name: ");
-			File f2 = new File(f.getParent() + "\\" + newName);
+			f2 = new File(f.getParent() + "\\" + newName);
+			} while (f2.exists());
 			f.renameTo(f2);
-//			try {
-//				is = new FileInputStream(f);
-//				File dest = new File(f.getParent() + "\\" + newName);
-//				os = new FileOutputStream(dest);
-//				byte[] buffer = new byte[1024];
-//				int length;
-//				while ((length = is.read(buffer)) > 0) {
-//					os.write(buffer, 0, length);
-//				}
-//			} catch (Exception e) {
-//			}			
-//			try {
-//				is.close();
-//				os.close();
-//			} catch (IOException e) {
-//			}
 			new Open(new File(addressBarController.getModel().getPath())).execute();
 		}
 	}
@@ -642,6 +650,8 @@ public class FrameController {
 		public void execute() {
 			clipboard = sources;
 			cut = false;
+			setPanMenuActions(filePanelController.getView().getrClickMenuView());
+			setPanMenuActions(view.getFilePane().getrClickMenu());
 		}
 	}
 	
@@ -656,6 +666,8 @@ public class FrameController {
 		public void execute() {
 			clipboard = sources;
 			cut = true;
+			setPanMenuActions(filePanelController.getView().getrClickMenuView());
+			setPanMenuActions(view.getFilePane().getrClickMenu());
 		}
 	}
 	
