@@ -42,7 +42,7 @@ public class FrameController {
 		this.view = view;
 
 		this.desktop = Desktop.getDesktop();
-
+		
 		treeController = this.view.getTreeController();
 		addressBarController = this.view.getAddressBarController();
 		filePanelController = this.view.getFilePanelController();
@@ -76,56 +76,64 @@ public class FrameController {
 		view.getFileTableView().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				File f = view.getFileTableModel().getCurrentFiles()[0];
-//				if (e.getButton() == MouseEvent.BUTTON3_MASK) {
-//					System.out.println("NDN");
-//					System.out.println(f.getName());
-//					ContextMenuFileView menu = new ContextMenuFileView(f);
-//					view.getFileTableView().setRClickMenu(menu);
-//					view.getFileTableView().getrClickMenu().getOpen().addActionListener(open(f));					
+				File f = null;
+				try {
+					f = view.getFileTableModel().getCurrentFiles()[0];
+				} catch (Exception exp) {
+					
+				}
+//				if (e.isPopupTrigger()) {
+//					System.out.println("Whyyyyyy");
+//					try {
+//						view.getFileTableView().setRClickMenu(new ContextMenuFileView(f));
+//						view.getFileTableView().getrClickMenu().show(e.getComponent(), e.getX(), e.getY());
+//						new OpenFile(f).execute();
+//					} catch (Exception exp) {
+//						
+//					}
 //				}
 				if (e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1) {
-					if (f.exists() && f.isDirectory()) {
-						backButtonController.addMemento(view.getAddressBarModel().getPath());
-						addressBarController.setPath(f.getPath());
-						view.getFileTableModel().setTableData(f.listFiles());
-						filePanelController.setFolder(f);
-						addOpenListener(filePanelController.getView().getFileLabelsController());
-						hasParent(f);
-					} else {
-						try {
-							desktop.open(f);
-						} catch (IOException e1) {
-							e1.printStackTrace();
-						}
+					try {
+						new OpenFile(f).execute();
+					} catch (Exception exp) {
+						
+					}
+				}
+			}
+			
+			public void mouseReleased(MouseEvent e) {
+				File f = null;
+				try {
+					f = view.getFileTableModel().getCurrentFiles()[0];
+				} catch (Exception exp) {
+					
+				}
+				if (e.isPopupTrigger()) {
+					System.out.println("Whyyyyyy");
+					try {
+						view.getFileTableView().setRClickMenu(new ContextMenuFileView(f));
+						ContextMenuFileView menu = view.getFileTableView().getrClickMenu();
+						menu.show(e.getComponent(), e.getX(), e.getY());
+						menu.getOpen().addActionListener(new AbstractAction() {
+							File f = view.getFileTableModel().getCurrentFiles()[0];
+							@Override
+							public void actionPerformed(ActionEvent arg0) {
+								new OpenFile(f).execute();
+							}
+						});
+					} catch (Exception exp) {
 					}
 				}
 			}
 		});
 		
+		
 		view.getFileTableView().addKeyListener(new KeyAdapter() {
 			
 			public void keyPressed(KeyEvent k) {
 				if (k.getKeyCode() == KeyEvent.VK_ENTER) {
-					try {
-						File f = view.getFileTableModel().getCurrentFiles()[0];
-						if (f.exists() && f.isDirectory()) {
-							backButtonController.addMemento(view.getAddressBarModel().getPath());
-							addressBarController.setPath(f.getPath());
-							view.getFileTableModel().setTableData(f.listFiles());
-							filePanelController.setFolder(f);
-							addOpenListener(filePanelController.getView().getFileLabelsController());
-							hasParent(f);
-						} else {
-							try {
-								desktop.open(f);
-							} catch (IOException e1) {
-								e1.printStackTrace();
-							}
-						}
-					} catch (Exception e) {
-						
-					}
+					File f = view.getFileTableModel().getCurrentFiles()[0];
+					new OpenFile(f).execute();
 				}
 			}
 		});
@@ -155,10 +163,8 @@ public class FrameController {
 						addressBarController.getView().setText(view.getAddressBarModel().getPath());
 					}
 					File ff = new File(view.getAddressBarModel().getPath());
-					view.getFileTableModel().setTableData(ff.listFiles());
-					filePanelController.setFolder(ff);
-					addOpenListener(filePanelController.getView().getFileLabelsController());
-					hasParent(ff);
+					new OpenFile(ff).execute();
+
 				}
 			}
 		};
@@ -223,29 +229,29 @@ public class FrameController {
 		return a;
 	}
 
-	private Action open(File f) {
-		Action a = new AbstractAction() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (f.exists() && f.isDirectory()) {
-					backButtonController.addMemento(view.getAddressBarModel().getPath());
-					addressBarController.setPath(f.getPath());
-					view.getFileTableModel().setTableData(f.listFiles());
-					filePanelController.setFolder(f);
-					addOpenListener(filePanelController.getView().getFileLabelsController());
-				} else {
-					try {
-						desktop.open(f);
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-				}
-				hasParent(f);
-			}
-		};
-		return a;
-	}
+//	private Action open(File f) {
+//		Action a = new AbstractAction() {
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				if (f.exists() && f.isDirectory()) {
+//					backButtonController.addMemento(view.getAddressBarModel().getPath());
+//					addressBarController.setPath(f.getPath());
+//					view.getFileTableModel().setTableData(f.listFiles());
+//					filePanelController.setFolder(f);
+//					addOpenListener(filePanelController.getView().getFileLabelsController());
+//				} else {
+//					try {
+//						desktop.open(f);
+//					} catch (IOException e1) {
+//						e1.printStackTrace();
+//					}
+//				}
+//				hasParent(f);
+//			}
+//		};
+//		return a;
+//	}
 
 	private TreeSelectionListener treeSelection() {
 		TreeSelectionListener t = new TreeSelectionListener() {
@@ -303,5 +309,44 @@ public class FrameController {
 		}
 	}
 
-
+	class OpenFile implements Command {
+		
+		File f;
+		
+		public OpenFile(File f) {
+			this.f = f;
+		}
+		
+		public void execute() {
+			if (f.exists() && f.isDirectory()) {
+				backButtonController.addMemento(view.getAddressBarModel().getPath());
+				addressBarController.setPath(f.getPath());
+				view.getFileTableModel().setTableData(f.listFiles());
+				filePanelController.setFolder(f);
+				addOpenListener(filePanelController.getView().getFileLabelsController());
+			} else {
+				try {
+					desktop.open(f);
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+			hasParent(f);
+		}
+	}
+	
+	class Rename implements Command {
+		File f;
+		File f2;
+		
+		public Rename(File f, File f2) {
+			this.f = f;
+			this.f2 = f2;
+		}
+		
+		public void execute() {
+			f.renameTo(f2);
+		}
+	}
+	
 }

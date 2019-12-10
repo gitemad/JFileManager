@@ -27,4 +27,15 @@ public class ContextMenuFileController {
 		
 		
 	}
+
+	/**
+	 * @return the view
+	 */
+	public ContextMenuFileView getView() {
+		return view;
+	}
+	
+	
+	
+	
 }

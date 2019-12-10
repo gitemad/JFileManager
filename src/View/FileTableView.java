@@ -145,14 +145,14 @@ public class FileTableView extends JTable {
         	rectDrawer.setStartPoint(10000, 10000);
         	rectDrawer.setEndPoint(10000, 10000);
         	repaint();
-        	if (e.isPopupTrigger()) {
-                JTable source = (JTable) e.getSource();
-                int row = source.rowAtPoint( e.getPoint() );
-                int column = source.columnAtPoint( e.getPoint() );
-                if (! source.isRowSelected(row))
-                    source.changeSelection(row, column, false, false);
-                rClickMenu.show(e.getComponent(), e.getX(), e.getY());
-            }
+//        	if (e.isPopupTrigger()) {
+//                JTable source = (JTable) e.getSource();
+//                int row = source.rowAtPoint( e.getPoint() );
+//                int column = source.columnAtPoint( e.getPoint() );
+//                if (! source.isRowSelected(row))
+//                    source.changeSelection(row, column, false, false);
+////                rClickMenu.show(e.getComponent(), e.getX(), e.getY());
+//            }
         }
         
     }
