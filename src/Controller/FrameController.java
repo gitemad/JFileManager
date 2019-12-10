@@ -22,6 +22,7 @@ import View.ContextMenuPanelView;
 import View.FileMenuView;
 import View.FileTableView;
 import View.FrameView;
+import View.PropertiesView;
 
 /**
  * 
@@ -77,6 +78,7 @@ public class FrameController {
 
 		setFileMenuActions(view.getMenuBarView().getFileView());
 		setPanMenuActions(filePanelController.getView().getrClickMenuView());
+		setPanMenuActions(view.getFilePane().getrClickMenu());
 		addLabelsListener(filePanelController.getView().getFileLabelsController());
 
 		view.getFileTableView().addMouseListener(new MouseAdapter() {
@@ -122,7 +124,6 @@ public class FrameController {
 						ContextMenuPanelView menu = view.getFileTableView().getPanelRClickMenu();
 						menu.show(e.getComponent(), e.getX(), e.getY());
 						setPanMenuActions(menu);
-
 					} else {
 						try {
 							view.getFileTableView().setRClickMenu(new ContextMenuFileView(f));
@@ -143,6 +144,19 @@ public class FrameController {
 				if (k.getKeyCode() == KeyEvent.VK_ENTER) {
 					File f = view.getFileTableModel().getCurrentFiles()[0];
 					new Open(f).execute();
+				}
+			}
+		});
+		
+		
+		view.getFilePane().getViewport().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					view.getFilePane().setrClickMenu(new ContextMenuPanelView());
+					ContextMenuPanelView menu = view.getFilePane().getrClickMenu();
+					menu.show(e.getComponent(), e.getX(), e.getY());
+					setPanMenuActions(menu);
 				}
 			}
 		});
@@ -190,6 +204,7 @@ public class FrameController {
 					filePanelController.setFolder(f);
 					setPanMenuActions(filePanelController.getView().getrClickMenuView());
 					setFileMenuActions(view.getMenuBarView().getFileView());
+					setPanMenuActions(view.getFilePanelController().getView().getrClickMenuView());
 					addLabelsListener(filePanelController.getView().getFileLabelsController());
 				}
 				hasParent(f);
@@ -210,6 +225,7 @@ public class FrameController {
 					filePanelController.setFolder(f);
 					setPanMenuActions(filePanelController.getView().getrClickMenuView());
 					setFileMenuActions(view.getMenuBarView().getFileView());
+					setPanMenuActions(view.getFilePanelController().getView().getrClickMenuView());
 					addLabelsListener(filePanelController.getView().getFileLabelsController());
 				}
 				hasParent(f);
@@ -231,6 +247,7 @@ public class FrameController {
 						filePanelController.setFolder(f);
 						setPanMenuActions(filePanelController.getView().getrClickMenuView());
 						setFileMenuActions(view.getMenuBarView().getFileView());
+						setPanMenuActions(view.getFilePanelController().getView().getrClickMenuView());
 						addLabelsListener(filePanelController.getView().getFileLabelsController());
 					}
 					hasParent(f);
@@ -273,14 +290,7 @@ public class FrameController {
 				DefaultMutableTreeNode node = (DefaultMutableTreeNode) tse.getPath().getLastPathComponent();
 				view.getTreeModel().setCurrentNode((File) node.getUserObject());
 				treeController.addChildren(node);
-				backButtonController.addMemento(view.getAddressBarModel().getPath());
-				addressBarController.setPath(view.getTreeModel().getCurrentNode().getPath());
-				if (view.getTreeModel().getCurrentNode().listFiles() != null) {
-					view.getFileTableModel().setTableData(view.getTreeModel().getCurrentNode().listFiles());
-					filePanelController.setFolder(view.getTreeModel().getCurrentNode());
-					addLabelsListener(filePanelController.getView().getFileLabelsController());
-				}
-				hasParent(view.getTreeModel().getCurrentNode());
+				new Open(view.getTreeModel().getCurrentNode()).execute();
 			}
 		};
 		return t;
@@ -354,30 +364,39 @@ public class FrameController {
 	}
 
 	private void setConMenuActions(ContextMenuFileView menu) {
+		File[] f = view.getFileTableModel().getCurrentFiles();
+		if (f.length > 1) {
+			menu.getOpen().setVisible(false);
+			menu.getRename().setVisible(false);
+		}
 		menu.getOpen().addActionListener(new AbstractAction() {
-			File f = view.getFileTableModel().getCurrentFiles()[0];
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				new Open(f).execute();
+				new Open(f[0]).execute();
 			}
 		});
 
 		menu.getRename().addActionListener(new AbstractAction() {
-			File f = view.getFileTableModel().getCurrentFiles()[0];
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				new Rename(f).execute();
+				new Rename(f[0]).execute();
 			}
 		});
 
 		menu.getDelete().addActionListener(new AbstractAction() {
-			File[] f = view.getFileTableModel().getCurrentFiles();
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				new Delete(f).execute();
+			}
+		});
+		
+		menu.getProperties().addActionListener(new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				new Properties(f).execute();
 			}
 		});
 
@@ -398,6 +417,13 @@ public class FrameController {
 				new newFolder(path).execute();
 			}
 		});
+		
+		menu.getProperties().addActionListener(new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				new Properties(path).execute();
+			}
+		});
 	}
 	
 	private void setFileMenuActions(FileMenuView menu) {
@@ -413,6 +439,20 @@ public class FrameController {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				new newFolder(path).execute();
+			}
+		});
+		
+		menu.getDelete().addActionListener(new AbstractAction() {
+			public void actionPerformed(ActionEvent arg0) {
+				File[] files;
+				if (view.getFooterView().getGridController().isSelected()) {
+					//TODO
+				} else if (view.getFooterView().getListController().isSelected()) {
+					files = view.getFileTableModel().getCurrentFiles();
+					if (files != null ) {
+						new Delete(files).execute();
+					}
+				}
 			}
 		});
 
@@ -434,6 +474,7 @@ public class FrameController {
 				filePanelController.setFolder(f);
 				setPanMenuActions(filePanelController.getView().getrClickMenuView());
 				setFileMenuActions(view.getMenuBarView().getFileView());
+				setPanMenuActions(view.getFilePanelController().getView().getrClickMenuView());
 				addLabelsListener(filePanelController.getView().getFileLabelsController());
 			} else {
 				try {
@@ -455,7 +496,7 @@ public class FrameController {
 
 		public void execute() {
 			String newName;
-			newName = JOptionPane.showInputDialog("Enter file name: ");
+			newName = JOptionPane.showInputDialog("Enter new file name: ");
 			File f2 = new File(newName);
 			f.renameTo(f2);
 			view.repaint();
@@ -496,6 +537,18 @@ public class FrameController {
 			fileName = JOptionPane.showInputDialog("Enter file name: ");
 			if (fileName != null) {
 				path += fileName;
+				while (new File(path).exists()) {
+					path = path.replace(fileName, "");
+					int i = fileName.lastIndexOf(".");
+					if (i > 0) {
+						String extension = "";
+					    extension = fileName.substring(i);
+					    fileName = fileName.replace(extension, "");
+					    fileName += "_copy";
+					    fileName += extension;
+					    path += fileName;
+					}
+				}
 				File file = new File(path);
 				try {
 					file.createNewFile();
@@ -516,12 +569,39 @@ public class FrameController {
 		public void execute() {
 			path += "\\";
 			String fileName;
-			fileName = JOptionPane.showInputDialog("Enter file name: ", JOptionPane.OK_OPTION);
+			fileName = JOptionPane.showInputDialog("Enter folder name: ", JOptionPane.OK_OPTION);
 			if (fileName != null) {
 				path += fileName;
-				File file = new File(path);			
+				while (new File(path).isDirectory()) {
+					path += "_copy";
+				}
+				File file = new File(path);
 				file.mkdir();
 				new Open(file.getParentFile()).execute();
+			}
+		}
+	}
+	
+	class Properties implements Command {
+		
+		String path;
+		File[] files;
+		
+		public Properties(String path) {
+			this.path = path;
+			this.files = new File[1];
+			this.files[0] = new File(path);
+		}
+		
+		public Properties(File[] files) {
+			this.files = files;
+		}
+		
+		public void execute() {
+			if (files.length == 1) {
+				new PropertiesView(files[0]);
+			} else if (files.length > 1) {
+				new PropertiesView(files);
 			}
 		}
 	}

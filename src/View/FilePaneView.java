@@ -11,9 +11,9 @@ import javax.swing.table.*;
  */
 public class FilePaneView extends JScrollPane {
 	
-    private JPopupMenu rClickMenu;
+    private ContextMenuPanelView rClickMenu;
 	private JPanel panel;
-	private JTable table;
+	private FileTableView table;
 	private Dimension minSize;
 	private RectangleDrawerView rectDrawer;
 	
@@ -23,7 +23,7 @@ public class FilePaneView extends JScrollPane {
 	 */
 	public FilePaneView(JPanel panel) {
 		super(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		rClickMenu = new JPopupMenu();
+		rClickMenu = new ContextMenuPanelView();
 		rectDrawer = new RectangleDrawerView();
 		minSize = new Dimension(400, 300);
 		
@@ -36,7 +36,7 @@ public class FilePaneView extends JScrollPane {
 	 * second constructor of class with following parameter requirement
 	 * @param table the table you want to show files in list view
 	 */
-	public FilePaneView(JTable table) {
+	public FilePaneView(FileTableView table) {
 		super(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		this.table = table;
 		rClickMenu = new ContextMenuPanelView();
@@ -56,10 +56,28 @@ public class FilePaneView extends JScrollPane {
 	}
 	
 
-    class DrawMouseListener extends MouseAdapter {
+    /**
+	 * @return the rClickMenu
+	 */
+	public ContextMenuPanelView getrClickMenu() {
+		return rClickMenu;
+	}
+
+	/**
+	 * @param rClickMenu the rClickMenu to set
+	 */
+	public void setrClickMenu(ContextMenuPanelView rClickMenu) {
+		this.rClickMenu = rClickMenu;
+	}
+
+
+
+
+	class DrawMouseListener extends MouseAdapter {
 
         public void mousePressed(MouseEvent e) {
             rectDrawer.setStartPoint(e.getX(), e.getY());
+            table.getFileTableModel().setCurrentFiles(null);
             table.clearSelection();
         }
 
@@ -72,9 +90,6 @@ public class FilePaneView extends JScrollPane {
         	rectDrawer.setStartPoint(10000, 10000);
         	rectDrawer.setEndPoint(10000, 10000);
         	repaint();
-            if (e.isPopupTrigger()) {
-            	rClickMenu.show(e.getComponent(), e.getX(), e.getY());
-            }
         }
         
     }

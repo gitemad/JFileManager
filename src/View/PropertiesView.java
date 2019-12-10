@@ -24,6 +24,10 @@ public class PropertiesView extends JOptionPane {
 		this.showMessageDialog(null, getData(file), "Properties", JOptionPane.PLAIN_MESSAGE);
 	}
 	
+	public PropertiesView(File[] files) {
+		this.showMessageDialog(null, getData(files), "Properties", JOptionPane.PLAIN_MESSAGE);
+	}
+	
 	//get data of file
 	private String getData(File file) {
 		String props = "<html>";
@@ -31,7 +35,7 @@ public class PropertiesView extends JOptionPane {
 		props += getType(file);
 		props += "<br/>";
 		props += "Location:&emsp &emsp ";
-		props += file.getPath();
+		props += file.getParent();
 		props += "<br/>";
 		props += "Size:&ensp &emsp &emsp &emsp ";
 		props += getFileSize(file);
@@ -47,6 +51,20 @@ public class PropertiesView extends JOptionPane {
 		} catch (Exception e) {
 			
 		}
+		props += "</html>";
+		return props;
+	}
+	
+	private String getData(File[] files) {
+		String props = "<html>";
+		props += "Location:&emsp &emsp ";
+		props += files[0].getParent();
+		props += "<br/>";
+		props += "Size:&ensp &emsp &emsp &emsp ";
+		props += getFilesSize(files);
+		props += "<br/>";
+		props += "Items: &emsp &emsp &emsp ";
+		props += countItems(files);
 		props += "</html>";
 		return props;
 	}
@@ -108,6 +126,35 @@ public class PropertiesView extends JOptionPane {
 		return "";
     }
 	
+	private String getFilesSize(File[] files) {
+    	long bytes = 0;
+    	for (File file :files) {
+	    	if (!file.isFile()) {
+	    		bytes += folderSize(file);
+	    	} else {
+	    		bytes += file.length();
+	    	}
+    	}
+    	
+    	long kilobytes = (bytes / 1024);
+		long megabytes = (kilobytes / 1024);
+		long gigabytes = (megabytes / 1024);
+		long terabytes = (gigabytes / 1024);
+		
+		if (terabytes > 0)
+			return terabytes + " TB";
+		if (gigabytes > 0)
+			return gigabytes + " GB";
+		if (megabytes > 0)
+			return megabytes + " MB";
+		if (kilobytes > 0)
+			return kilobytes + " KB";
+		if (bytes > 0)
+			return bytes + " B";
+		return "";
+
+	}
+	
 	//get the size of folder
 	private long folderSize(File directory) {
 	    long length = 0;
@@ -132,5 +179,23 @@ public class PropertiesView extends JOptionPane {
 		childs += numFiles;
 		childs += " Files";
 		return childs;
+	}
+	
+	private String countItems(File[] files) {
+		String items = "";
+		int numFolders = 0;
+		int numFiles = 0;
+		for (File file : files) {
+			if (file.isDirectory()) {
+				numFolders++;
+			} else {
+				numFiles++;
+			}
+		}
+		items += numFolders;
+		items += " Folders, ";
+		items += numFiles;
+		items += " Files";
+		return items;
 	}
 }

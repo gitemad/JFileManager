@@ -128,13 +128,32 @@ public class FileTableView extends JTable {
         }
         tableColumn.setPreferredWidth(width);
     }
+    
 
-    class DrawMouseListener extends MouseAdapter {
+    /**
+	 * @return the fileTableModel
+	 */
+	public FileTableModel getFileTableModel() {
+		return fileTableModel;
+	}
+
+
+	/**
+	 * @param fileTableModel the fileTableModel to set
+	 */
+	public void setFileTableModel(FileTableModel fileTableModel) {
+		this.fileTableModel = fileTableModel;
+	}
+
+
+
+	class DrawMouseListener extends MouseAdapter {
 
         public void mousePressed(MouseEvent e) {
         	int w = FileTableView.this.getWidth();
         	int h = FileTableView.this.getRowCount() * FileTableView.this.getRowHeight();
         	if (e.getX() > w || h < e.getY()) {
+        		fileTableModel.setCurrentFiles(null);
         		FileTableView.this.clearSelection();
         	}
             rectDrawer.setStartPoint(e.getX(), e.getY());

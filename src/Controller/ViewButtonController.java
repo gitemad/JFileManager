@@ -27,6 +27,10 @@ public class ViewButtonController {
 		updateView();
 	}
 	
+	public boolean isSelected() {
+		return model.getSelected();
+	}
+	
 	//update the button view
 	private void updateView() {
 		view.setSelected(model.getSelected());

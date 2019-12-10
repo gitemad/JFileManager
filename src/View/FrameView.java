@@ -238,6 +238,22 @@ public class FrameView extends JFrame {
 	}
 
 
+	/**
+	 * @return the filePane
+	 */
+	public FilePaneView getFilePane() {
+		return filePane;
+	}
+
+
+	/**
+	 * @return the footerView
+	 */
+	public FooterView getFooterView() {
+		return footerView;
+	}
+
+
 	// a function for list view
 	private void listView() {
 		reconstruct();

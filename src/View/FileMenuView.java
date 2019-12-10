@@ -33,6 +33,7 @@ public class FileMenuView extends JMenu {
 		
 		delete = new JMenuItem("Delete");
 		delete.setMnemonic(KeyEvent.VK_D);
+		delete.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0));
 		this.add(delete);
 		
 		sync = new JMenuItem("Synchronize");
