@@ -105,6 +105,21 @@ public class ToolBarView extends JToolBar {
 	public AddressBarController getAddressBarController() {
 		return addressBarController;
 	}
+
+	/**
+	 * @return the searchModel
+	 */
+	public SearchModel getSearchModel() {
+		return searchModel;
+	}
+
+	/**
+	 * @return the searchView
+	 */
+	public SearchView getSearchView() {
+		return searchView;
+	}
+	
 	
 }
 

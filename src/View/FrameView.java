@@ -254,6 +254,14 @@ public class FrameView extends JFrame {
 	}
 
 
+	/**
+	 * @return the toolBarView
+	 */
+	public ToolBarView getToolBarView() {
+		return toolBarView;
+	}
+
+
 	// a function for list view
 	private void listView() {
 		reconstruct();
