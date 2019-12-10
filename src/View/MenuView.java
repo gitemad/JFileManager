@@ -54,7 +54,20 @@ public class MenuView extends JMenuBar {
 	public HelpMenuController getHelpController() {
 		return helpController;
 	}
-	
+
+	/**
+	 * @return the fileView
+	 */
+	public FileMenuView getFileView() {
+		return fileView;
+	}
+
+	/**
+	 * @return the editView
+	 */
+	public EditMenuView getEditView() {
+		return editView;
+	}
 	
 	
 	

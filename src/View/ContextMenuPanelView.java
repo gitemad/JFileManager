@@ -36,4 +36,34 @@ public class ContextMenuPanelView extends JPopupMenu {
 		add(newFolder);
 		add(properties);
 	}
+
+	/**
+	 * @return the paste
+	 */
+	public JMenuItem getPaste() {
+		return paste;
+	}
+
+	/**
+	 * @return the newFile
+	 */
+	public JMenuItem getNewFile() {
+		return newFile;
+	}
+
+	/**
+	 * @return the newFolder
+	 */
+	public JMenuItem getNewFolder() {
+		return newFolder;
+	}
+
+	/**
+	 * @return the properties
+	 */
+	public JMenuItem getProperties() {
+		return properties;
+	}
+	
+	
 }

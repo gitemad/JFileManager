@@ -39,5 +39,35 @@ public class FileMenuView extends JMenu {
 		sync.setMnemonic(KeyEvent.VK_S);
 		this.add(sync);
 	}
+
+	/**
+	 * @return the newFile
+	 */
+	public JMenuItem getNewFile() {
+		return newFile;
+	}
+
+	/**
+	 * @return the newFolder
+	 */
+	public JMenuItem getNewFolder() {
+		return newFolder;
+	}
+
+	/**
+	 * @return the delete
+	 */
+	public JMenuItem getDelete() {
+		return delete;
+	}
+
+	/**
+	 * @return the sync
+	 */
+	public JMenuItem getSync() {
+		return sync;
+	}
+	
+	
 	
 }

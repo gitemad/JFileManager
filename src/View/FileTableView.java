@@ -22,7 +22,8 @@ import Model.FileTableModel;
 public class FileTableView extends JTable {
 	
 	private RectangleDrawerView rectDrawer;
-    private ContextMenuFileView rClickMenu;
+    private ContextMenuFileView fileRClickMenu;
+    private ContextMenuPanelView panelRClickMenu;
 	private FileTableModel fileTableModel;
 //	private ListSelectionListener listSelectionListener;
 	private boolean cellSizesSet = false;
@@ -34,7 +35,7 @@ public class FileTableView extends JTable {
 	public FileTableView(FileTableModel fileTableModel) {
 		super(fileTableModel);
 
-		rClickMenu = new ContextMenuFileView(new File(""));
+		fileRClickMenu = new ContextMenuFileView(new File(""));
 		rectDrawer = new RectangleDrawerView();
         DrawMouseListener listener = new DrawMouseListener();
         addMouseListener(listener);
@@ -82,13 +83,17 @@ public class FileTableView extends JTable {
 	/**
 	 * @return the rClickMenu
 	 */
-	public ContextMenuFileView getrClickMenu() {
-		return rClickMenu;
+	public ContextMenuFileView getFileRClickMenu() {
+		return fileRClickMenu;
+	}
+	
+	public ContextMenuPanelView getPanelRClickMenu() {
+		return panelRClickMenu;
 	}
 
 
 	public void setRClickMenu(ContextMenuFileView menu) {
-		rClickMenu = menu;
+		fileRClickMenu = menu;
 	}
 	
 	
@@ -145,14 +150,6 @@ public class FileTableView extends JTable {
         	rectDrawer.setStartPoint(10000, 10000);
         	rectDrawer.setEndPoint(10000, 10000);
         	repaint();
-//        	if (e.isPopupTrigger()) {
-//                JTable source = (JTable) e.getSource();
-//                int row = source.rowAtPoint( e.getPoint() );
-//                int column = source.columnAtPoint( e.getPoint() );
-//                if (! source.isRowSelected(row))
-//                    source.changeSelection(row, column, false, false);
-////                rClickMenu.show(e.getComponent(), e.getX(), e.getY());
-//            }
         }
         
     }
@@ -169,5 +166,10 @@ public class FileTableView extends JTable {
         g.setColor(new Color(0, 0, 255, 100));
         rectDrawer.fillRect(g, x, y, x2, y2);
     }
+
+
+	public void setRClickMenu(ContextMenuPanelView panelRClickMenu) {
+		this.panelRClickMenu = panelRClickMenu;
+	}
 	
 }
