@@ -51,6 +51,10 @@ public class FilePanelModel {
 	public void addCurrentFile(File file) {
 		this.currentFiles.add(file);
 	}
+	
+	public void removeCurrentFiles() {
+		this.currentFiles.removeAll(this.currentFiles);
+	}
 
 	/**
 	 * @return the ctrlDown

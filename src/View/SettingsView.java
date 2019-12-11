@@ -2,6 +2,8 @@ package View;
 
 import javax.swing.*;
 
+import Controller.FileTreeController;
+import Model.FileTreeModel;
 import Model.Originator;
 import Model.SettingsModel;
 import Model.SizedStack;

@@ -88,5 +88,5 @@ public class RectangleDrawerView extends JComponent {
 	public int getY2() {
 		return y2;
 	}
-    
+	    
 }

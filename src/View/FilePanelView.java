@@ -50,6 +50,24 @@ public class FilePanelView extends JPanel {
     	ctrlDown = false;
     	this.model = model;
     	
+    	this.addKeyListener(new KeyListener() {
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+			}
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				ctrlDown = false;
+			}
+			@Override
+			public void keyPressed(KeyEvent k) {
+				if (k.getKeyCode() == KeyEvent.CTRL_MASK)
+					ctrlDown = true;
+			}
+		});
+    	
+    	this.setFocusable(true);
+    	this.requestFocusInWindow();
+    	
     	drawMouseListener = new DrawMouseListener();
         addMouseListener(drawMouseListener);
         addMouseMotionListener(drawMouseListener);
@@ -66,6 +84,7 @@ public class FilePanelView extends JPanel {
 			fileLabelsView.add(fileLabelView);				
 			fileLabelsController.add(fileLabelController);				
 			
+			
 			fileLabelController.addMouseListener(new MouseListener() {
 				@Override
 				public void mouseReleased(MouseEvent e) {
@@ -74,7 +93,9 @@ public class FilePanelView extends JPanel {
 				
 				@Override
 				public void mousePressed(MouseEvent e) {
-					deselectOther(fileLabelController);
+					if (e.getButton() == MouseEvent.BUTTON1) {
+						deselectOther(fileLabelController);
+					}
 					repaint();
 				}
 				
@@ -121,9 +142,10 @@ public class FilePanelView extends JPanel {
 				}
 				
 				@Override
-				public void mousePressed(MouseEvent arg0) {
-					
-					deselectOther(fileLabelController);
+				public void mousePressed(MouseEvent e) {
+					if (e.getButton() == MouseEvent.BUTTON1 && !ctrlDown) {
+						deselectOther(fileLabelController);
+					}
 					repaint();
 					ArrayList<File> currentFiles = new ArrayList<File>();
 					for (FileLabelController fileLabel : fileLabelsController) {
@@ -160,6 +182,11 @@ public class FilePanelView extends JPanel {
 	 */
 	public ContextMenuPanelView getrClickMenuView() {
 		return rClickMenuView;
+	}
+	
+	
+	public void setrClickMenuView(ContextMenuPanelView menu) {
+		rClickMenuView = menu;
 	}
 
 	/**
@@ -217,6 +244,24 @@ public class FilePanelView extends JPanel {
 
         public void mouseDragged(MouseEvent e) {
             rectDrawer.setEndPoint(e.getX(), e.getY());
+            model.removeCurrentFiles();
+            for (FileLabelController f : fileLabelsController) {
+            	int minX = Math.min(rectDrawer.getX(), rectDrawer.getX2());
+            	int maxX = Math.max(rectDrawer.getX(), rectDrawer.getX2());
+            	int minY = Math.min(rectDrawer.getY(), rectDrawer.getY2());
+            	int maxY = Math.max(rectDrawer.getY(), rectDrawer.getY2());
+            	boolean x = minX < f.getView().getX() &&
+            				maxX > f.getView().getX();
+				boolean y = minY < f.getView().getY() &&
+							maxY > f.getView().getY();
+            	if (x && y) {
+            		f.selected();
+            		model.addCurrentFile(f.getModel().getFile());
+            	} else {
+            		f.unSelected();
+            		model.getCurrentFiles().remove(f.getModel().getFile());
+            	}
+            }
             repaint();
         }
 

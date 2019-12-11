@@ -68,6 +68,13 @@ public class MenuView extends JMenuBar {
 	public EditMenuView getEditView() {
 		return editView;
 	}
+
+	/**
+	 * @return the editController
+	 */
+	public EditMenuController getEditController() {
+		return editController;
+	}
 	
 	
 	

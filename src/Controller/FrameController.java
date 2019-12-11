@@ -1,6 +1,7 @@
 package Controller;
 
 import java.awt.Desktop;
+import java.awt.GridLayout;
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetAdapter;
 import java.awt.dnd.DropTargetDropEvent;
@@ -8,9 +9,7 @@ import java.awt.event.*;
 import java.io.*;
 import java.util.ArrayList;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 import javax.swing.KeyStroke;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
@@ -132,7 +131,9 @@ public class FrameController {
 				}
 			}
 		});
-
+		
+		
+		
 		view.getFileTableView().addKeyListener(new KeyAdapter() {
 
 			public void keyPressed(KeyEvent k) {
@@ -318,6 +319,13 @@ public class FrameController {
 			File f = flc.getModel().getFile();
 			File[] fs = new File[1];
 			fs[0] = f;
+			
+			try {
+				flc.getView().removeMouseListener(flc.getView().getMouseListeners()[3]);
+			} catch (Exception e) {
+				
+			}
+			
 			flc.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -365,6 +373,12 @@ public class FrameController {
 					}
 				}
 			});
+			
+			try {
+				flc.getView().removeKeyListener(flc.getView().getKeyListeners()[0]);
+			} catch (Exception e) {
+				
+			}
 
 			flc.getView().addKeyListener(new KeyListener() {
 				@Override
@@ -390,7 +404,7 @@ public class FrameController {
 	private void setConMenuActions(ContextMenuFileView menu) {
 		final File[] f;
 		if (view.getFooterView().getGridController().isSelected()) {
-			File[] tmp = null;
+			File[] tmp = new File[filePanelController.getModel().getCurrentFiles().size()];
 			f = filePanelController.getModel().getCurrentFiles().toArray(tmp);
 		} else {
 			f = view.getFileTableModel().getCurrentFiles();
@@ -398,6 +412,12 @@ public class FrameController {
 		if (f.length > 1) {
 			menu.getOpen().setVisible(false);
 			menu.getRename().setVisible(false);
+		}
+		
+		try {
+			menu.getOpen().removeActionListener(menu.getOpen().getActionListeners()[0]);
+		} catch (Exception e) {
+			
 		}
 		menu.getOpen().addActionListener(new AbstractAction() {
 
@@ -407,12 +427,24 @@ public class FrameController {
 			}
 		});
 		
+		try {
+			menu.getCopy().removeActionListener(menu.getCopy().getActionListeners()[0]);
+		} catch (Exception e) {
+			
+		}
+		
 		menu.getCopy().addActionListener(new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				new Copy(f).execute();
 			}
 		});
+		
+		try {
+			menu.getCut().removeActionListener(menu.getCut().getActionListeners()[0]);
+		} catch (Exception e) {
+			
+		}
 		
 		menu.getCut().addActionListener(new AbstractAction() {
 			@Override
@@ -421,6 +453,12 @@ public class FrameController {
 			}
 		});
 		
+		
+		try {
+			menu.getRename().removeActionListener(menu.getRename().getActionListeners()[0]);
+		} catch (Exception e) {
+			
+		}
 
 		menu.getRename().addActionListener(new AbstractAction() {
 
@@ -429,6 +467,12 @@ public class FrameController {
 				new Rename(f[0]).execute();
 			}
 		});
+		
+		try {
+			menu.getDelete().removeActionListener(menu.getDelete().getActionListeners()[0]);
+		} catch (Exception e) {
+			
+		}
 
 		menu.getDelete().addActionListener(new AbstractAction() {
 
@@ -438,6 +482,13 @@ public class FrameController {
 			}
 		});
 
+		try {
+			menu.getProperties().removeActionListener(menu.getProperties().getActionListeners()[0]);
+		} catch (Exception e) {
+			
+		}
+		
+		
 		menu.getProperties().addActionListener(new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -452,6 +503,14 @@ public class FrameController {
 		
 		if (clipboard == null) {
 			menu.getPaste().setEnabled(false);
+		} else {
+			menu.getPaste().setEnabled(true);
+		}
+		
+		try {
+			menu.getNewFile().removeActionListener(menu.getNewFile().getActionListeners()[0]);
+		} catch (Exception e) {
+			
 		}
 		
 		menu.getNewFile().addActionListener(new AbstractAction() {
@@ -461,6 +520,12 @@ public class FrameController {
 			}
 		});
 
+		try {
+			menu.getNewFolder().removeActionListener(menu.getNewFolder().getActionListeners()[0]);
+		} catch (Exception e) {
+			
+		}
+		
 		menu.getNewFolder().addActionListener(new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -468,12 +533,24 @@ public class FrameController {
 			}
 		});
 
+		try {
+			menu.getPaste().removeActionListener(menu.getPaste().getActionListeners()[0]);
+		} catch (Exception e) {
+			
+		}
+		
 		menu.getPaste().addActionListener(new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				new Paste(path).execute();
 			}
 		});
+		
+		try {
+			menu.getProperties().removeActionListener(menu.getProperties().getActionListeners()[0]);
+		} catch (Exception e) {
+			
+		}
 		
 		menu.getProperties().addActionListener(new AbstractAction() {
 			@Override
@@ -485,13 +562,26 @@ public class FrameController {
 
 	private void setFileMenuActions(FileMenuView menu) {
 		String path = addressBarController.getModel().getPath();
+		
+		try {
+			menu.getNewFile().removeActionListener(menu.getNewFile().getActionListeners()[0]);
+		} catch (Exception e) {
+			
+		}
+		
 		menu.getNewFile().addActionListener(new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				new NewFile(path).execute();
 			}
 		});
-
+		
+		try {
+			menu.getNewFolder().removeActionListener(menu.getNewFolder().getActionListeners()[0]);
+		} catch (Exception e) {
+			
+		}
+		
 		menu.getNewFolder().addActionListener(new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -499,11 +589,18 @@ public class FrameController {
 			}
 		});
 
+		try {
+			menu.getDelete().removeActionListener(menu.getDelete().getActionListeners()[0]);
+		} catch (Exception e) {
+			
+		}
+		
 		menu.getDelete().addActionListener(new AbstractAction() {
 			public void actionPerformed(ActionEvent arg0) {
 				File[] files;
 				if (view.getFooterView().getGridController().isSelected()) {
-					// TODO
+					File[] temp = new File[filePanelController.getModel().getCurrentFiles().size()];
+					files = filePanelController.getModel().getCurrentFiles().toArray(temp);
 				} else if (view.getFooterView().getListController().isSelected()) {
 					files = view.getFileTableModel().getCurrentFiles();
 					if (files != null) {
@@ -517,8 +614,27 @@ public class FrameController {
 	
 	private void setEditMenuActions(EditMenuView menu) {
 		String path = addressBarController.getModel().getPath();
-		File[] f = view.getFileTableModel().getCurrentFiles();
-
+		
+		if (clipboard == null) {
+			menu.getPaste().setEnabled(false);
+		} else {
+			menu.getPaste().setEnabled(true);
+		}
+		
+		final File[] f;
+		if (view.getFooterView().getGridController().isSelected()) {
+			File[] tmp = new File[filePanelController.getModel().getCurrentFiles().size()];
+			f = filePanelController.getModel().getCurrentFiles().toArray(tmp);
+		} else {
+			f = view.getFileTableModel().getCurrentFiles();
+		}
+		
+		
+		try {
+			menu.getRename().removeActionListener(menu.getRename().getActionListeners()[0]);
+		} catch (Exception e) {
+			
+		}
 		
 		menu.getRename().addActionListener(new AbstractAction() {
 			@Override
@@ -530,12 +646,24 @@ public class FrameController {
 			}
 		});
 		
+		try {
+			menu.getCopy().removeActionListener(menu.getCopy().getActionListeners()[0]);
+		} catch (Exception e) {
+			
+		}
+		
 		menu.getCopy().addActionListener(new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				new Copy(f).execute();
 			}
 		});
+		
+		try {
+			menu.getCut().removeActionListener(menu.getCut().getActionListeners()[0]);
+		} catch (Exception e) {
+			
+		}
 		
 		menu.getCut().addActionListener(new AbstractAction() {
 			@Override
@@ -544,6 +672,12 @@ public class FrameController {
 			}
 		});
 
+		try {
+			menu.getPaste().removeActionListener(menu.getPaste().getActionListeners()[0]);
+		} catch (Exception e) {
+			
+		}
+		
 		menu.getPaste().addActionListener(new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -586,6 +720,7 @@ public class FrameController {
 				filePanelController.setFolder(f);
 				setPanMenuActions(filePanelController.getView().getrClickMenuView());
 				setFileMenuActions(view.getMenuBarView().getFileView());
+				setEditMenuActions(view.getMenuBarView().getEditView());
 				setPanMenuActions(view.getFilePane().getrClickMenu());
 				addLabelsListener(filePanelController.getView().getFileLabelsController());
 			} else {
@@ -609,11 +744,18 @@ public class FrameController {
 		public void execute() {
 			FileInputStream is = null;
 			FileOutputStream os = null;
-			String newName;
+			JTextField newName;
+			int option;
 			File f2;
 			do {
-			newName = JOptionPane.showInputDialog("Enter new file name: ");
-			f2 = new File(f.getParent() + "\\" + newName);
+				JPanel panel = new JPanel(new GridLayout(1, 1));
+				newName = new JTextField();
+		        panel.add(newName);
+		        option = JOptionPane.showConfirmDialog(null, panel, "Enter new name for file", JOptionPane.OK_CANCEL_OPTION);
+		        if (option != JOptionPane.OK_OPTION) {
+		        	return;
+		        }
+			f2 = new File(f.getParent() + "\\" + newName.getText());
 			} while (f2.exists());
 			f.renameTo(f2);
 			new Open(new File(addressBarController.getModel().getPath())).execute();
@@ -658,6 +800,7 @@ public class FrameController {
 		public void execute() {
 			clipboard = sources;
 			cut = false;
+			setEditMenuActions(view.getMenuBarView().getEditView());
 			setPanMenuActions(filePanelController.getView().getrClickMenuView());
 			setPanMenuActions(view.getFilePane().getrClickMenu());
 		}
@@ -674,6 +817,7 @@ public class FrameController {
 		public void execute() {
 			clipboard = sources;
 			cut = true;
+			setEditMenuActions(view.getMenuBarView().getEditView());
 			setPanMenuActions(filePanelController.getView().getrClickMenuView());
 			setPanMenuActions(view.getFilePane().getrClickMenu());
 		}
