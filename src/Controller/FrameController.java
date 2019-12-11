@@ -10,7 +10,6 @@ import java.io.*;
 import java.util.ArrayList;
 
 import javax.swing.*;
-import javax.swing.KeyStroke;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -200,6 +199,9 @@ public class FrameController {
 			public void keyPressed(KeyEvent k) {
 				if (k.getKeyCode() == KeyEvent.VK_ENTER) {
 					File f = new File(addressBarController.getView().getText());
+					if (!f.exists()) {
+						new JOptionPane().showMessageDialog(null, "Address is not correct!");
+					}
 					if (f.exists() && f.isDirectory()) {
 						if (!(f.getPath().equals(view.getAddressBarModel().getPath()))) {
 							backButtonController.addMemento(view.getAddressBarModel().getPath());					
@@ -711,6 +713,9 @@ public class FrameController {
 		}
 
 		public void execute() {
+			if (!f.exists()) {
+				new JOptionPane().showMessageDialog(null, "Address is not correct!");
+			}
 			if (f.exists() && f.isDirectory()) {
 				if (!(f.getPath().equals(view.getAddressBarModel().getPath()))) {
 					backButtonController.addMemento(view.getAddressBarModel().getPath());					
@@ -802,6 +807,10 @@ public class FrameController {
 		}
 
 		public void execute() {
+			if (view.getFooterView().getGridController().isSelected()) {
+				File[] tmp = new File[filePanelController.getModel().getCurrentFiles().size()];
+				sources = filePanelController.getModel().getCurrentFiles().toArray(tmp);
+			}
 			clipboard = sources;
 			cut = false;
 			setEditMenuActions(view.getMenuBarView().getEditView());
@@ -819,7 +828,10 @@ public class FrameController {
 		}
 		
 		public void execute() {
-			clipboard = sources;
+			if (view.getFooterView().getGridController().isSelected()) {
+				File[] tmp = new File[filePanelController.getModel().getCurrentFiles().size()];
+				sources = filePanelController.getModel().getCurrentFiles().toArray(tmp);
+			}
 			cut = true;
 			setEditMenuActions(view.getMenuBarView().getEditView());
 			setPanMenuActions(filePanelController.getView().getrClickMenuView());
