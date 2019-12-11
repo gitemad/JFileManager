@@ -5,6 +5,7 @@ import java.util.*;
 public class NavigateButtonModel {
 	
 	private boolean enable;
+	int numStates;
 	private SizedStack<Originator.Memento> savedStates;
 	
 	/**
@@ -13,6 +14,7 @@ public class NavigateButtonModel {
 	 */
 	public NavigateButtonModel(boolean enable, int numStates) {
 		this.enable = enable;
+		this.numStates = numStates;
 		savedStates = new SizedStack<Originator.Memento>(numStates);
 	}
 	
@@ -38,5 +40,9 @@ public class NavigateButtonModel {
 	public SizedStack<Originator.Memento> getSavedStates() {
 		return savedStates;
 	}
+	
+//	public void setNumStates(int numStates) {
+//		savedStates.setMaxSize(numStates);
+//	}
 		
 }

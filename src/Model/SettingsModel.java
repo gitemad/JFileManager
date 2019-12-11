@@ -11,12 +11,14 @@ import View.FrameView;
 public class SettingsModel {
 	
 	private String defaultAddress;
+	private int numPageHistory;
 	private String lookAndFeel;
 	private int lNum;
 	private boolean list;
 	
 	public SettingsModel() {
 		defaultAddress = System.getProperty("user.home") + "\\Desktop";
+		numPageHistory = 10;
 		lNum = 1;
 		lookAndFeel = UIManager.getInstalledLookAndFeels()[lNum].getClassName();
 		list = true;
@@ -76,6 +78,20 @@ public class SettingsModel {
 	 */
 	public void setlNum(int lNum) {
 		this.lNum = lNum;
+	}
+
+	/**
+	 * @return the numPageHistory
+	 */
+	public int getNumPageHistory() {
+		return numPageHistory;
+	}
+
+	/**
+	 * @param numPageHistory the numPageHistory to set
+	 */
+	public void setNumPageHistory(int numPageHistory) {
+		this.numPageHistory = numPageHistory;
 	}	
 	
 	

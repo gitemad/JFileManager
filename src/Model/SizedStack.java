@@ -4,11 +4,15 @@ import java.util.Stack;
 
 public class SizedStack<T> extends Stack<T> {
     
-	private int maxSize;
+	public static int maxSize;
 
     public SizedStack(int size) {
         super();
-        this.maxSize = size;
+        maxSize = size;
+    }
+    
+    public static void setMaxSize(int max) {
+    	maxSize = max;
     }
 
     @Override

@@ -51,6 +51,7 @@ public class FrameController {
 
 		this.desktop = Desktop.getDesktop();
 		this.found = new ArrayList<File>();
+		clipboard = null;
 		
 		treeController = this.view.getTreeController();
 		addressBarController = this.view.getAddressBarController();
@@ -125,7 +126,6 @@ public class FrameController {
 							ContextMenuFileView menu = view.getFileTableView().getFileRClickMenu();
 							menu.show(e.getComponent(), e.getX(), e.getY());
 							setConMenuActions(menu);
-
 						} catch (Exception exp) {
 						}
 					}
@@ -181,6 +181,7 @@ public class FrameController {
 				}
 			}
 		});
+		
 		
 	}
 
@@ -369,7 +370,6 @@ public class FrameController {
 				@Override
 				public void keyTyped(KeyEvent arg0) {
 				}
-
 				@Override
 				public void keyReleased(KeyEvent arg0) {
 				}
@@ -379,13 +379,22 @@ public class FrameController {
 					if (e.getKeyCode() == KeyEvent.VK_DELETE) {
 						new Delete(fs).execute();
 					}
+					if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+						new Open(f).execute();
+					}
 				}
 			});
 		}
 	}
 
 	private void setConMenuActions(ContextMenuFileView menu) {
-		File[] f = view.getFileTableModel().getCurrentFiles();
+		final File[] f;
+		if (view.getFooterView().getGridController().isSelected()) {
+			File[] tmp = null;
+			f = filePanelController.getModel().getCurrentFiles().toArray(tmp);
+		} else {
+			f = view.getFileTableModel().getCurrentFiles();
+		}
 		if (f.length > 1) {
 			menu.getOpen().setVisible(false);
 			menu.getRename().setVisible(false);
@@ -442,7 +451,7 @@ public class FrameController {
 		String path = addressBarController.getModel().getPath();
 		
 		if (clipboard == null) {
-			menu.getPaste().setVisible(false);
+			menu.getPaste().setEnabled(false);
 		}
 		
 		menu.getNewFile().addActionListener(new AbstractAction() {
@@ -577,7 +586,6 @@ public class FrameController {
 				filePanelController.setFolder(f);
 				setPanMenuActions(filePanelController.getView().getrClickMenuView());
 				setFileMenuActions(view.getMenuBarView().getFileView());
-				setPanMenuActions(view.getFilePanelController().getView().getrClickMenuView());
 				setPanMenuActions(view.getFilePane().getrClickMenu());
 				addLabelsListener(filePanelController.getView().getFileLabelsController());
 			} else {
@@ -683,11 +691,9 @@ public class FrameController {
 			if (clipboard == null) {
 				return;
 			}
-			FileInputStream is = null;
-			FileOutputStream os = null;
 			for (File source : clipboard) {
 				try {
-					is = new FileInputStream(source);
+					FileInputStream is = new FileInputStream(source);
 					String fileName = source.getName();
 					destPath += "\\" + fileName;
 					while (new File(destPath).isDirectory()) {
@@ -706,19 +712,16 @@ public class FrameController {
 						}
 					}
 					File dest = new File(destPath);
-					os = new FileOutputStream(dest);
+					FileOutputStream os = new FileOutputStream(dest);
 					byte[] buffer = new byte[1024];
 					int length;
 					while ((length = is.read(buffer)) > 0) {
 						os.write(buffer, 0, length);
 					}
+					is.close();
+					os.close();
 				} catch (Exception e) {
 				}
-			}
-			try {
-				is.close();
-				os.close();
-			} catch (IOException e) {
 			}
 			if (cut) {
 				new Delete(clipboard).execute();

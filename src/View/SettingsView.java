@@ -2,10 +2,13 @@ package View;
 
 import javax.swing.*;
 
+import Model.Originator;
 import Model.SettingsModel;
+import Model.SizedStack;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.Scanner;
 
 /**
  * @author Emad
@@ -21,6 +24,7 @@ public class SettingsView extends JFrame {
 	private JPanel sharePanel;
 	private JPanel viewPanel;
 	private JTextField address;
+	private JTextField numPageHistory;
 	private JTextField savePath;
 	private JTextField compAdrs;
 	private JTextField compPort;
@@ -43,6 +47,7 @@ public class SettingsView extends JFrame {
 		sharePanel = new JPanel(new GridBagLayout());
 		viewPanel = new JPanel(new GridBagLayout());
 		address = new JTextField(model.getDefaultAddress());
+		numPageHistory = new JTextField("10");
 		savePath = new JTextField("Select save path location");
 		compAdrs = new JTextField("Select computer address to share files");
 		compPort = new JTextField("Select computer port to share files");
@@ -79,11 +84,14 @@ public class SettingsView extends JFrame {
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		gbc.weightx = 1;
+		gbc.weightx = 0.2;
 		gbc.anchor = GridBagConstraints.EAST;
 
 		adrsPanel.add(new JLabel("Default address: "), gbc);
+		gbc.gridy++;
+		adrsPanel.add(new JLabel("Number of page history:"), gbc);
 
+		gbc.gridy = 0;
 		sharePanel.add(new JLabel("Computer address to file sharing: "), gbc);
 		gbc.gridy++;
 		sharePanel.add(new JLabel("Computer port to file sharing: "), gbc);
@@ -102,7 +110,11 @@ public class SettingsView extends JFrame {
 		gbc.anchor = GridBagConstraints.WEST;
 
 		adrsPanel.add(address, gbc);
-
+		gbc.gridy++;
+		adrsPanel.add(numPageHistory, gbc);
+		
+		
+		gbc.gridy = 0;
 		sharePanel.add(compAdrs, gbc);
 		gbc.gridy++;
 		sharePanel.add(compPort, gbc);
@@ -157,6 +169,7 @@ public class SettingsView extends JFrame {
 		Action a = new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				setNumPageHistory();
 				setLookAndFeels();
 				setView();
 			}
@@ -169,6 +182,7 @@ public class SettingsView extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				address.setText(model.getDefaultAddress());
+				numPageHistory.setText("" + model.getNumPageHistory());
 				lookFeels.setSelectedIndex(model.getlNum());
 				view.setSelected(model.isList());
 				SettingsView.this.setVisible(false);
@@ -189,7 +203,6 @@ public class SettingsView extends JFrame {
 					try {
 						SwingUtilities.updateComponentTreeUI(component);
 					} catch (Exception e) {
-						continue;
 					}
 				}
 			}
@@ -202,5 +215,39 @@ public class SettingsView extends JFrame {
 	private void setView() {
 		model.setList(view.isSelected());
 		view.setSelected(model.isList());
+	}
+	
+	private void setNumPageHistory() {
+		String newNum = numPageHistory.getText();
+		if (isNum(newNum)) {
+			model.setNumPageHistory(str2num(newNum));
+		}
+		numPageHistory.setText("" + model.getNumPageHistory());
+		new SizedStack<Object>(1).setMaxSize(model.getNumPageHistory());
+	}
+	
+	private boolean isNum(String str) {
+		int len;
+		len = str.length();
+		for (int i = 0; i < len; i++) {
+			if ('0' <= str.charAt(i) && str.charAt(i) <= '9') {
+				
+			} else {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	//change string to number
+	private int str2num(String str) {
+		int len, dig, num = 0;
+		len = str.length();
+		for (int i = 0; i < len; i++) {
+			dig = str.charAt(i);
+			dig -= 48;
+			num += dig * Math.pow(10, len - i - 1); 
+		}
+		return num;
 	}
 }
