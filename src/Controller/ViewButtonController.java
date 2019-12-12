@@ -27,6 +27,10 @@ public class ViewButtonController {
 		updateView();
 	}
 	
+	/**
+	 * detemine if button is selected or not
+	 * @return selected
+	 */
 	public boolean isSelected() {
 		return model.getSelected();
 	}

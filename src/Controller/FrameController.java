@@ -2,15 +2,8 @@ package Controller;
 
 import java.awt.Desktop;
 import java.awt.GridLayout;
-import java.awt.dnd.DropTarget;
-import java.awt.dnd.DropTargetAdapter;
-import java.awt.dnd.DropTargetDropEvent;
 import java.awt.event.*;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -46,7 +39,11 @@ public class FrameController {
 	private ArrayList<File> found;
 	private File[] clipboard;
 	private boolean cut;
-
+	
+	/**
+	 * Only constructor of class with following parameters
+	 * @param view the frame view
+	 */
 	public FrameController(FrameView view) {
 		this.view = view;
 
@@ -736,7 +733,11 @@ public class FrameController {
 	class Open implements Command {
 
 		File f;
-
+		
+		/**
+		 * Only constructor of class with following parameters
+		 * @param f file to open
+		 */
 		public Open(File f) {
 			this.f = f;
 		}
@@ -771,6 +772,10 @@ public class FrameController {
 	class Rename implements Command {
 		File f;
 
+		/**
+		 * Only constructor of class with following parameters
+		 * @param f file to rename
+		 */
 		public Rename(File f) {
 			this.f = f;
 		}
@@ -800,6 +805,10 @@ public class FrameController {
 	class Delete implements Command {
 		File[] f;
 
+		/**
+		 * Only constructor of class with following parameters
+		 * @param f files to delete
+		 */
 		public Delete(File[] f) {
 			this.f = f;
 		}
@@ -841,6 +850,10 @@ public class FrameController {
 
 		File[] sources;
 
+		/**
+		 * Only constructor of class with following parameters
+		 * @param sources files to copy
+		 */
 		public Copy(File[] sources) {
 			this.sources = sources;
 		}
@@ -862,6 +875,10 @@ public class FrameController {
 
 		File[] sources;
 
+		/**
+		 * Only constructor of class with following parameters
+		 * @param sources files to cut
+		 */
 		public Cut(File[] sources) {
 			this.sources = sources;
 		}
@@ -883,6 +900,10 @@ public class FrameController {
 
 		String destPath;
 
+		/**
+		 * Only constructor of class with following parameters
+		 * @param destPath destination path
+		 */
 		public Paste(String destPath) {
 			this.destPath = destPath;
 		}
@@ -903,6 +924,12 @@ public class FrameController {
 			new Open(new File(addressBarController.getModel().getPath())).execute();
 		}
 
+		/**
+		 * paste method
+		 * @param src source file
+		 * @param destAdrs destination address
+		 * @throws IOException
+		 */
 		public void paste(File src, String destAdrs) throws IOException {
 			String fileName = src.getName();
 			destPath += "\\" + fileName;
@@ -972,6 +999,10 @@ public class FrameController {
 
 		String path;
 
+		/**
+		 * Only constructor of class with following parameters
+		 * @param path path to create new file
+		 */
 		public NewFile(String path) {
 			this.path = path;
 		}
@@ -1007,6 +1038,10 @@ public class FrameController {
 	class NewFolder implements Command {
 		String path;
 
+		/**
+		 * Only constructor of class with following parameters
+		 * @param path path to create new folder
+		 */
 		public NewFolder(String path) {
 			this.path = path;
 		}
@@ -1032,12 +1067,20 @@ public class FrameController {
 		String path;
 		File[] files;
 
+		/**
+		 * first constructor of class with following parameters
+		 * @param path path to see properties
+		 */
 		public Properties(String path) {
 			this.path = path;
 			this.files = new File[1];
 			this.files[0] = new File(path);
 		}
-
+		
+		/**
+		 * second constructor of class with following parameters
+		 * @param files files to see properties
+		 */
 		public Properties(File[] files) {
 			this.files = files;
 		}

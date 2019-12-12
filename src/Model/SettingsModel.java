@@ -16,6 +16,9 @@ public class SettingsModel {
 	private int lNum;
 	private boolean list;
 	
+	/**
+	 * Only constructor of class without any parameters
+	 */
 	public SettingsModel() {
 		defaultAddress = System.getProperty("user.home") + "\\Desktop";
 		numPageHistory = 10;

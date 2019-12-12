@@ -17,13 +17,17 @@ import javax.swing.*;
 public class PropertiesView extends JOptionPane {
 		
 	/**
-	 * Only constructor of class with following parameter requirement
+	 * first constructor of class with following parameter requirement
 	 * @param file the file you want to see properties of it
 	 */
 	public PropertiesView(File file) {
 		this.showMessageDialog(null, getData(file), "Properties", JOptionPane.PLAIN_MESSAGE);
 	}
 	
+	/**
+	 * second constructor of class with following parameters
+	 * @param files files to see properties
+	 */
 	public PropertiesView(File[] files) {
 		this.showMessageDialog(null, getData(files), "Properties", JOptionPane.PLAIN_MESSAGE);
 	}

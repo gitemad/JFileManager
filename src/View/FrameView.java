@@ -55,9 +55,9 @@ public class FrameView extends JFrame {
 	 */
 	public FrameView() {
 		super();
-		icon = new ImageIcon("img/icon.png").getImage();
+		icon = new ImageIcon("img/programIcon.png").getImage();
 		this.setIconImage(icon);
-		this.setTitle("JFileManger");
+		this.setTitle("JFileManager");
 		this.setSize(1024, 720);
 		this.setMinimumSize(new Dimension(600, 400));
 		this.setLocation(100, 150);
@@ -276,6 +276,10 @@ public class FrameView extends JFrame {
 		this.setVisible(true);
 	}
 	
+	/**
+	 * get system tray
+	 * @return system tray
+	 */
 	public SystemTray getTray() {
 		return tray;
 	}
@@ -294,6 +298,7 @@ public class FrameView extends JFrame {
 		this.setVisible(true);
 	}
 
+	
 	private void reconstruct() {
 		header.setLayout(new BorderLayout());
 		header.add(menuBarView, BorderLayout.NORTH);

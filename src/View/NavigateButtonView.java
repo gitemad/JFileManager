@@ -22,6 +22,9 @@ public class NavigateButtonView extends JButton {
 		this.setPreferredSize(size);
 	}
 	
+	/**
+	 * get the image icon of  button
+	 */
 	public ImageIcon getIcon() {
 		return icon;
 	}

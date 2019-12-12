@@ -6,11 +6,19 @@ public class SizedStack<T> extends Stack<T> {
     
 	public static int maxSize;
 
+	/**
+	 * Only constructor of class with following parameters
+	 * @param size size to limit the stack size
+	 */
     public SizedStack(int size) {
         super();
         maxSize = size;
     }
     
+    /**
+     * set the maximum size of stack
+     * @param max
+     */
     public static void setMaxSize(int max) {
     	maxSize = max;
     }

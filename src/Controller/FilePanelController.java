@@ -25,6 +25,10 @@ public class FilePanelController {
 		this.view = view;
 	}
 	
+	/**
+	 * setting the folder
+	 * @param folder folder to set
+	 */
 	public void setFolder(File folder) {
 		model.setFolder(folder);
 		view.setPanelData(folder);

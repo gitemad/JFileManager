@@ -5,7 +5,7 @@ import java.util.*;
 public class NavigateButtonModel {
 	
 	private boolean enable;
-	int numStates;
+	public int numStates;
 	private SizedStack<Originator.Memento> savedStates;
 	
 	/**

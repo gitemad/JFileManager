@@ -64,6 +64,10 @@ public class FileTreeController {
 		
 	}
 	
+	/**
+	 * add tree selection listener to file tree
+	 * @param tse tree selection listener to add 
+	 */
 	public void addTreeSelectionListener(TreeSelectionListener tse) {
 		model.getTree().addTreeSelectionListener(tse);
 	}

@@ -14,6 +14,10 @@ public class FilePanelModel {
 	private ArrayList<File> currentFiles;
 	private boolean ctrlDown;
 	
+	/**
+	 * Only constructor of class with following parameters
+	 * @param folder folder to show its files
+	 */
 	public FilePanelModel(File folder) {
 		this.folder = folder;
 		currentFiles = new ArrayList<File>();
@@ -21,13 +25,15 @@ public class FilePanelModel {
 	}
 
 	/**
-	 * @return the folder
+	 * get the current folder
+	 * @return the folder which its files shown 
 	 */
 	public File getFolder() {
 		return folder;
 	}
 
 	/**
+	 * set the folder to show its files
 	 * @param folder the folder to set
 	 */
 	public void setFolder(File folder) {
@@ -48,10 +54,17 @@ public class FilePanelModel {
 		this.currentFiles = currentFiles;
 	}
 	
+	/**
+	 * add file to current files
+	 * @param file file to add
+	 */
 	public void addCurrentFile(File file) {
 		this.currentFiles.add(file);
 	}
 	
+	/**
+	 * remove all current files
+	 */
 	public void removeCurrentFiles() {
 		this.currentFiles.removeAll(this.currentFiles);
 	}

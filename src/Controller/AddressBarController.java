@@ -1,8 +1,6 @@
 package Controller;
 
-import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.File;
 
 import Model.AddressBarModel;
 import View.AddressBarView;
@@ -52,13 +50,17 @@ public class AddressBarController {
 //		this.view.addKeyListener(k);
 	}
 	
-	
+	/**
+	 * adding key listener to address bar
+	 * @param k key listener to add
+	 */
 	public void addKeyListener(KeyListener k) {
 		view.addKeyListener(k);
 	}
 	
 	
 	/**
+	 * get the model of address bar
 	 * @return the model
 	 */
 	public AddressBarModel getModel() {
@@ -67,7 +69,8 @@ public class AddressBarController {
 
 
 	/**
-	 * @return the view
+	 * get the view of address bar
+	 * @return the views
 	 */
 	public AddressBarView getView() {
 		return view;
