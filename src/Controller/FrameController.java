@@ -325,9 +325,12 @@ public class FrameController {
 	private void addLabelsListener(ArrayList<FileLabelController> flcs) {
 		for (FileLabelController flc : flcs) {
 			File f = flc.getModel().getFile();
-			File[] fs = new File[1];
-			fs[0] = f;
+			File[] tmp = new File[filePanelController.getModel().getCurrentFiles().size()];
+			File[] fs = filePanelController.getModel().getCurrentFiles().toArray(tmp);
+//			File[] fs = new File[1];
+//			fs[0] = f;
 
+			
 			try {
 				flc.getView().removeMouseListener(flc.getView().getMouseListeners()[3]);
 			} catch (Exception e) {
@@ -376,6 +379,13 @@ public class FrameController {
 							@Override
 							public void actionPerformed(ActionEvent arg0) {
 								new Delete(fs).execute();
+							}
+						});
+						
+						flc.getView().getRightClickMenu().getProperties().addActionListener(new AbstractAction() {
+							@Override
+							public void actionPerformed(ActionEvent arg0) {
+								new Properties(fs).execute();
 							}
 						});
 					}
@@ -1019,6 +1029,10 @@ public class FrameController {
 		}
 
 		public void execute() {
+			if (view.getFooterView().getGridController().isSelected()) {
+				File[] tmp = new File[filePanelController.getModel().getCurrentFiles().size()];
+				files = filePanelController.getModel().getCurrentFiles().toArray(tmp);
+			}
 			if (files.length == 1) {
 				new PropertiesView(files[0]);
 			} else if (files.length > 1) {

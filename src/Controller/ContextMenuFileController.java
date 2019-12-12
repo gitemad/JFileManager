@@ -18,12 +18,12 @@ public class ContextMenuFileController {
 		this.view = view;
 		
 		
-		view.getProperties().addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent eve) {
-				new PropertiesView(view.getFile());
-			}
-		});
+//		view.getProperties().addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent eve) {
+//				new PropertiesView(view.getFile());
+//			}
+//		});
 		
 		
 	}
