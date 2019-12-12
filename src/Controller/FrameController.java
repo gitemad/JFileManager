@@ -159,28 +159,34 @@ public class FrameController {
 
 		view.getToolBarView().getSearchView().addKeyListener(new KeyListener() {
 			@Override
-			public void keyTyped(KeyEvent arg0) {
+			public void keyTyped(KeyEvent k) {
 			}
 
 			@Override
 			public void keyReleased(KeyEvent arg0) {
+				
 			}
 
 			@Override
 			public void keyPressed(KeyEvent k) {
 				if (k.getKeyCode() == KeyEvent.VK_ENTER) {
-					found.removeAll(found);
 					if (view.getToolBarView().getSearchView().getText().equals("")) {
 						new Open(new File(addressBarController.getView().getText())).execute();
-					} else {
+					}
+					return;
+				}
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override
+					public void run() {
+						found.removeAll(found);
 						File f = new File(addressBarController.getView().getText());
 						search(f, view.getToolBarView().getSearchView().getText());
 						File[] arr = new File[found.size()];
 						arr = found.toArray(arr);
 						view.getFileTableModel().setTableData(arr);
+						view.getToolBarView().getSearchView().requestFocus();
 					}
-
-				}
+				});
 			}
 		});
 
@@ -687,6 +693,7 @@ public class FrameController {
 	}
 
 	private void search(File path, String text) {
+		view.getToolBarView().getSearchView().repaint();
 		view.getFooterView().getGridController().setSelected(false);
 		view.getFooterView().getListController().setSelected(true);
 		view.listView();
@@ -776,7 +783,7 @@ public class FrameController {
 		public void execute() {
 			if (cut) {
 				for (File file : f) {
-					file.delete();
+					delete(file);
 				}
 				cut = false;
 				return;
@@ -865,38 +872,6 @@ public class FrameController {
 					paste(source, destPath);
 				} catch (IOException e) {
 				}
-
-//				try {
-//					FileInputStream is = new FileInputStream(source);
-//					String fileName = source.getName();
-//					destPath += "\\" + fileName;
-//					while (new File(destPath).isDirectory()) {
-//						destPath += "_copy";
-//					}
-//					while (new File(destPath).exists()) {
-//						destPath = destPath.replace(fileName, "");
-//						int i = fileName.lastIndexOf(".");
-//						if (i > 0) {
-//							String extension = "";
-//							extension = fileName.substring(i);
-//							fileName = fileName.replace(extension, "");
-//							fileName += "_copy";
-//							fileName += extension;
-//							destPath += fileName;
-//						}
-//					}
-//					File dest = new File(destPath);
-//					FileOutputStream os = new FileOutputStream(dest);
-//					byte[] buffer = new byte[1024];
-//					int length;
-//					while ((length = is.read(buffer)) > 0) {
-//						os.write(buffer, 0, length);
-//					}
-//					is.close();
-//					os.close();
-//				} catch (Exception e) {
-//				}
-
 			}
 			if (cut) {
 				new Delete(clipboard).execute();

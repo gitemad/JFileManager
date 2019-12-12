@@ -47,7 +47,11 @@ public class FileLabelView extends JLabel {
 		
 		fileSystemView = FileSystemView.getFileSystemView();
 		name = fileSystemView.getSystemDisplayName(model.getFile());
-		icon = enlargeIcon(model.getFile());
+		try {
+			icon = enlargeIcon(model.getFile());
+		} catch (Exception e) {
+			
+		}
 		rClickView = new ContextMenuFileView(model.getFile());
 		rClickController = new ContextMenuFileController(rClickView);
 		
