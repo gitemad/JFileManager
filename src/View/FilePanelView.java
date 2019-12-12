@@ -250,9 +250,9 @@ public class FilePanelView extends JPanel {
             	int maxX = Math.max(rectDrawer.getX(), rectDrawer.getX2());
             	int minY = Math.min(rectDrawer.getY(), rectDrawer.getY2());
             	int maxY = Math.max(rectDrawer.getY(), rectDrawer.getY2());
-            	boolean x = minX < f.getView().getX() &&
+            	boolean x = minX < f.getView().getX() + f.getView().getWidth() &&
             				maxX > f.getView().getX();
-				boolean y = minY < f.getView().getY() &&
+				boolean y = minY < f.getView().getY() + f.getView().getHeight() &&
 							maxY > f.getView().getY();
             	if (x && y) {
             		f.selected();
