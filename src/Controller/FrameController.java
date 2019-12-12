@@ -113,6 +113,17 @@ public class FrameController {
 				} catch (Exception exp) {
 
 				}
+				if (e.getButton() == MouseEvent.BUTTON3) {
+					int r = view.getFileTableView().rowAtPoint(e.getPoint());
+					if (!view.getFileTableView().isRowSelected(r) ) {
+						if (r >= 0 && r < view.getFileTableView().getRowCount()) {
+							view.getFileTableView().setRowSelectionInterval(r, r);							
+						} else {
+							view.getFileTableView().clearSelection();
+						}	
+					}
+				}
+				
 				if (e.isPopupTrigger()) {
 					int w = view.getFileTableView().getWidth();
 					int h = view.getFileTableView().getRowCount() * view.getFileTableView().getRowHeight();
