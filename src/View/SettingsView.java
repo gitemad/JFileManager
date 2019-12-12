@@ -3,6 +3,7 @@ package View;
 import javax.swing.*;
 
 import Controller.FileTreeController;
+import Controller.FrameController;
 import Model.FileTreeModel;
 import Model.Originator;
 import Model.SettingsModel;
@@ -172,8 +173,8 @@ public class SettingsView extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				setNumPageHistory();
-				setLookAndFeels();
 				setView();
+				setLookAndFeels();
 			}
 		};
 		return a;
@@ -195,18 +196,24 @@ public class SettingsView extends JFrame {
 		
 	private void setLookAndFeels() {
 		int i = lookFeels.getSelectedIndex();
+//		if (i == model.getlNum()) {
+//			SettingsView.this.setVisible(false);
+//			return;
+//		}
 		try {
 			String lf = UIManager.getInstalledLookAndFeels()[i].getClassName();
 			model.setlNum(i);
 			model.setLookAndFeel(lf);
-			UIManager.setLookAndFeel(lf);
-			for(Window window: Window.getWindows()) {
-				for(Component component : window.getComponents()) {
-					try {
-						SwingUtilities.updateComponentTreeUI(component);
-					} catch (Exception e) {
-					}
-				}
+			try {
+				UIManager.setLookAndFeel(lf);
+				SwingUtilities.updateComponentTreeUI(Main.view);
+//				Main.view.getTray().remove(Main.view.getTray().getTrayIcons()[0]);
+//				Main.view.setVisible(false);
+//				Main.view.dispose();
+//				Main.view = new FrameView();
+//				Main.controller = new FrameController(Main.view);
+			} catch(Exception e) {
+				
 			}
 		} catch (Exception ignored) {
 		} finally {

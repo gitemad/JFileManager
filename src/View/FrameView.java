@@ -113,7 +113,6 @@ public class FrameView extends JFrame {
 			UIManager.setLookAndFeel(menuBarView.getHelpController().getSettingsModel().getLookAndFeel());
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
 				| UnsupportedLookAndFeelException e) {
-			e.printStackTrace();
 		}
 
 		if (menuBarView.getHelpController().getSettingsModel().isList()) {
@@ -275,6 +274,10 @@ public class FrameView extends JFrame {
 		this.setContentPane(content);
 
 		this.setVisible(true);
+	}
+	
+	public SystemTray getTray() {
+		return tray;
 	}
 
 	// a function for grid view

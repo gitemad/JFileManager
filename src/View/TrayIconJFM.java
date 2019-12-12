@@ -52,4 +52,8 @@ public class TrayIconJFM {
 	public SystemTray getTray() {
 		return tray;
 	}
+	
+	public TrayIcon getTrayIcon() {
+		return trayIcon;
+	}
 }
