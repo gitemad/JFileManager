@@ -50,6 +50,9 @@ public class FilePanelView extends JPanel {
     	ctrlDown = false;
     	this.model = model;
     	
+    	this.setFocusable(true);
+    	this.requestFocus();
+    	
     	this.addKeyListener(new KeyListener() {
 			@Override
 			public void keyTyped(KeyEvent arg0) {
@@ -60,13 +63,12 @@ public class FilePanelView extends JPanel {
 			}
 			@Override
 			public void keyPressed(KeyEvent k) {
+				System.out.println(k.getKeyChar());
 				if (k.getKeyCode() == KeyEvent.CTRL_MASK)
 					ctrlDown = true;
 			}
 		});
     	
-    	this.setFocusable(true);
-    	this.requestFocusInWindow();
     	
     	drawMouseListener = new DrawMouseListener();
         addMouseListener(drawMouseListener);

@@ -189,6 +189,8 @@ public class FrameController {
 				});
 			}
 		});
+		
+//		filePanelController.getView().requestFocus();
 
 	}
 
@@ -336,7 +338,7 @@ public class FrameController {
 			} catch (Exception e) {
 
 			}
-
+			
 			flc.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -632,6 +634,7 @@ public class FrameController {
 	private void setEditMenuActions(EditMenuView menu) {
 		String path = addressBarController.getModel().getPath();
 
+		
 		if (clipboard == null) {
 			menu.getPaste().setEnabled(false);
 		} else {

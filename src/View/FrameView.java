@@ -291,7 +291,6 @@ public class FrameView extends JFrame {
 		content.add(footerView, BorderLayout.SOUTH);
 
 		this.setContentPane(content);
-
 		this.setVisible(true);
 	}
 
