@@ -10,91 +10,93 @@ import View.FrameView;
  */
 public class SettingsModel {
 	
-	private String defaultAddress;
-	private int numPageHistory;
-	private String lookAndFeel;
-	private int lNum;
-	private boolean list;
+	private static String defaultAddress;
+	private static int numPageHistory;
+	private static String lookAndFeel;
+	private static int lNum;
+	private static boolean list;
 	
 	/**
 	 * Only constructor of class without any parameters
 	 */
 	public SettingsModel() {
-		defaultAddress = System.getProperty("user.home") + "\\Desktop";
-		numPageHistory = 10;
-		lNum = 1;
-		lookAndFeel = UIManager.getInstalledLookAndFeels()[lNum].getClassName();
-		list = true;
+		if (lookAndFeel == null) {
+			defaultAddress = System.getProperty("user.home") + "\\Desktop";
+			numPageHistory = 10;
+			lNum = 1;
+			lookAndFeel = UIManager.getInstalledLookAndFeels()[lNum].getClassName();
+			list = true;
+		}
 	}
 
 	/**
 	 * @return the defaultAddress
 	 */
-	public String getDefaultAddress() {
+	public static String getDefaultAddress() {
 		return defaultAddress;
 	}
 
 	/**
 	 * @param defaultAddress the defaultAddress to set
 	 */
-	public void setDefaultAddress(String defaultAddress) {
-		this.defaultAddress = defaultAddress;
+	public static void setDefaultAddress(String defaultAdrs) {
+		defaultAddress = defaultAdrs;
 	}
 
 	/**
 	 * @return the lookAndFeel
 	 */
-	public String getLookAndFeel() {
+	public static String getLookAndFeel() {
 		return lookAndFeel;
 	}
 
 	/**
 	 * @param lookAndFeel the lookAndFeel to set
 	 */
-	public void setLookAndFeel(String lookAndFeel) {
-		this.lookAndFeel = lookAndFeel;
+	public static void setLookAndFeel(String lookFeel) {
+		lookAndFeel = lookFeel;
 	}
 
 	/**
 	 * @return the list
 	 */
-	public boolean isList() {
+	public static boolean isList() {
 		return list;
 	}
 
 	/**
 	 * @param list the list to set
 	 */
-	public void setList(boolean list) {
-		this.list = list;
+	public static void setList(boolean listt) {
+		list = listt;
 	}
 
 	/**
 	 * @return the lNum
 	 */
-	public int getlNum() {
+	public static int getlNum() {
 		return lNum;
 	}
 
 	/**
 	 * @param lNum the lNum to set
 	 */
-	public void setlNum(int lNum) {
-		this.lNum = lNum;
+	public static void setlNum(int num) {
+		lNum = num;
 	}
 
 	/**
 	 * @return the numPageHistory
 	 */
-	public int getNumPageHistory() {
+	public static int getNumPageHistory() {
 		return numPageHistory;
 	}
 
 	/**
 	 * @param numPageHistory the numPageHistory to set
 	 */
-	public void setNumPageHistory(int numPageHistory) {
-		this.numPageHistory = numPageHistory;
+	public static void setNumPageHistory(int numHistory) {
+		numPageHistory = numHistory;
 	}	
 	
 	

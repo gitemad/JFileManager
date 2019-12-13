@@ -64,9 +64,14 @@ public class FrameView extends JFrame {
 		this.setLayout(null);
 		this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
+		menuBarView = new MenuView();
+		try {
+			UIManager.setLookAndFeel(menuBarView.getHelpController().getSettingsModel().getLookAndFeel());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e) {
+		}
 		content = new JPanel();
 		header = new JPanel();
-		menuBarView = new MenuView();
 		toolBarView = new ToolBarView();
 		footerView = new FooterView();
 		tray = new TrayIconJFM(this).getTray();
@@ -109,11 +114,6 @@ public class FrameView extends JFrame {
 			}
 		});
 		
-		try {
-			UIManager.setLookAndFeel(menuBarView.getHelpController().getSettingsModel().getLookAndFeel());
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-				| UnsupportedLookAndFeelException e) {
-		}
 
 		if (menuBarView.getHelpController().getSettingsModel().isList()) {
 			listView();

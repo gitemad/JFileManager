@@ -11,6 +11,7 @@ import Model.SizedStack;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.io.File;
 import java.util.Scanner;
 
 /**
@@ -172,6 +173,7 @@ public class SettingsView extends JFrame {
 		Action a = new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				setDefaultAddress();
 				setNumPageHistory();
 				setView();
 				setLookAndFeels();
@@ -193,6 +195,13 @@ public class SettingsView extends JFrame {
 		};
 		return a;
 	}
+	
+	private void setDefaultAddress() {
+		File f = new File(address.getText());
+		if (f.exists() && f.isDirectory()) {
+			model.setDefaultAddress(address.getText());
+		}
+	}
 		
 	private void setLookAndFeels() {
 		int i = lookFeels.getSelectedIndex();
@@ -206,12 +215,12 @@ public class SettingsView extends JFrame {
 			model.setLookAndFeel(lf);
 			try {
 				UIManager.setLookAndFeel(lf);
-				SwingUtilities.updateComponentTreeUI(Main.view);
-//				Main.view.getTray().remove(Main.view.getTray().getTrayIcons()[0]);
-//				Main.view.setVisible(false);
-//				Main.view.dispose();
-//				Main.view = new FrameView();
-//				Main.controller = new FrameController(Main.view);
+//				SwingUtilities.updateComponentTreeUI(Main.view);
+				Main.view.getTray().remove(Main.view.getTray().getTrayIcons()[0]);
+				Main.view.setVisible(false);
+				Main.view.dispose();
+				Main.view = new FrameView();
+				Main.controller = new FrameController(Main.view);
 			} catch(Exception e) {
 				
 			}
